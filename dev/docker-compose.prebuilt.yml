@@ -1,0 +1,5 @@
+# Run an already built JAR with the same development dependencies.
+# Build with Maven package first; this override does not compile or run tests.
+services:
+  java:
+    command: [java, -jar, target/hm-dianping-0.0.1-SNAPSHOT.jar]

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmdp.mapper.KnowledgeMapper">
+    <resultMap id="KnowledgeChunkMap" type="com.hmdp.entity.KnowledgeChunk">
+        <id column="id" property="chunkId"/>
+        <result column="source_key" property="sourceKey"/>
+        <result column="version" property="version"/>
+        <result column="chunk_no" property="chunkNo"/>
+        <result column="title" property="title"/>
+        <result column="kind" property="kind"/>
+        <result column="shop_id" property="shopId"/>
+        <result column="voucher_id" property="voucherId"/>
+        <result column="content" property="content"/>
+        <result column="valid_from" property="validFrom"/>
+        <result column="valid_until" property="validUntil"/>
+    </resultMap>
+    <insert id="ensureSource">
+        INSERT IGNORE INTO tb_knowledge_source(source_key) VALUES(#{sourceKey})
+    </insert>
+    <select id="lockSource" resultType="map">
+        SELECT current_version,enabled FROM tb_knowledge_source WHERE source_key=#{sourceKey} FOR UPDATE
+    </select>
+    <insert id="insertRevision">
+        INSERT INTO tb_knowledge_revision(source_key,version,title,kind,shop_id,voucher_id,content,rule_fingerprint,valid_from,valid_until)
+        VALUES(#{sourceKey},#{version},#{title},#{kind},#{shopId},#{voucherId},#{content},#{ruleFingerprint},#{validFrom},#{validUntil})
+    </insert>
+    <insert id="insertChunk">
+        INSERT INTO tb_knowledge_chunk(source_key,version,chunk_no,content)
+        VALUES(#{sourceKey},#{version},#{chunkNo},#{content})
+    </insert>
+    <update id="activate">
+        UPDATE tb_knowledge_source SET current_version=#{version},enabled=1 WHERE source_key=#{sourceKey}
+    </update>
+    <update id="withdraw">
+        UPDATE tb_knowledge_source SET enabled=0,current_version=current_version+1 WHERE source_key=#{sourceKey}
+    </update>
+    <sql id="currentChunks">
+        FROM tb_knowledge_chunk c
+        JOIN tb_knowledge_source d ON d.source_key=c.source_key AND d.current_version=c.version AND d.enabled=1
+        JOIN tb_knowledge_revision r ON r.source_key=c.source_key AND r.version=c.version
+        WHERE r.valid_from&lt;=NOW(3) AND (r.valid_until IS NULL OR r.valid_until&gt;NOW(3))
+        AND (r.kind='PLATFORM_FAQ'
+        <if test="shopId != null">
+            OR (r.kind='SHOP_SERVICE' AND r.shop_id=#{shopId})
+        </if>
+        <if test="shopId != null and voucherId != null">
+            OR (r.kind='VOUCHER_RULE' AND r.shop_id=#{shopId} AND r.voucher_id=#{voucherId} AND r.rule_fingerprint=#{ruleFingerprint})
+        </if>
+        )
+    </sql>
+    <select id="selectCandidates" resultMap="KnowledgeChunkMap">
+        SELECT c.id,c.source_key,c.version,c.chunk_no,c.content,r.title,r.kind,r.shop_id,r.voucher_id,r.valid_from,r.valid_until
+        <include refid="currentChunks"/>
+        ORDER BY CASE r.kind WHEN 'VOUCHER_RULE' THEN 0 WHEN 'SHOP_SERVICE' THEN 1 ELSE 2 END,c.source_key,c.chunk_no
+        LIMIT #{limit}
+    </select>
+    <select id="recheckCurrentChunks" resultMap="KnowledgeChunkMap">
+        SELECT c.id,c.source_key,c.version,c.chunk_no,c.content,r.title,r.kind,r.shop_id,r.voucher_id,r.valid_from,r.valid_until
+        <include refid="currentChunks"/>
+        <choose>
+            <when test="ids != null and ids.size() > 0">
+                AND c.id IN
+                <foreach collection="ids" item="id" open="(" close=")" separator=",">#{id}</foreach>
+            </when>
+            <otherwise>AND 1=0</otherwise>
+        </choose>
+    </select>
+    <select id="selectCurrentSource" resultType="map">
+        SELECT r.source_key,r.version,r.title,r.kind,r.shop_id,r.voucher_id,r.content,r.rule_fingerprint,r.valid_from,r.valid_until
+        FROM tb_knowledge_source d JOIN tb_knowledge_revision r
+          ON r.source_key=d.source_key AND r.version=d.current_version
+        WHERE d.source_key=#{sourceKey} AND d.enabled=1
+          AND r.valid_from&lt;=NOW(3) AND (r.valid_until IS NULL OR r.valid_until&gt;NOW(3))
+        <if test="version != null">AND r.version=#{version}</if>
+    </select>
+</mapper>

@@ -1,0 +1,77 @@
+{
+  "generatedAt": "2026-10-30T04:19:54.243573+00:00",
+  "scope": "Local keyword retrieval only; no embeddings or generated answer",
+  "checks": [
+    {
+      "name": "anonymous_public_read",
+      "passed": true
+    },
+    {
+      "name": "anonymous_publication_denied",
+      "passed": true
+    },
+    {
+      "name": "ordinary_publication_denied",
+      "passed": true
+    },
+    {
+      "name": "admin_publication",
+      "passed": true
+    },
+    {
+      "name": "published_text_retrieved",
+      "passed": true
+    },
+    {
+      "name": "citation_points_to_current_source",
+      "passed": true
+    },
+    {
+      "name": "version_update",
+      "passed": true
+    },
+    {
+      "name": "old_citation_rejected",
+      "passed": true
+    },
+    {
+      "name": "stale_writer_rejected",
+      "passed": true
+    },
+    {
+      "name": "retrieval_only_returns_current_version",
+      "passed": true
+    },
+    {
+      "name": "withdraw_fixture_created",
+      "passed": true
+    },
+    {
+      "name": "admin_withdrawal",
+      "passed": true
+    },
+    {
+      "name": "stale_publication_cannot_undo_withdrawal",
+      "passed": true
+    },
+    {
+      "name": "withdrawn_source_rejected",
+      "passed": true
+    },
+    {
+      "name": "withdrawn_evidence_excluded",
+      "passed": true
+    },
+    {
+      "name": "no_evidence_means_no_match",
+      "passed": true
+    },
+    {
+      "name": "oversized_top_k_rejected",
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "retainedSource": "platform-claim-progress",
+  "retainedVersion": 4
+}

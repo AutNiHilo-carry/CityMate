@@ -31,3 +31,15 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Local credentials (keep example templates in Git)
+/.env
+/dev/.env
+
+# Generated dependencies, local credential variants and diagnostic logs
+**/node_modules/
+*.log
+/.env.*
+!/.env.example
+/dev/.env.*
+!/dev/.env.example

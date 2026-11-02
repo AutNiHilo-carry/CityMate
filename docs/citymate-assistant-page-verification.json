@@ -1,0 +1,22 @@
+{
+  "generatedAt": "2026-11-02T08:25:15.758145+00:00",
+  "frontendSyntaxCheck": "passed",
+  "frontendTests": 18,
+  "newFrontendTests": 6,
+  "bundledVue": "2.5.16",
+  "templateCompilation": "passed",
+  "textOnlyAnswerAndSourceVNodeCheck": "passed",
+  "nginxConfigTest": "passed",
+  "nginxReload": "passed",
+  "http200": [
+    "/assistant.html",
+    "/scripts/assistant.js",
+    "/scripts/assistant-helpers.js",
+    "/assets/assistant.css",
+    "/api/actuator/health"
+  ],
+  "visualBrowserInspection": false,
+  "visualBlocker": "Browser access host unavailable",
+  "sseImplemented": false,
+  "agentToolLoopImplemented": false
+}

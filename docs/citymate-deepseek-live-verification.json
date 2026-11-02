@@ -1,0 +1,39 @@
+{
+  "generatedAt": "2026-11-02T06:38:31.078074+00:00",
+  "checks": [
+    {
+      "name": "health_up",
+      "passed": true
+    },
+    {
+      "name": "anonymous_answer_denied",
+      "passed": true
+    },
+    {
+      "name": "no_evidence_abstains",
+      "passed": true
+    },
+    {
+      "name": "real_model_answered",
+      "passed": true
+    },
+    {
+      "name": "has_server_sources",
+      "passed": true
+    },
+    {
+      "name": "source_current_platform-claim-progress",
+      "passed": true
+    }
+  ],
+  "answerStatus": "ANSWERED",
+  "answerElapsedMs": 1515,
+  "publicAnswer": "不是。SUCCESS 表示正式订单已落库，并不表示已经付款；付费券还需核对付款状态。",
+  "sources": [
+    {
+      "sourceKey": "platform-claim-progress",
+      "version": 4
+    }
+  ],
+  "passed": true
+}

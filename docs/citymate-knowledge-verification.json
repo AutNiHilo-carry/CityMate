@@ -1,0 +1,43 @@
+{
+  "generatedAt": "2026-10-30T04:27:02.218502+00:00",
+  "mode": "KEYWORD_BM25_RETRIEVAL_ONLY",
+  "embeddingsImplemented": false,
+  "generationImplemented": false,
+  "initialSelectedUnitTests": 50,
+  "finalSelectedUnitTestsAfterWithdrawalFix": 27,
+  "newSuites": [
+    {
+      "name": "KnowledgeUnitTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "KnowledgeAccessTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "KnowledgeIntegrationTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "httpChecks": 17,
+  "checkstyle": "passed",
+  "packageBuild": "passed",
+  "integrationDatabase": "hmdp_optimization_test",
+  "integrationProject": "citymate-ragtest",
+  "integrationRuntime": "Java 8",
+  "migration": "V10__versioned_public_knowledge.sql",
+  "withdrawalConsumesVersion": true,
+  "liveSource": "platform-claim-progress",
+  "liveSourceVersion": 4,
+  "scope": "Public knowledge only. No vector retrieval, LLM answer quality evaluation, or load test.",
+  "passed": true
+}

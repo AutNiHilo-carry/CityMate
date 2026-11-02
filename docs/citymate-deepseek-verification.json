@@ -1,0 +1,71 @@
+{
+    "generatedAt":  "2026-11-02T05:36:35.3302925Z",
+    "selectedTests":  44,
+    "newTests":  17,
+    "suites":  [
+                   {
+                       "skipped":  0,
+                       "name":  "com.hmdp.knowledge.KnowledgeAnswerTest",
+                       "tests":  10,
+                       "errors":  0,
+                       "failures":  0
+                   },
+                   {
+                       "skipped":  0,
+                       "name":  "com.hmdp.knowledge.DeepSeekClientTest",
+                       "tests":  7,
+                       "errors":  0,
+                       "failures":  0
+                   },
+                   {
+                       "skipped":  0,
+                       "name":  "com.hmdp.knowledge.KnowledgeUnitTest",
+                       "tests":  7,
+                       "errors":  0,
+                       "failures":  0
+                   },
+                   {
+                       "skipped":  0,
+                       "name":  "com.hmdp.knowledge.KnowledgeAccessTest",
+                       "tests":  2,
+                       "errors":  0,
+                       "failures":  0
+                   },
+                   {
+                       "skipped":  0,
+                       "name":  "com.hmdp.MapperArchitectureTest",
+                       "tests":  3,
+                       "errors":  0,
+                       "failures":  0
+                   },
+                   {
+                       "skipped":  0,
+                       "name":  "com.hmdp.agent.tool.QueryToolServiceTest",
+                       "tests":  11,
+                       "errors":  0,
+                       "failures":  0
+                   },
+                   {
+                       "skipped":  0,
+                       "name":  "com.hmdp.reliability.AccessGuardTest",
+                       "tests":  4,
+                       "errors":  0,
+                       "failures":  0
+                   }
+               ],
+    "checkstyle":  "passed",
+    "package":  "passed",
+    "hostJdk":  "21.0.6",
+    "compilerRelease":  8,
+    "hostTestArgLine":  "--add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED",
+    "transport":  "local HTTP stub; no paid API requests",
+    "realDeepSeekVerified":  true,
+    "liveHttpVerified":  true,
+    "dockerEngineObserved":  "running; health UP",
+    "credentialsObserved":  "Configured through ignored local .env; value never reported",
+    "vectorRetrieval":  false,
+    "chatUi":  false,
+    "agentToolLoop":  false,
+    "passed":  true,
+    "liveVerificationReport":  "citymate-deepseek-live-verification.json"
+}

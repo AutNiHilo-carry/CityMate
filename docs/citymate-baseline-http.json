@@ -1,0 +1,111 @@
+{
+  "generatedAt": "2026-10-30T02:55:00.398318+00:00",
+  "baseUrl": "http://127.0.0.1:8080",
+  "scope": "Local HTTP smoke verification, not a load test",
+  "checks": [
+    {
+      "name": "frontend_home",
+      "passed": true
+    },
+    {
+      "name": "restored_image",
+      "passed": true
+    },
+    {
+      "name": "health_via_nginx",
+      "passed": true
+    },
+    {
+      "name": "shop_search",
+      "passed": true
+    },
+    {
+      "name": "nearby_search",
+      "passed": true
+    },
+    {
+      "name": "voucher_query",
+      "passed": true
+    },
+    {
+      "name": "anonymous_order_denied",
+      "passed": true
+    },
+    {
+      "name": "real_code_login",
+      "passed": true
+    },
+    {
+      "name": "demo_catalog_admin",
+      "passed": true
+    },
+    {
+      "name": "ordinary_idempotency",
+      "passed": true,
+      "orderId": "654268293938413569"
+    },
+    {
+      "name": "free_voucher_held",
+      "passed": true
+    },
+    {
+      "name": "paid_voucher_remains_unpaid",
+      "passed": true
+    },
+    {
+      "name": "cross_account_order_denied",
+      "passed": true
+    },
+    {
+      "name": "own_order_list",
+      "passed": true
+    },
+    {
+      "name": "seckill_accepted",
+      "passed": true,
+      "orderId": "654268298233380867"
+    },
+    {
+      "name": "seckill_fulfilled",
+      "passed": true,
+      "state": "SUCCESS"
+    },
+    {
+      "name": "seckill_order_persisted",
+      "passed": true
+    },
+    {
+      "name": "seckill_duplicate_returns_original",
+      "passed": true
+    },
+    {
+      "name": "last_stock_not_oversold",
+      "passed": true
+    },
+    {
+      "name": "cross_account_request_denied",
+      "passed": true
+    },
+    {
+      "name": "inventory_reconciliation",
+      "passed": true
+    },
+    {
+      "name": "order_progress",
+      "passed": true
+    }
+  ],
+  "objects": {
+    "shopId": 4,
+    "userId": 1010,
+    "otherUserId": 1011,
+    "freeVoucherId": 10,
+    "paidVoucherId": 11,
+    "seckillVoucherId": 12,
+    "freeOrderId": "654268293938413569",
+    "unpaidOrderId": "654268293938413570",
+    "seckillOrderId": "654268298233380867"
+  },
+  "retainedDemoData": true,
+  "passed": true
+}

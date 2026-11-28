@@ -25,8 +25,8 @@ services:
   $compose+=@('-f',$overridePath)
   if ($Mode -eq 'reproduce') {$tests='AccessGuardRoutingTest,OrderExpiryBatchTest,VoucherOrderReliabilityTest#nonexistentOrdinaryVoucherDoesNotCommitItsSerializationSlot,MetricsPathSecurityTest'}
   elseif ($Mode -eq 'redis-reproduce') {$tests='SeckillCompensationIntegrationTest#invalidNumericStockDoesNotDestroyTheOwnerNeededForRetry'}
-  elseif ($Mode -eq 'broker') {$tests='RocketMqIntegrationTest,KafkaBehaviorIntegrationTest,CacheCdcIntegrationTest,ExperienceIntegrationTest'}
-  else {$tests='*Test,!RedissonTest,!CacheBenchmarkIntegrationTest,!CacheCdcIntegrationTest,!KafkaBehaviorIntegrationTest,!RocketMqIntegrationTest,!ExperienceIntegrationTest,!IndependentTransactionProfileIntegrationTest,!TransactionBaselineIntegrationTest'}
+  elseif ($Mode -eq 'broker') {$tests='RocketMqIntegrationTest,KafkaBehaviorIntegrationTest,CacheCdcIntegrationTest,CanalPauseRecoveryIntegrationTest,ExperienceIntegrationTest'}
+  else {$tests='*Test,!RedissonTest,!CacheBenchmarkIntegrationTest,!CacheCdcIntegrationTest,!CanalPauseRecoveryIntegrationTest,!KafkaBehaviorIntegrationTest,!RocketMqIntegrationTest,!ExperienceIntegrationTest,!IndependentTransactionProfileIntegrationTest,!TransactionBaselineIntegrationTest'}
   if ($Mode -ne 'reproduce') {
     $started=$true
     if ($Mode -eq 'broker') {

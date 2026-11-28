@@ -96,8 +96,10 @@ public class CanalCacheConsumer {
   private void consume() {
     while (running && !Thread.currentThread().isInterrupted()) {
       RLock leader = redisson.getLock("lock:cache-cdc:" + destination);
+      boolean acquired = false;
       try {
-        if (!leader.tryLock()) {
+        acquired = leader.tryLock();
+        if (!acquired) {
           Thread.sleep(1000);
           continue;
         }
@@ -131,19 +133,20 @@ public class CanalCacheConsumer {
         metrics.counter("hmdp.cdc.connections", "result", "error").increment();
         if (running) {
           log.warn("Canal 暂不可用，将重连: {}", e.getMessage());
-        }
-        try {
-          Thread.sleep(1000);
-        } catch (InterruptedException interrupted) {
-          Thread.currentThread().interrupt();
+          try {
+            Thread.sleep(1000);
+          } catch (InterruptedException interrupted) {
+            Thread.currentThread().interrupt();
+          }
         }
       } finally {
-        try {
-          if (leader.isHeldByCurrentThread()) {
-            leader.unlock();
+        if (acquired) {
+          try {
+            // Wait for ownership-checked Redis cleanup even when shutdown interrupts this worker.
+            leader.unlockAsync().join();
+          } catch (RuntimeException unlockFailure) {
+            log.warn("CDC 主节点锁释放失败，将由租约回收");
           }
-        } catch (RuntimeException unlockFailure) {
-          log.warn("CDC 主节点锁释放失败，将由租约回收");
         }
       }
     }

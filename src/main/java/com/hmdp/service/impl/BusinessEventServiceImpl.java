@@ -82,8 +82,11 @@ public class BusinessEventServiceImpl implements IBusinessEventService {
         || event.getAggregateId() != task.getAggregateId()) {
       throw new IllegalArgumentException("消息内容与持久化事件不一致");
     }
-    if (messageMapper.countInboxEvent(group, event.getEventId()) > 0) {
-      businessOutboxMapper.markDuplicateDone(event.getEventId());
+    boolean done = OutboxState.DONE.matches(task.getState());
+    if (done || messageMapper.countInboxEvent(group, event.getEventId()) > 0) {
+      if (!done && !OutboxState.REVIEW.matches(task.getState())) {
+        businessOutboxMapper.markDuplicateDone(event.getEventId());
+      }
       metrics.counter("hmdp.mq.consumptions", "group", group, "result", "duplicate").increment();
       return;
     }
@@ -94,7 +97,9 @@ public class BusinessEventServiceImpl implements IBusinessEventService {
       appendFeedContinuation(task);
     }
     messageMapper.insertInboxEvent(group, event.getEventId());
-    businessOutboxMapper.markConsumed(event.getEventId());
+    if (businessOutboxMapper.markConsumed(event.getEventId()) != 1) {
+      throw new IllegalStateException("事件无法提交为已消费");
+    }
     metrics.counter("hmdp.mq.consumptions", "group", group, "result", "success").increment();
   }
 
@@ -136,7 +141,8 @@ public class BusinessEventServiceImpl implements IBusinessEventService {
                   } catch (RuntimeException invalid) {
                     valid = false;
                   }
-                  if (valid && OutboxState.DONE.matches(task.getState())) {
+                  if (valid && (OutboxState.DONE.matches(task.getState())
+                      || OutboxState.REVIEW.matches(task.getState()))) {
                     return true;
                   }
                   if (valid) {

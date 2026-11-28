@@ -329,9 +329,19 @@ private boolean deliverOutboxTask(BusinessOutboxTask task, String leaseOwner) {
   BusinessEvent event = BusinessEvent.from(task);
   if (mqEnabled) {
     publishers.getObject().publish(event);
+    metrics.counter("hmdp.mq.broker.accepted").increment();
     // 快速消费可能已经完成；owner/state 条件防止 DONE 被覆盖成 SENT。
-    businessOutboxMapper.markSent(task.getId(), leaseOwner);
-    return true;
+    int changed;
+    try {
+      changed = businessOutboxMapper.markSent(task.getId(), leaseOwner);
+    } catch (RuntimeException failure) {
+      metrics.counter("hmdp.outbox.sent.writeback", "result", "error").increment();
+      throw failure;
+    }
+    metrics
+        .counter("hmdp.outbox.sent.writeback", "result", changed > 0 ? "updated" : "not_matched")
+        .increment();
+    return changed > 0;
   }
   if (event.getDeliverAt() != null && event.getDeliverAt() > System.currentTimeMillis()) {
     businessOutboxMapper.deferDeadline(task.getId(), leaseOwner);
@@ -370,6 +380,8 @@ private int effectiveLeaseSeconds() {
 
 
 `relayOutboxBatch` 创建批次 owner 并领取；`sendClaimedTask` 负责续期、计时与失败处理；`deliverOutboxTask` 负责 MQ 或本地投递；`recordSendFailure` 在事务中保存退避与复核状态。方法拆开后，租约校验和异常捕获仍包住同一个任务的投递过程。
+
+`hmdp.mq.broker.accepted` 记录 Broker 确认接收。`hmdp.outbox.sent.writeback` 以 `updated`、`not_matched`、`error` 分别记录写回成功、条件未匹配和数据库异常。`not_matched` 既可能是消费者已完成，也可能是旧租约失效。`hmdp.mq.sends` 的 `success` 在 MQ 路径仅统计实际写回 `SENT`，本地消费成功仍按原口径统计。
 
 未到目标时间的本地 deadline 延后，不立即执行关单。MQ 模式则可提前将定时消息送给 Broker。SENT 的写入必须带条件，因为此时快消费者可能已经消费完成。
 
@@ -430,8 +442,11 @@ private void consumeLockedTask(BusinessEvent event, String group) {
       || event.getAggregateId() != task.getAggregateId()) {
     throw new IllegalArgumentException("消息内容与持久化事件不一致");
   }
-  if (messageMapper.countInboxEvent(group, event.getEventId()) > 0) {
-    businessOutboxMapper.markDuplicateDone(event.getEventId());
+  boolean done = OutboxState.DONE.matches(task.getState());
+  if (done || messageMapper.countInboxEvent(group, event.getEventId()) > 0) {
+    if (!done && !OutboxState.REVIEW.matches(task.getState())) {
+      businessOutboxMapper.markDuplicateDone(event.getEventId());
+    }
     metrics.counter("hmdp.mq.consumptions", "group", group, "result", "duplicate").increment();
     return;
   }
@@ -442,7 +457,9 @@ private void consumeLockedTask(BusinessEvent event, String group) {
     appendFeedContinuation(task);
   }
   messageMapper.insertInboxEvent(group, event.getEventId());
-  businessOutboxMapper.markConsumed(event.getEventId());
+  if (businessOutboxMapper.markConsumed(event.getEventId()) != 1) {
+    throw new IllegalStateException("事件无法提交为已消费");
+  }
   metrics.counter("hmdp.mq.consumptions", "group", group, "result", "success").increment();
 }
 
@@ -459,9 +476,9 @@ private void appendFeedContinuation(BusinessOutboxTask task) {
 
 1. 消息版本、正事件 ID、kind 和逻辑消费组必须匹配。
 2. 锁 Outbox 对应行，任务不存在或内容不一致不能继续。
-3. 已有 Inbox 表示这个组处理过，走重复路径，不再重做。
+3. 已完成或已有 Inbox 的事件走重复路径。待复核事件保留 REVIEW，由人工确认后走已有重试入口。
 4. 执行投影；返回 `ProjectionResult.CONTINUE` 时创建 Feed 续传事件，返回 `COMPLETE` 表示不需要下一批。
-5. 插入 Inbox、标任务 DONE，并与数据库效果一同提交。
+5. 插入 Inbox、标任务 DONE，并与数据库效果一同提交。消费回写只接受 PENDING、SENDING 或 SENT。待复核事件的迟到失败回执保留原失败原因和次数。
 
 Feed 续传不是“本次失败”：本批的 Redis 投递完成后，返回 `ProjectionResult.CONTINUE`，事务中登记下一批任务并把当前任务标为 DONE。新增的 `MessagingIntegrationTest.feedContinuationPreservesCursorAndPublicationTimeAcrossDuplicateDelivery` 用 201 名发布前关注的粉丝和 1 名发布后关注的粉丝验证边界：首批只处理 200 人，续批覆盖剩余 1 人；重投首批不会多建续传任务；下一批沿用原发布时间，也不会把历史笔记发给后来才关注的人。
 

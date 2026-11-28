@@ -407,6 +407,8 @@ ROW 表示日志记录行变化；FULL 提供完整行映像，有利于拿到�
 
 处理相关批次后会记录检查点，再向 Canal ACK。数据库记录成功但 ACK 丢失，仍可能再次收到批次；不要把检查点记录当成跨数据库与 Canal 的原子确认。它提供观察依据，Canal 自身的消费位点负责续读。
 
+同一批次连续失败达到配置阈值时，消费者暂停并保留未确认位点。修复投影失败的原因后，可以用相同的 Canal destination 重新启动消费者并重放。[`CanalPauseRecoveryIntegrationTest`](../src/test/java/com/hmdp/cache/CanalPauseRecoveryIntegrationTest.java) 使用隔离的 MySQL、Redis 和 Canal，注入商户缓存投影异常，检查暂停期间的旧缓存、恢复后的重放，以及后续 SQL 变更能否继续传播。测试覆盖投影异常，真正损坏的 binlog 和丢失位点需要独立验收。
+
 <a id="section-13-05"></a>
 
 ### 一次能分辨传播来源的实验

@@ -329,6 +329,26 @@ class MessagingIntegrationTest {
   }
 
   @Test
+  void redeliveryCannotReopenReviewedEventWithExistingInbox() {
+    long id = append("ORDER_CREATED", 107);
+    BusinessEvent message = event(id);
+    consumer.consume(message, "orders");
+
+    // Preserve a historical review decision even if an Inbox receipt already exists.
+    jdbc.update("UPDATE tb_business_outbox SET state='REVIEW' WHERE id=?", id);
+    consumer.consume(message, "orders");
+    assertEquals("REVIEW", state(id));
+    assertEquals(0, businessOutboxMapper.markDuplicateDone(id));
+    assertEquals(0, businessOutboxMapper.markConsumed(id));
+    assertEquals(0, businessOutboxMapper.recordConsumeFailure("late error", id));
+    assertEquals(0, businessOutboxMapper.markReview(id));
+    assertEquals(
+        1L,
+        jdbc.queryForObject(
+            "SELECT COUNT(*) FROM tb_order_event_history WHERE event_id=?", Long.class, id));
+  }
+
+  @Test
   void persistentFailureIsQuarantinedAndManualRetryPreservesIdentity() {
     long id = append("ORDER_CREATED", 104);
     BusinessEvent message = event(id);
@@ -345,6 +365,17 @@ class MessagingIntegrationTest {
     }
     assertEquals("REVIEW", state(id));
     assertThrows(IllegalStateException.class, () -> consumer.consume(message, "orders"));
+    assertTrue(
+        consumer.recordConsumptionFailure(
+            message, "orders", "late-delivery", "{}", new IllegalStateException("late error"), 1));
+    assertEquals(
+        5,
+        jdbc.queryForObject(
+            "SELECT consume_attempts FROM tb_business_outbox WHERE id=?", Integer.class, id));
+    assertTrue(
+        jdbc.queryForObject(
+                "SELECT last_error FROM tb_business_outbox WHERE id=?", String.class, id)
+            .contains("storage unavailable"));
     jdbc.update(
         "UPDATE tb_business_outbox SET "
             + "state='PENDING',attempts=0,consume_attempts=0,next_attempt_at=NOW() "

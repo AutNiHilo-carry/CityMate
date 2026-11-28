@@ -121,9 +121,19 @@ public class OutboxRelayServiceImpl implements IOutboxRelayService {
     BusinessEvent event = BusinessEvent.from(task);
     if (mqEnabled) {
       publishers.getObject().publish(event);
+      metrics.counter("hmdp.mq.broker.accepted").increment();
       // 快速消费可能已经完成；owner/state 条件防止 DONE 被覆盖成 SENT。
-      businessOutboxMapper.markSent(task.getId(), leaseOwner);
-      return true;
+      int changed;
+      try {
+        changed = businessOutboxMapper.markSent(task.getId(), leaseOwner);
+      } catch (RuntimeException failure) {
+        metrics.counter("hmdp.outbox.sent.writeback", "result", "error").increment();
+        throw failure;
+      }
+      metrics
+          .counter("hmdp.outbox.sent.writeback", "result", changed > 0 ? "updated" : "not_matched")
+          .increment();
+      return changed > 0;
     }
     if (event.getDeliverAt() != null && event.getDeliverAt() > System.currentTimeMillis()) {
       businessOutboxMapper.deferDeadline(task.getId(), leaseOwner);

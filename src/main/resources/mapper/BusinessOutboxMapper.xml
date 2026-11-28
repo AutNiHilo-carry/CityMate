@@ -97,7 +97,7 @@
     <update id="markDuplicateDone">
         UPDATE tb_business_outbox
         SET state='DONE',lease_owner=NULL,lease_until=NULL
-        WHERE id=#{eventId}
+        WHERE id=#{eventId} AND state IN ('PENDING','SENDING','SENT')
     </update>
 
     <select id="selectCursor" resultType="Long">
@@ -114,19 +114,19 @@
     <update id="markConsumed">
         UPDATE tb_business_outbox
         SET state='DONE',consumed_at=NOW(3),lease_owner=NULL,lease_until=NULL,last_error=NULL
-        WHERE id=#{eventId}
+        WHERE id=#{eventId} AND state IN ('PENDING','SENDING','SENT')
     </update>
 
     <update id="recordConsumeFailure">
         UPDATE tb_business_outbox
         SET consume_attempts=consume_attempts+1,last_error=#{lastError}
-        WHERE id=#{eventId}
+        WHERE id=#{eventId} AND state IN ('PENDING','SENDING','SENT')
     </update>
 
     <update id="markReview">
         UPDATE tb_business_outbox
         SET state='REVIEW',lease_owner=NULL,lease_until=NULL
-        WHERE id=#{eventId} AND state&lt;&gt;'DONE'
+        WHERE id=#{eventId} AND state IN ('PENDING','SENDING','SENT')
     </update>
 
     <select id="selectClaimableEvents" resultMap="BusinessOutboxTaskMap">

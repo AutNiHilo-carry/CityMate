@@ -16,13 +16,13 @@
     <link rel="stylesheet" href="/assets/feedback.css" />
     <link rel="stylesheet" href="/assets/experience.css" />
     <link rel="stylesheet" href="/assets/assistant.css" />
-    <link rel="preload" href="/assets/hangzhou-terrace.png" as="image" />
+    <link rel="stylesheet" href="/assets/business-ui.css" />
     <script defer src="/vendor/vue.js"></script>
     <script type="module" src="/scripts/app.js"></script>
   </head>
   <body>
     <noscript>请启用 JavaScript，查看店铺和探店内容。</noscript>
-    <div id="app" v-cloak>
+    <div id="app" v-cloak :class="{ 'has-mobile-nav': showMobileNav }">
       <a class="skip-link" href="#main">跳到主要内容</a>
       <header class="site-header">
         <div class="header-inner">
@@ -37,14 +37,14 @@
           <nav class="main-nav" aria-label="主导航">
             <a href="/" :class="{ active: activeNav === 'home' }">发现</a>
             <a href="/shop-list.html" :class="{ active: activeNav === 'shops' }"
-              >好店</a
+              >找店</a
             >
             <a
               href="/vouchers.html"
               :class="{ active: activeNav === 'vouchers' }"
               >优惠券</a
             >
-            <a href="/assistant.html" :class="{ active: activeNav === 'assistant' }">AI 助手</a>
+            <a href="/assistant.html" :class="{ active: activeNav === 'assistant' }">问一问</a>
           </nav>
           <a
             class="experience-nav"
@@ -56,14 +56,16 @@
             <i class="el-icon-search" aria-hidden="true"></i>
             <input
               v-model="keyword"
-              maxlength="50"
-              aria-label="搜索商家"
-              placeholder="搜索商家，发现你的下一站"
+              :maxlength="page === 'vouchers' ? 100 : 50"
+              :aria-label="headerSearchLabel"
+              :placeholder="headerSearchPlaceholder"
             />
             <button type="submit" aria-label="搜索">
               <i class="el-icon-right" aria-hidden="true"></i>
             </button>
           </form>
+          <a class="mobile-ai-entry" href="/assistant.html" :aria-current="page === 'assistant' ? 'page' : null"><img src="/assets/mascots/xiaocheng-v1.png" alt="" width="24" height="24" />问一问</a>
+          <a class="header-orders" href="/orders.html" :aria-current="page === 'orders' ? 'page' : null">我的订单</a>
           <a class="button outline publish-link" href="/blog-edit.html"
             ><i class="el-icon-edit-outline" aria-hidden="true"></i>发布笔记</a
           >
@@ -77,7 +79,7 @@
               alt=""
             ></app-image
           ></a>
-          <a v-else class="login-link" href="/login.html">登录 / 注册</a>
+          <a v-else class="login-link" :href="loginHref">登录 / 注册</a>
         </div>
       </header>
 
@@ -95,25 +97,13 @@
         ></experience-page>
         <template v-else-if="page === 'home'">
           <section class="hero" aria-labelledby="hero-title">
-            <img
-              class="hero-photo"
-              src="/assets/hangzhou-terrace.png"
-              alt="湖畔咖啡露台的城市生活氛围图"
-              fetchpriority="high"
-            />
-            <div class="hero-copy">
-              <span class="eyebrow"
-                ><span class="small-dot"></span>杭州 · 城市探索</span
-              >
-              <h1 id="hero-title">发现身边的好去处</h1>
-              <p>从一顿好饭，到一个愉快的周末。</p>
-              <a class="button primary" href="/shop-list.html"
-                >开始探索<i class="el-icon-right" aria-hidden="true"></i
-              ></a>
-            </div>
-            <div class="hero-note">
-              在杭州<br />遇见日常的美好<span>HANGZHOU, EVERYDAY</span>
-            </div>
+            <div class="hero-copy"><h1 id="hero-title">杭州吃喝玩乐</h1><p>找店、看评价，出门前查查优惠。</p></div>
+            <nav class="home-shortcuts" aria-label="常用服务">
+              <a href="/shop-list.html"><i class="el-icon-search" aria-hidden="true"></i>找商户</a>
+              <a href="/vouchers.html"><i class="el-icon-tickets" aria-hidden="true"></i>查优惠</a>
+              <a href="/orders.html"><i class="el-icon-document" aria-hidden="true"></i>我的订单</a>
+              <a href="/blog-edit.html"><i class="el-icon-edit" aria-hidden="true"></i>写笔记</a>
+            </nav>
           </section>
           <nav class="category-strip" aria-label="店铺分类">
             <a
@@ -133,30 +123,32 @@
             <section class="feed-section" aria-labelledby="feed-title">
               <div class="section-heading">
                 <h2 id="feed-title">
-                  达人探店<span class="heading-dot"></span>
+                  探店笔记<span class="section-emoji" aria-hidden="true">📸</span>
                 </h2>
                 <div class="tabs" aria-label="笔记来源">
                   <button
                     :class="{ active: feed === 'hot' }"
+                    :aria-pressed="feed === 'hot'"
                     @click="changeFeed('hot')"
                   >
                     热门推荐</button
                   ><button
                     :class="{ active: feed === 'follow' }"
+                    :aria-pressed="feed === 'follow'"
                     @click="changeFeed('follow')"
                   >
                     关注动态
                   </button>
                 </div>
-                <span class="section-caption">记录每一次小确幸</span>
+                <span class="section-caption">看看大家最近去了哪儿</span>
               </div>
               <div v-if="pageError" class="error-state" role="alert">
                 <i class="el-icon-warning-outline" aria-hidden="true"></i>{{
-                pageError }}<button class="text-button" @click="reload">
+                pageError }}<button class="text-button" :disabled="blogLoading" @click="loadBlogs(blogs.length === 0)">
                   重新加载
                 </button>
               </div>
-              <div v-if="loading && !blogs.length" class="blog-grid">
+              <div v-if="(loading || blogLoading) && !blogs.length" class="blog-grid" aria-label="正在加载探店笔记" role="status">
                 <div v-for="n in 6" :key="n" class="skeleton-card">
                   <div></div>
                   <span></span><span></span>
@@ -171,13 +163,13 @@
                 ></blog-card>
               </div>
               <div
-                v-if="!loading && !blogs.length && !pageError"
+                v-if="!loading && !blogLoading && !blogs.length && !pageError"
                 class="empty-state"
               >
-                <i class="el-icon-camera" aria-hidden="true"></i>
+                <span class="empty-illustration" aria-hidden="true">📸</span>
                 <h3>
-                  {{ feed === 'follow' ? '关注的故事，还在路上' :
-                  '好故事，等你来记录' }}
+                  {{ feed === 'follow' ? '还没有关注动态' :
+                  '暂时没有探店笔记' }}
                 </h3>
                 <p>
                   {{ feed === 'follow' ?
@@ -212,12 +204,12 @@
                     >更多<i class="el-icon-arrow-right" aria-hidden="true"></i
                   ></a>
                 </div>
-                <p class="panel-subtitle">从好口碑出发，找到下一站</p>
+                <p class="panel-subtitle">按店铺评分展示</p>
                 <a
                   v-for="shop in homeShops"
                   :key="shop.id"
                   class="mini-shop"
-                  :href="'/shop-detail.html?id=' + shop.id"
+                  :href="contextLink('/shop-detail.html?id=' + shop.id)"
                   ><app-image
                     :src="images(shop.images)[0]"
                     :alt="shop.name"
@@ -255,24 +247,23 @@
                     </div>
                     <a
                       class="button primary small"
-                      :href="'/shop-detail.html?id=' + homeOffer.shopId"
+                      :href="contextLink('/shop-detail.html?id=' + homeOffer.shopId)"
                       >去看看</a
                     >
                   </div></template
                 >
                 <template v-else
-                  ><p class="deal-title">给下一次出门，多一点期待</p>
+                  ><p class="deal-title">查看店铺优惠券</p>
                   <p class="muted">查看店铺当前可领取的优惠券。</p>
                   <a class="text-button" href="/vouchers.html"
                     >发现优惠<i class="el-icon-right" aria-hidden="true"></i></a
                 ></template>
               </section>
-              <section class="city-note">
-                <span class="eyebrow">给生活留点空白</span>
-                <h3>好好吃饭，<br />慢慢发现。</h3>
-                <p>你的下一次惊喜，也许就在街角。</p>
-                <div class="city-note-line"></div>
-                <span>杭州 / 每一天都值得记录</span>
+              <section class="service-links">
+                <h3>常用入口</h3>
+                <a href="/assistant.html">找店查券，问一问<i class="el-icon-arrow-right" aria-hidden="true"></i></a>
+                <a href="/orders.html">我的优惠券订单<i class="el-icon-arrow-right" aria-hidden="true"></i></a>
+                <a href="/blog-edit.html">发布探店笔记<i class="el-icon-arrow-right" aria-hidden="true"></i></a>
               </section>
             </aside>
           </div>
@@ -284,48 +275,61 @@
               <span class="eyebrow">HANGZHOU · 好店发现</span>
               <h1>
                 {{ keyword ? '关于“' + keyword + '”的好店' : currentType ?
-                currentType.name + '，总有新发现' : '下一站，去一家好店' }}
+                currentType.name : '全部商户' }}
               </h1>
-              <p>从好口碑到好价格，找到合你心意的地方。</p>
+              <p>按分类、商圈、评分和人均预算，找到适合你的店铺。</p>
             </div>
             <span class="result-count"
-              >找到 <strong>{{ catalogTotal }}</strong> 家店铺</span
+              ><template v-if="catalogLoading && catalogPage === 1">正在查找…</template><template v-else>找到 <strong>{{ catalogTotal }}</strong> 家店铺</template></span
             >
           </div>
-          <section class="filter-panel">
+          <form class="filter-panel" @submit.prevent="loadCatalog(true)">
+            <div class="catalog-search-row"><label class="catalog-keyword"><i class="el-icon-search" aria-hidden="true"></i><input v-model="catalogKeyword" maxlength="50" aria-label="搜索店名" placeholder="输入店铺名称"></label><button type="submit" class="button primary">查找店铺</button></div>
             <div class="filter-categories">
               <span class="filter-label">分类</span
               ><button
+                type="button"
                 :class="{ active: !catalogType }"
+                :aria-pressed="!catalogType"
                 @click="catalogType = ''; loadCatalog(true)"
               >
                 全部</button
               ><button
                 v-for="type in types"
                 :key="type.id"
+                type="button"
                 :class="{ active: String(type.id) === String(catalogType) }"
+                :aria-pressed="String(type.id) === String(catalogType)"
                 @click="catalogType = String(type.id); loadCatalog(true)"
               >
                 {{ type.name }}
               </button>
             </div>
+            <div class="catalog-options">
+              <label>商圈 / 地址<input v-model="catalogArea" aria-label="商圈 / 地址" maxlength="50" placeholder="例如：运河、拱墅"></label>
+              <label>人均预算<select v-model="catalogMaxPrice" aria-label="人均预算" @change="loadCatalog(true)"><option value="">不限</option><option v-if="catalogMaxPrice && !['50','100','200','300'].includes(String(catalogMaxPrice))" :value="catalogMaxPrice">{{ catalogMaxPrice }}元以内（链接条件）</option><option value="50">50元以内</option><option value="100">100元以内</option><option value="200">200元以内</option><option value="300">300元以内</option></select></label>
+              <label>评分<select v-model="catalogMinScore" aria-label="评分" @change="loadCatalog(true)"><option value="">不限</option><option v-if="catalogMinScore && !['40','45','48'].includes(String(catalogMinScore))" :value="catalogMinScore">链接中的评分条件</option><option value="40">4.0分以上</option><option value="45">4.5分以上</option><option value="48">4.8分以上</option></select></label>
+              <label class="catalog-voucher-option"><input type="checkbox" v-model="catalogHasVoucher" @change="loadCatalog(true)">只看有优惠券的店铺</label>
+            </div>
             <div class="filter-sort">
               <span class="filter-label">排序</span
               ><button
+                type="button"
                 :class="{ active: catalogSort === 'score' }"
+                :aria-pressed="catalogSort === 'score'"
                 @click="catalogSort = 'score'; loadCatalog(true)"
               >
                 评分优先</button
               ><button
+                type="button"
                 :class="{ active: catalogSort === 'price' }"
+                :aria-pressed="catalogSort === 'price'"
                 @click="catalogSort = 'price'; loadCatalog(true)"
               >
                 价格从低到高</button
-              ><a v-if="keyword" class="text-button" href="/shop-list.html"
-                >清除搜索<i class="el-icon-close" aria-hidden="true"></i
-              ></a>
+              ><button type="button" class="text-button catalog-reset" @click="resetCatalogFilters">清空筛选<i class="el-icon-close" aria-hidden="true"></i></button>
             </div>
-          </section>
+          </form>
           <div v-if="pageError" class="error-state" role="alert">
             {{ pageError }}<button
               class="text-button"
@@ -369,6 +373,7 @@
         </template>
 
         <template v-else-if="page === 'shop' && shop">
+          <a class="page-back" :href="detailBackHref"><i class="el-icon-arrow-left" aria-hidden="true"></i>{{ detailBackLabel }}</a>
           <div class="breadcrumbs">
             <a href="/">首页</a
             ><i class="el-icon-arrow-right" aria-hidden="true"></i
@@ -398,29 +403,35 @@
                 >
               </div>
             </div>
+            <favorite-button kind="shop" :id="shop.id" :user="user" :user-ready="userReady" :api="favoriteApi"></favorite-button>
             <a class="button outline" :href="'/blog-edit.html?shop=' + shop.id"
               ><i class="el-icon-edit-outline" aria-hidden="true"></i
               >写篇探店笔记</a
             >
           </section>
           <div class="shop-gallery">
+            <button v-if="shopPictures.length" type="button" class="photo-open shop-photo-open" aria-label="放大店铺照片，第 1 张" @click="openPhotos(shopPictures, 0, shop.name)">
             <app-image
               :src="shopPictures[0]"
               :alt="shop.name"
               eager="true"
             ></app-image>
+            <span class="photo-open-hint"><i class="el-icon-full-screen" aria-hidden="true"></i>查看 {{ shopPictures.length }} 张照片</span>
+            </button>
+            <app-image v-else src="" :alt="shop.name + '暂无照片'"></app-image>
             <div v-if="shopPictures.length > 1" class="gallery-secondary">
+              <button v-for="(picture, index) in shopPictures.slice(1, 3)" :key="index" type="button" class="photo-open" :aria-label="'放大店铺照片，第 ' + (index + 2) + ' 张'" @click="openPhotos(shopPictures, index + 1, shop.name)">
               <app-image
-                v-for="(picture, index) in shopPictures.slice(1, 3)"
-                :key="index"
                 :src="picture"
                 :alt="shop.name + '店铺照片'"
               ></app-image>
+              </button>
             </div>
           </div>
+          <nav class="shop-section-nav" aria-label="店铺页面内容"><a href="#shop-information">店铺信息</a><a href="#shop-vouchers">优惠券<span v-if="vouchers.length">{{ vouchers.length }}</span></a><a href="#shop-notes">探店笔记<span v-if="shopBlogsTotal">{{ shopBlogsTotal }}</span></a></nav>
           <div class="detail-columns">
             <div class="detail-main">
-              <section class="panel shop-information">
+              <section id="shop-information" class="panel shop-information">
                 <h2>店铺信息</h2>
                 <div>
                   <i class="el-icon-location-outline" aria-hidden="true"></i
@@ -436,7 +447,7 @@
                   >
                 </div>
               </section>
-              <section class="detail-section">
+              <section id="shop-vouchers" class="detail-section">
                 <div class="section-heading">
                   <h2>店铺优惠券</h2>
                   <span class="section-caption">好价格，也要好体验</span>
@@ -448,13 +459,15 @@
                   :busy="claimBusy === String(voucher.id)"
                   @claim="claim"
                 ></voucher-card>
-                <div v-if="!vouchers.length" class="inline-empty">
+                <div v-if="shopVouchersLoading" class="inline-empty" role="status">正在查询店铺优惠…</div>
+                <div v-if="shopVouchersError" class="error-state" role="alert">{{ shopVouchersError }}<button type="button" class="text-button" @click="loadShopVouchers">重试优惠查询</button></div>
+                <div v-if="!shopVouchersLoading && !shopVouchersError && !vouchers.length" class="inline-empty">
                   这家店铺暂时没有上架优惠券。
                 </div>
               </section>
-              <section class="detail-section">
+              <section id="shop-notes" class="detail-section">
                 <div class="section-heading">
-                  <h2>大家的探店记录</h2>
+                  <h2>大家的探店记录 <span v-if="shopBlogsTotal" class="detail-count">{{ shopBlogsTotal }} 篇</span></h2>
                   <a
                     class="text-button"
                     :href="'/blog-edit.html?shop=' + shop.id"
@@ -469,15 +482,18 @@
                     @like="like"
                   ></blog-card>
                 </div>
-                <div v-if="!shopBlogs.length" class="inline-empty">
+                <div v-if="shopBlogsError" class="error-state" role="alert">{{ shopBlogsError }}<button type="button" class="text-button" @click="loadShopBlogs">重试笔记查询</button></div>
+                <div v-if="!shopBlogsLoading && !shopBlogsError && !shopBlogs.length" class="inline-empty">
                   暂时没有探店记录，你可以写下第一篇。
                 </div>
+                <div v-if="shopBlogsLoading" class="inline-empty" role="status">正在加载探店记录…</div>
+                <div v-else-if="(shopBlogsPage - 1) * 5 < shopBlogsTotal" class="load-more"><button type="button" class="button soft" @click="loadShopBlogs">查看更多探店记录<i class="el-icon-arrow-down" aria-hidden="true"></i></button></div>
               </section>
             </div>
             <aside>
               <section class="panel detail-tip">
                 <span class="eyebrow">出门前的小提醒</span>
-                <h3>好好吃饭，<br />也好好计划。</h3>
+                <h3>到店与用券须知</h3>
                 <p>
                   营业时间由店铺登记。出发前建议确认营业安排，使用优惠券前查看使用规则。
                 </p>
@@ -490,6 +506,7 @@
         </template>
 
         <template v-else-if="page === 'blog' && blog">
+          <a class="page-back" :href="detailBackHref"><i class="el-icon-arrow-left" aria-hidden="true"></i>{{ detailBackLabel }}</a>
           <div class="breadcrumbs">
             <a href="/">发现</a
             ><i class="el-icon-arrow-right" aria-hidden="true"></i
@@ -497,11 +514,22 @@
           </div>
           <article class="note-layout">
             <div class="note-gallery">
+              <div class="note-photo-stage">
+              <button v-if="blogPictures.length" type="button" class="photo-open note-photo-open" aria-label="放大当前笔记照片" @click="openPhotos(blogPictures, galleryIndex, blog.title)">
               <app-image
                 :src="blogPictures[galleryIndex]"
                 :alt="blog.title"
                 eager="true"
               ></app-image>
+              <span class="photo-open-hint"><i class="el-icon-full-screen" aria-hidden="true"></i>点击看大图</span>
+              </button>
+              <app-image v-else src="" :alt="blog.title + '暂无照片'"></app-image>
+                <template v-if="blogPictures.length > 1">
+                  <span class="note-photo-count">{{ galleryIndex + 1 }} / {{ blogPictures.length }}</span>
+                  <button class="note-photo-arrow previous" type="button" aria-label="上一张照片" :disabled="galleryIndex === 0" @click="galleryIndex--"><i class="el-icon-arrow-left" aria-hidden="true"></i></button>
+                  <button class="note-photo-arrow next" type="button" aria-label="下一张照片" :disabled="galleryIndex >= blogPictures.length - 1" @click="galleryIndex++"><i class="el-icon-arrow-right" aria-hidden="true"></i></button>
+                </template>
+              </div>
               <div v-if="blogPictures.length > 1" class="note-thumbnails">
                 <button
                   v-for="(picture, index) in blogPictures"
@@ -522,8 +550,8 @@
                     alt=""
                   ></app-image>
                   <div>
-                    <strong>{{ blog.name || '探店记录员' }}</strong
-                    ><span>{{ date(blog.createTime) }} · 探店记录</span>
+                    <strong>{{ blog.name || '用户' }}</strong
+                    ><span>{{ date(blog.createTime) }}</span>
                   </div></a
                 ><button
                   v-if="!user || String(user.id) !== String(blog.userId)"
@@ -539,7 +567,7 @@
               <a
                 v-if="blogShop"
                 class="note-shop"
-                :href="'/shop-detail.html?id=' + blogShop.id"
+                :href="contextLink('/shop-detail.html?id=' + blogShop.id)"
                 ><i class="el-icon-location-outline" aria-hidden="true"></i>
                 <div>
                   <strong>{{ blogShop.name }}</strong
@@ -548,6 +576,7 @@
                 <i class="el-icon-arrow-right" aria-hidden="true"></i
               ></a>
               <div class="note-actions">
+                <favorite-button kind="note" :id="blog.id" :user="user" :user-ready="userReady" :api="favoriteApi"></favorite-button>
                 <button
                   class="button"
                   :class="blog.isLike ? 'primary' : 'outline'"
@@ -555,11 +584,10 @@
                   :aria-pressed="!!blog.isLike"
                   @click="like(blog)"
                 >
-                  <i class="el-icon-star-off" aria-hidden="true"></i>{{
-                  blog.isLike ? '已点赞' : '喜欢这篇笔记' }} · {{ blog.liked ||
-                  0 }}</button
+                  <svg class="like-heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"></path></svg>{{
+                  blog.isLike ? '已赞' : '点赞' }} {{ blog.liked || '' }}</button
                 ><a class="text-button" href="/"
-                  >继续发现<i class="el-icon-right" aria-hidden="true"></i
+                  >更多探店笔记<i class="el-icon-right" aria-hidden="true"></i
                 ></a>
               </div>
             </div>
@@ -570,12 +598,29 @@
           <div class="page-intro">
             <div>
               <span class="eyebrow">GOOD DEALS · 超值优惠</span>
-              <h1>把好日子，过得更划算</h1>
+              <h1>店铺优惠券</h1>
               <p>探索店铺当前上架的优惠券，具体规则以店铺说明为准。</p>
             </div>
             <i class="el-icon-tickets intro-icon" aria-hidden="true"></i>
           </div>
-          <div class="voucher-grid">
+          <section class="offer-filters" aria-label="优惠券搜索与筛选">
+            <form class="offer-search" @submit.prevent="loadOffers(true)">
+              <label class="offer-search-field"><i class="el-icon-search" aria-hidden="true"></i><input v-model="offerKeyword" maxlength="100" aria-label="搜索店铺或优惠券" placeholder="搜店名、优惠券或使用说明"></label>
+              <button type="submit" class="button primary">搜索优惠</button>
+            </form>
+            <div class="offer-filter-row"><span class="offer-filter-label">店铺分类</span><div class="offer-categories" role="group" aria-label="店铺分类">
+              <button type="button" :class="{active: !offerType}" :aria-pressed="!offerType" @click="changeOfferType('')">全部</button>
+              <button v-for="type in types" :key="type.id" type="button" :class="{active: String(type.id) === offerType}" :aria-pressed="String(type.id) === offerType" @click="changeOfferType(type.id)">{{ type.name }}</button>
+            </div></div>
+            <div class="offer-filter-row"><label for="offer-shop" class="offer-filter-label">具体店铺</label><div class="offer-shop-select"><select id="offer-shop" v-model="offerShopId" @change="loadOffers(true)"><option value="">全部店铺</option><option v-if="offerSelectedShopMissing" :value="offerShopId">当前筛选店铺</option><option v-for="shop in offerShopOptions" :key="shop.id" :value="String(shop.id)">{{ shop.name }}</option></select><i class="el-icon-arrow-down" aria-hidden="true"></i></div><button type="button" class="text-button offer-reset" @click="resetOfferFilters">清空筛选</button></div>
+            <p v-if="offerShopOptionsMore" class="offer-filter-hint">店铺选项展示前200家；更多店铺可输入店名直接搜索优惠券。</p>
+            <p v-if="offerShopLoading" class="offer-filter-hint" role="status">正在加载店铺选项…</p>
+            <p v-else-if="offerShopError" class="offer-filter-hint" role="status">{{ offerShopError }} <button type="button" class="text-button" @click="loadOfferShops">重新加载店铺</button></p>
+            <p v-else-if="offerSelectedShopMissing" class="offer-filter-hint">已保留链接中的店铺筛选。该店铺未在当前选项中展示，可选择“全部店铺”重新查找。</p>
+          </section>
+          <div class="offer-results-heading"><h2>优惠券列表 <span v-if="!offerLoading">{{ offerTotal }} 张</span></h2><span>是否可领取以提交时的资格、库存和活动时间为准</span></div>
+          <div v-if="offerError" class="error-state" role="alert">{{ offerError }}<button type="button" class="text-button" @click="loadOffers()">重试</button></div>
+          <div class="voucher-grid" :aria-busy="offerLoading">
             <voucher-card
               v-for="voucher in offers"
               :key="voucher.id"
@@ -588,11 +633,11 @@
           <div v-if="offerLoading" class="inline-empty">
             <span class="spinner"></span>正在发现店铺优惠…
           </div>
-          <div v-else-if="!offers.length && !pageError" class="empty-state">
-            <i class="el-icon-tickets" aria-hidden="true"></i>
-            <h3>好优惠，值得再等等</h3>
-            <p>暂时没有可领取的优惠券，先去发现喜欢的店铺吧。</p>
-            <a class="button outline" href="/shop-list.html">发现好店</a>
+          <div v-else-if="!offers.length && !offerError" class="empty-state">
+            <span class="empty-illustration" aria-hidden="true">🎟️</span>
+            <h3>没有找到符合条件的优惠券</h3>
+            <p>换个关键词，或清空店铺和分类后再试试。</p>
+            <button type="button" class="button outline" @click="resetOfferFilters">查看全部优惠</button>
           </div>
           <div v-if="offerHasMore && !loading" class="load-more">
             <button
@@ -608,19 +653,15 @@
         <template v-else-if="page === 'login'">
           <div class="login-layout">
             <section class="login-visual">
-              <img
-                src="/assets/hangzhou-terrace.png"
-                alt="杭州湖畔生活氛围图"
-              />
               <div>
-                <span class="eyebrow">每一天，都值得记录</span>
-                <h1>好生活，<br />从一次发现开始。</h1>
-                <p>登录CityMate，收藏你的喜欢，<br />分享你的探店故事。</p>
+                <span class="eyebrow">CityMate</span>
+                <h1>杭州本地生活</h1>
+                <p>查店铺、领优惠券，<br />管理订单和探店笔记。</p>
               </div>
             </section>
             <section class="login-panel">
               <span class="eyebrow">很高兴，又见到你</span>
-              <h2>欢迎来到CityMate</h2>
+              <h2>手机号登录</h2>
               <p class="muted">使用手机号与验证码登录</p>
               <form @submit.prevent="login">
                 <label for="phone">手机号码</label>
@@ -664,14 +705,14 @@
                   :disabled="loginBusy"
                   type="submit"
                 >
-                  {{ loginBusy ? '正在登录…' : '登录，开始发现' }}<i
+                  {{ loginBusy ? '正在登录…' : '登录' }}<i
                     class="el-icon-right"
                     aria-hidden="true"
                   ></i>
                 </button>
               </form>
               <p class="login-hint">
-                当前为本地演示环境，验证码请从点评服务日志获取。
+                本地演示未接短信。点击获取后，请在 Java 容器日志中搜索“验证码”。
               </p>
               <a class="text-button" href="/"
                 >先逛逛<i class="el-icon-right" aria-hidden="true"></i
@@ -690,11 +731,13 @@
               <div>
                 <span class="eyebrow">每一次出门，都有值得记录的故事</span>
                 <h1>{{ profileName }}</h1>
-                <p>在这里，留下你的城市生活。</p>
+                <p>{{ isOwnProfile ? '管理订单、签到和探店笔记' : '查看 TA 分享的探店笔记' }}</p>
               </div>
             </div>
             <div v-if="isOwnProfile" class="profile-tools">
-              <p>连续签到 <strong>{{ signCount }}</strong> 天</p>
+              <p v-if="signCountLoading" role="status">正在查询签到天数…</p>
+              <p v-else-if="signCountError" class="sign-count-error" role="status">{{ signCountError }} <button type="button" class="text-button" @click="loadSignCount">重新查询</button></p>
+              <p v-else>连续签到 <strong>{{ signCount }}</strong> 天</p>
               <button
                 class="button primary"
                 :disabled="signBusy || signed"
@@ -706,6 +749,7 @@
             </div>
           </section>
           <div v-if="isOwnProfile" class="profile-navigation">
+            <a href="/info.html#my-favorites"><i class="el-icon-star-off" aria-hidden="true"></i><div><h3>我的收藏</h3><p>想去的店与收藏的笔记</p></div><i class="el-icon-arrow-right" aria-hidden="true"></i></a>
             <a href="/orders.html"
               ><i class="el-icon-tickets" aria-hidden="true"></i>
               <div>
@@ -725,9 +769,10 @@
               ><span>退出登录</span>
             </button>
           </div>
+          <favorite-list v-if="isOwnProfile" :user="user" :api="favoriteApi"></favorite-list>
           <div class="section-heading profile-section-heading">
             <h2>{{ isOwnProfile ? '我的探店记录' : 'TA 的探店记录' }}</h2>
-            <span class="section-caption">把小日子，写成好故事</span>
+            <span class="section-caption">查看已发布的笔记</span>
           </div>
           <div class="profile-blog-grid">
             <blog-card
@@ -738,7 +783,7 @@
             ></blog-card>
           </div>
           <div
-            v-if="!loading && !blogs.length && !pageError"
+            v-if="!loading && !blogLoading && !blogs.length && !pageError"
             class="empty-state"
           >
             <i class="el-icon-notebook-2" aria-hidden="true"></i>
@@ -762,7 +807,7 @@
           <div class="page-intro">
             <div>
               <span class="eyebrow">MY ORDERS · 我的订单</span>
-              <h1>下一次出门，已经有了期待</h1>
+              <h1>我的订单</h1>
               <p>查看你的优惠券订单与领取状态。</p>
             </div>
             <button
@@ -775,7 +820,9 @@
           </div>
           <div v-if="requestMessage" class="request-banner" role="status">
             <i class="el-icon-info" aria-hidden="true"></i>{{ requestMessage }}
+            <button v-if="orderScope === 'held'" type="button" class="text-button" @click="changeOrderScope('all')">查看全部订单</button>
           </div>
+          <div class="order-scope-bar"><div role="group" aria-label="订单范围"><button type="button" :class="{active: orderScope === 'all'}" :aria-pressed="orderScope === 'all'" @click="changeOrderScope('all')">全部订单</button><button type="button" :class="{active: orderScope === 'held'}" :aria-pressed="orderScope === 'held'" @click="changeOrderScope('held')">已领取</button></div><span aria-live="polite">{{ orderLoading ? '查询中…' : '共 ' + orderTotal + ' 笔' }}</span></div>
           <div v-if="orderError" class="error-state" role="alert">
             {{ orderError }}<button class="text-button" @click="loadOrders">
               重试
@@ -788,7 +835,7 @@
               class="order-card"
             >
               <div class="order-top">
-                <span>订单编号 {{ order.order_id }}</span
+                <span class="order-number">订单编号 <code>{{ order.order_id }}</code><button type="button" class="order-copy" :aria-label="'复制订单号 ' + order.order_id" :disabled="!!copyingOrderId" @click="copyOrderId(order.order_id)"><i class="el-icon-document-copy" aria-hidden="true"></i></button></span
                 ><span>{{ date(order.created_at) }}</span>
               </div>
               <div class="order-main">
@@ -803,7 +850,7 @@
                   <a
                     v-if="order.shop_id"
                     class="text-button"
-                    :href="'/shop-detail.html?id=' + order.shop_id"
+                    :href="contextLink('/shop-detail.html?id=' + order.shop_id)"
                     >查看店铺<i class="el-icon-right" aria-hidden="true"></i
                   ></a>
                 </div>
@@ -813,6 +860,7 @@
                 ><button
                   v-if="order.status === 1 && order.voucher_type === 0"
                   class="button outline small"
+                  :disabled="cancelBusy"
                   @click="cancelOrder(order)"
                 >
                   取消订单
@@ -821,15 +869,17 @@
               <p v-if="order.status === 1" class="order-notice">
                 待付款订单将在超时后自动关闭。当前页面未接入在线支付。
               </p>
+              <details v-if="order.rules" class="order-rules"><summary>查看用券规则<i class="el-icon-arrow-down" aria-hidden="true"></i></summary><p>{{ rulesText(order.rules) }}</p></details>
             </article>
           </section>
+          <div v-if="orderLoading" class="inline-empty" role="status">正在查询你的订单…</div>
           <div
             v-if="!orderLoading && !orders.length && !orderError"
             class="empty-state"
           >
             <i class="el-icon-tickets" aria-hidden="true"></i>
-            <h3>还没有优惠券订单</h3>
-            <p>去发现好店，给下一次出门多一点期待。</p>
+            <h3>{{ orderScope === 'held' ? '还没有已领取的优惠券' : '还没有优惠券订单' }}</h3>
+            <p>{{ orderScope === 'held' ? '未付款或已取消的订单，可切换“全部订单”查看。' : '领取或购买优惠券后，可以在这里查看订单。' }}</p>
             <a class="button primary" href="/vouchers.html">发现优惠券</a>
           </div>
           <div class="pagination" v-if="orderTotal > 20">
@@ -854,14 +904,17 @@
           <div class="page-intro">
             <div>
               <span class="eyebrow">YOUR CITY STORIES · 探店记录</span>
-              <h1>今天，有什么值得分享？</h1>
-              <p>一张照片，一段记录，让更多人发现你的好去处。</p>
+              <h1>发布探店笔记</h1>
+              <p>选择店铺，添加照片，写下你的实际体验。</p>
             </div>
           </div>
-          <div class="publish-layout">
-            <form class="panel publish-form" @submit.prevent="saveBlog">
-              <label for="note-title">给这次探店起个标题</label
-              ><input
+          <section v-if="draftRecovery" class="draft-recovery" role="status"><div><h2>有一篇还没写完的草稿</h2><p>{{ draftRecovery.draft.title || '未命名笔记' }} · {{ draftRecovery.updatedAt ? date(draftRecovery.updatedAt) : '保存在此浏览器' }}</p></div><div><button type="button" class="button primary" @click="restoreLocalDraft">继续编辑</button><button type="button" class="button outline" @click="startFreshDraft">新写一篇</button></div></section>
+          <div v-if="draftStorageReady && !draftRecovery" class="publish-layout">
+            <form v-if="!draftRecovery" class="panel publish-form" @submit.prevent="saveBlog">
+              <div class="draft-save-status" role="status"><span>{{ draftSaveState === 'saved' ? '草稿已自动保存在此浏览器' : draftSaveState === 'pending' ? '正在保存草稿…' : draftSaveState === 'unavailable' ? '自动保存暂不可用，请保留页面或复制文字' : '编辑内容会自动保存为本地草稿' }}</span><button type="button" class="text-button" :disabled="publishBusy || uploadBusy || !draftStorageReady" @click="persistDraft(true)">保存草稿</button></div>
+              <div v-if="publishUncertain" class="publish-warning" role="alert"><strong>发布结果还未确认</strong><p>请先到个人主页查看是否已发布，避免重复提交。</p><a href="/info.html" class="text-button">查看我的笔记<i class="el-icon-right" aria-hidden="true"></i></a><button type="button" class="text-button" @click="acknowledgePublishCheck">我已核对，继续编辑</button></div>
+              <div class="field-label first-field"><label for="note-title">给这次探店起个标题</label><span>{{ draft.title.length }} / 255</span></div>
+              <input
                 id="note-title"
                 v-model="draft.title"
                 maxlength="255"
@@ -886,15 +939,17 @@
               </div>
               <div class="upload-grid">
                 <div
-                  v-for="picture in draft.pictures"
+                  v-for="(picture, pictureIndex) in draft.pictures"
                   :key="picture"
                   class="upload-preview"
                 >
                   <app-image
                     :src="imagePath(picture)"
                     alt="待发布的探店照片"
-                  ></app-image
-                  ><button
+                  ></app-image>
+                  <span v-if="pictureIndex === 0" class="cover-badge">封面</span>
+                  <button v-else type="button" class="cover-button" :disabled="uploadBusy || publishBusy" @click="setNoteCover(picture)">设为封面</button>
+                  <button
                     type="button"
                     aria-label="移除这张照片"
                     :disabled="uploadBusy || publishBusy"
@@ -922,7 +977,7 @@
                 /></label>
               </div>
               <p class="muted upload-help">
-                支持 JPG、PNG、WebP，每张不超过 5 MB，最多 9 张。
+                最多9张，每张不超过5 MB。第一张为封面，可将其他照片设为封面。
               </p>
               <label for="shop-query">关联你探访的店铺</label>
               <div class="shop-picker-search">
@@ -943,6 +998,7 @@
               <select
                 id="note-shop"
                 v-model="draft.shopId"
+                :disabled="publishShopLoading || publishBusy"
                 required
                 aria-label="关联店铺"
               >
@@ -955,6 +1011,7 @@
                   {{ shop.name }} · {{ shop.area }}
                 </option>
               </select>
+              <p v-if="publishShopError" class="publish-shop-error" role="alert">{{ publishShopError }}</p>
               <p
                 v-if="!publishShopLoading && !publishShops.length"
                 class="muted"
@@ -962,11 +1019,10 @@
                 没有找到匹配店铺，试试其他关键词。
               </p>
               <div class="publish-actions">
-                <span class="muted">分享真实体验，尊重每一份感受。</span
-                ><button
+                <div class="publish-secondary"><a href="#note-preview" class="button soft">预览笔记</a><button type="button" class="text-button" :disabled="publishBusy || uploadBusy" @click="draftDiscardConfirm = true">清空草稿</button></div><button
                   type="submit"
                   class="button primary"
-                  :disabled="publishBusy || uploadBusy"
+                  :disabled="publishBusy || uploadBusy || publishUncertain || publishShopLoading || !draftStorageReady"
                 >
                   {{ publishBusy ? '正在发布…' : '发布笔记' }}<i
                     class="el-icon-right"
@@ -974,12 +1030,12 @@
                   ></i>
                 </button>
               </div>
+              <div v-if="draftDiscardConfirm" class="draft-discard-confirm" role="alert"><p>清空当前草稿的文字和照片选择？此操作不能撤销。</p><button type="button" class="button outline small" @click="clearLocalDraft">确认清空</button><button type="button" class="text-button" @click="draftDiscardConfirm = false">继续编辑</button></div>
             </form>
-            <aside class="panel writing-tip">
-              <i class="el-icon-edit-outline" aria-hidden="true"></i>
-              <h3>你的发现，<br />会成为别人的惊喜。</h3>
-              <p>清晰的照片、真实的体验、实用的地址，都是一篇好笔记的开始。</p>
-              <p>试着写下你最喜欢的一道菜，或那个让你想再来的瞬间。</p>
+            <aside id="note-preview" class="note-publish-preview">
+              <div class="preview-heading"><h2>笔记预览</h2><span>随编辑实时更新</span></div>
+              <article class="publish-preview-card"><app-image v-if="draft.pictures.length" :src="draft.pictures[0]" alt="笔记封面预览"></app-image><div v-else class="preview-no-photo"><i class="el-icon-picture-outline" aria-hidden="true"></i><span>添加照片后显示封面</span></div><div class="publish-preview-body"><h3>{{ draft.title || '你的笔记标题' }}</h3><p>{{ draft.content || '记录菜品、环境和你的真实感受。' }}</p><div class="preview-author"><app-image :src="user.icon || '/imgs/icons/default-icon.png'" alt=""></app-image><span>{{ user.nickName || '我' }}</span></div><div class="preview-shop"><i class="el-icon-location-outline" aria-hidden="true"></i>{{ publishShopName }}</div></div></article>
+              <p class="preview-privacy">草稿仅保存在此浏览器，按账号分别保存。换设备不会自动同步；图片以服务器实际可用状态为准。</p>
             </aside>
           </div>
         </template>
@@ -990,7 +1046,7 @@
           role="status"
         >
           <span class="spinner"></span>
-          <p>正在加载你的好发现…</p>
+          <p>正在加载…</p>
         </div>
         <div
           v-if="pageError && page !== 'home' && page !== 'shops'"
@@ -1002,22 +1058,30 @@
           <button class="button outline" @click="reload">重新加载</button>
         </div>
         <div v-if="page === 'not-found'" class="empty-state">
-          <h1>这条小路，暂时还没开放</h1>
+          <h1>页面不存在</h1>
           <p>回到首页，继续发现杭州的好去处。</p>
           <a href="/" class="button primary">返回首页</a>
         </div>
       </main>
 
+      <photo-viewer v-if="photoViewer" :pictures="photoViewer.pictures" :start-index="photoViewer.index" :title="photoViewer.title" @close="photoViewer = null" @change="page === 'blog' && (galleryIndex = $event)"></photo-viewer>
+      <nav v-if="showMobileNav" class="mobile-bottom-nav" aria-label="手机主导航">
+        <a href="/" :aria-current="['home','blog'].includes(page) ? 'page' : null"><i class="el-icon-discover" aria-hidden="true"></i><span>发现</span></a>
+        <a href="/shop-list.html" :aria-current="['shops','shop'].includes(page) ? 'page' : null"><i class="el-icon-location-outline" aria-hidden="true"></i><span>找店</span></a>
+        <a href="/vouchers.html" :aria-current="page === 'vouchers' ? 'page' : null"><i class="el-icon-tickets" aria-hidden="true"></i><span>优惠券</span></a>
+        <a href="/orders.html" :aria-current="page === 'orders' ? 'page' : null"><i class="el-icon-document" aria-hidden="true"></i><span>订单</span></a>
+        <a href="/info.html" :aria-current="page === 'profile' && isOwnProfile ? 'page' : null"><i class="el-icon-user" aria-hidden="true"></i><span>我的</span></a>
+      </nav>
       <footer class="site-footer">
         <a class="footer-brand" href="/"
-          >CityMate<span>把日常，过得有滋有味。</span></a
+          >CityMate<span>杭州本地生活</span></a
         >
         <div>
           <a href="/shop-list.html">发现好店</a><span>·</span
           ><a href="/vouchers.html">超值优惠</a><span>·</span
-          ><a href="/blog-edit.html">记录生活</a>
+          ><a href="/blog-edit.html">发布笔记</a><span>·</span><a href="/experience.html">工程体验</a>
         </div>
-        <span>杭州 · 每一天都值得发现</span>
+        <span>商户 · 优惠券 · 探店笔记</span>
       </footer>
       <transition name="toast"
         ><div
@@ -1082,9 +1146,8 @@
             </p>
             <div class="dialog-actions">
               <button class="button soft" @click="dialog = null">再想想</button
-              ><button class="button primary" @click="confirmClaim">
-                确认{{ Number(dialog.voucher.payValue) === 0 ? '领取' :
-                '创建订单' }}
+              ><button class="button primary" :disabled="!!claimBusy" @click="confirmClaim">
+                {{ claimBusy ? '正在核对…' : Number(dialog.voucher.payValue) === 0 ? '确认领取' : '确认创建订单' }}
               </button>
             </div></template
           ><template v-else

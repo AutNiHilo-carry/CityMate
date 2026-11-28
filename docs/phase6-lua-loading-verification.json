@@ -1,0 +1,163 @@
+{
+  "generatedAt": "2026-11-07T13:55:32.881106+08:00",
+  "status": "LUA_LOADING_OPTIMIZATION_VERIFIED",
+  "beforeRunId": "6ec2cde25523432e9def90390d1ae6f2",
+  "afterRunId": "3faa5c39ac0a4c5d9281e0996a3d79c5",
+  "selectedRegressionTests": 22,
+  "profileJUnitExecutions": 2,
+  "uniqueProfileJUnitCases": 1,
+  "measuredHttpRequests": 1200,
+  "measuredOrders": 600,
+  "warmupRequestsExcluded": 40,
+  "matchingEnvironment": {
+    "databaseVersion": "8.0.46",
+    "jvm": "1.8.0_504",
+    "availableProcessors": 28,
+    "jvmMaxMemoryBytes": 477626368,
+    "brokerEnabled": true,
+    "automaticScheduling": true,
+    "generatorSharesApplicationJvm": false,
+    "generatorHost": "Windows host; published localhost port, independent Python process",
+    "redisFsync": "always",
+    "redisAppendOnly": "yes"
+  },
+  "comparisons": [
+    {
+      "concurrency": 8,
+      "beforeHttpResponsesPerSecond": 24.75997739818854,
+      "afterHttpResponsesPerSecond": 77.73671120037378,
+      "beforeP99Ms": 544.8019000177737,
+      "afterP99Ms": 136.9944000034593,
+      "responseRateRatio": 3.1396115574023526,
+      "p99ReductionPercent": 74.85427271839728,
+      "beforeShaPerRequestMeanMs": 246.3845355850001,
+      "afterShaPerRequestMeanMs": 0.006197219999999999
+    },
+    {
+      "concurrency": 16,
+      "beforeHttpResponsesPerSecond": 26.369079301203314,
+      "afterHttpResponsesPerSecond": 149.1498495859075,
+      "beforeP99Ms": 1155.8334000001196,
+      "afterP99Ms": 138.94389997585677,
+      "responseRateRatio": 5.656240321561067,
+      "p99ReductionPercent": 87.97889903719322,
+      "beforeShaPerRequestMeanMs": 509.9637987949998,
+      "afterShaPerRequestMeanMs": 0.004456485
+    },
+    {
+      "concurrency": 32,
+      "beforeHttpResponsesPerSecond": 24.80375547708566,
+      "afterHttpResponsesPerSecond": 297.18472451845884,
+      "beforeP99Ms": 2390.9258999919984,
+      "afterP99Ms": 125.9596000018064,
+      "responseRateRatio": 11.981440665023715,
+      "p99ReductionPercent": 94.73176479445775,
+      "beforeShaPerRequestMeanMs": 1140.15863997,
+      "afterShaPerRequestMeanMs": 0.002767345000000001
+    }
+  ],
+  "coldCacheMisses": {
+    "before": 4,
+    "after": 7
+  },
+  "luaFilesUnchanged": {
+    "src/main/resources/cache-fill.lua": "079a2a9a00ff8d0d68b3476bafed1cf3dedd27f95c49e366b5ac46d5fc2f7b6c",
+    "src/main/resources/cache-invalidate.lua": "5d278a5ae9ab8d53ec51ddae0a1eab8fa1375d7564f7d2e76de02a48f66742ef",
+    "src/main/resources/consume-code.lua": "7a14ad29dfd472f748b24e9b6804c98b6e91cb24f6cb996feaf2d6f2382ffed2",
+    "src/main/resources/rate-limit.lua": "215ff7e646489eb19e1283c1b9c0d8f1e0c0c2b1d93502e8cf65cebd235b8572",
+    "src/main/resources/seckill-compensate.lua": "82ec50c842adfb57f451ef62a37f3fe46f1f8f07065dadd471186ded3c495bdb",
+    "src/main/resources/seckill-release.lua": "df6a513badb5e3466930d20d31959b039b92e401be1a9bf7ee4271b9b4742f67",
+    "src/main/resources/seckill.lua": "e1732c1d36d533eb83faddacaaeafe24f63ab8d3e0a10b66ddf566a7ccc3d983",
+    "src/main/resources/stream-lag.lua": "fc0df794d26f6eae885d4e80d32d95a8c13eec41e15f49768bccc7d7db3d24f5",
+    "src/main/resources/unlock.lua": "7ffcb1cc33f287e6018160d61d20b148caad3809fc97ed66c0bb41b9d61cbf77"
+  },
+  "beforeSourceHashes": {
+    "src/main/java/com/hmdp/reliability/RedisScripts.java": "73cad06a3b9e379499f99667506db4ac8f9347b949dfc80922bd76b6992f86d5",
+    "src/main/java/com/hmdp/service/impl/VoucherOrderServiceImpl.java": "894a24cac672493588ba157ae5c3b913ecc162d588ea7bf6940a4d8f09bf4be9",
+    "src/main/java/com/hmdp/utils/SimpleRedisLock.java": "56b0dd52710c654beb0807b1a71e3ebb155c9b836ffaf7b06729e3a68386587f",
+    "src/test/java/com/hmdp/reliability/IndependentTransactionProfileIntegrationTest.java": "fb9c685a4ae79d8bcb825b2a4d31f1487d5f607309415cedc5a141e99d913545",
+    "src/test/java/com/hmdp/reliability/RequestStageProbe.java": "6f10e383670c013559229391123e6e27aa742d1adf1d8b2c9f92c40d72017297"
+  },
+  "afterSourceHashes": {
+    "src/main/java/com/hmdp/reliability/RedisScripts.java": "72128e080418a8eb73260af1a345387f76e831a334e4d97e7a40fb9d3fa15290",
+    "src/main/java/com/hmdp/service/impl/VoucherOrderServiceImpl.java": "b64876c2e1948e20401c7d4fa184a1e4284e79c81ae514ff907b56414708492d",
+    "src/main/java/com/hmdp/utils/SimpleRedisLock.java": "cc24f84ed250effefe80c6a08a8d3c06e6d0964709cd23bbddc33cc3164a9931",
+    "src/test/java/com/hmdp/reliability/IndependentTransactionProfileIntegrationTest.java": "fb9c685a4ae79d8bcb825b2a4d31f1487d5f607309415cedc5a141e99d913545",
+    "src/test/java/com/hmdp/reliability/RequestStageProbe.java": "6f10e383670c013559229391123e6e27aa742d1adf1d8b2c9f92c40d72017297",
+    "src/test/java/com/hmdp/reliability/RedisScriptsTest.java": "92098b5bae105ca4a14ed164107c324dceb95ece924f139a9696dab7df71eae4",
+    "src/test/java/com/hmdp/reliability/RedisScriptLoadingIntegrationTest.java": "6eaccf4aeead8672e673902965b1a4c6dfc61689f6c14337534d7f375d03918b"
+  },
+  "regressionSuites": [
+    {
+      "skipped": 0,
+      "name": "com.hmdp.reliability.RedisScriptsTest",
+      "tests": 4,
+      "errors": 0,
+      "failures": 0
+    },
+    {
+      "skipped": 0,
+      "name": "com.hmdp.reliability.RedisScriptLoadingIntegrationTest",
+      "tests": 1,
+      "errors": 0,
+      "failures": 0
+    },
+    {
+      "skipped": 0,
+      "name": "com.hmdp.reliability.SeckillMessageTest",
+      "tests": 1,
+      "errors": 0,
+      "failures": 0
+    },
+    {
+      "skipped": 0,
+      "name": "com.hmdp.VoucherOrderReliabilityTest",
+      "tests": 3,
+      "errors": 0,
+      "failures": 0
+    },
+    {
+      "skipped": 0,
+      "name": "com.hmdp.MockPaymentTest",
+      "tests": 1,
+      "errors": 0,
+      "failures": 0
+    },
+    {
+      "skipped": 0,
+      "name": "com.hmdp.reliability.LoginCodeTest",
+      "tests": 1,
+      "errors": 0,
+      "failures": 0
+    },
+    {
+      "skipped": 0,
+      "name": "com.hmdp.reliability.AccessGuardTest",
+      "tests": 4,
+      "errors": 0,
+      "failures": 0
+    },
+    {
+      "skipped": 0,
+      "name": "com.hmdp.cache.CacheLayersIntegrationTest",
+      "tests": 7,
+      "errors": 0,
+      "failures": 0
+    }
+  ],
+  "productionDurabilityChanged": false,
+  "businessDatabaseModified": false,
+  "businessContainersUpdated": false,
+  "isolatedEnvironmentsCleaned": true,
+  "priorProfilePreserved": true,
+  "measuredPackagedJar": false,
+  "repeatedPairs": false,
+  "orderReversed": false,
+  "limitations": [
+    "Single before-then-after pair in Windows bind-mounted source development environment",
+    "One finite batch per concurrency, no confidence intervals, no maximum-capacity claim",
+    "Response rate and P99 include sold-out responses; not steady-state order TPS",
+    "Test-only probes and observers add overhead; shared host resources can vary",
+    "No packaged-JAR or production performance result"
+  ]
+}

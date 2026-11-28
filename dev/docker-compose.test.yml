@@ -151,9 +151,9 @@ services:
       HMDP_ANALYTICS_ENABLED: 'false'
       HMDP_KAFKA_SERVERS: kafka:9092
       HMDP_MONITOR_TOKEN: ${HMDP_MONITOR_TOKEN:-hmdp_dev_metrics}
-      CITYLENS_CATALOG_ADMIN_IDS: '1010'
-      CITYLENS_PAYMENT_MOCK_ENABLED: 'true'
-      CITYLENS_RELIABILITY_SCHEDULING_ENABLED: 'false'
+      CITYMATE_CATALOG_ADMIN_IDS: '1010'
+      CITYMATE_PAYMENT_MOCK_ENABLED: 'true'
+      CITYMATE_RELIABILITY_SCHEDULING_ENABLED: 'false'
     depends_on:
       mysql:
         condition: service_healthy
@@ -167,11 +167,11 @@ services:
         condition: service_completed_successfully
       kafka-init:
         condition: service_completed_successfully
-    command: [mvn, -B, '-DargLine=-Xmx512m', '-Dspring.test.context.cache.maxSize=2', '-Dtest=KnowledgeAnswerTest,DeepSeekClientTest,KnowledgeUnitTest,KnowledgeAccessTest,KnowledgeIntegrationTest,QueryToolServiceTest,QueryToolsIntegrationTest,CacheReadTraceTest,ExperienceServiceTest,ExperienceIntegrationTest,MapperArchitectureTest,MessagingIntegrationTest,RocketMqIntegrationTest,BehaviorAggregationIntegrationTest,KafkaBehaviorIntegrationTest,ReliabilityIntegrationTest,SeckillMessageTest,CacheConcurrencyTest,AccessGuardTest,LoginCodeTest,VoucherOrderReliabilityTest,ShopCacheCompatibilityTest,ShopSearchBoundaryTest,MockPaymentTest,UserLogoutTest,RequestCacheScopeTest,CacheLayersIntegrationTest,CanalBatchTest,CacheChangeProjectorTest,CacheCdcIntegrationTest,CacheBenchmarkIntegrationTest', test]
+    command: [mvn, -B, '-DargLine=-Xmx512m', '-Dspring.test.context.cache.maxSize=2', '-Dtest=SeckillOrderExpiryIntegrationTest,SeckillCompensationIntegrationTest,KnowledgeAnswerTest,DeepSeekClientTest,KnowledgeUnitTest,KnowledgeAccessTest,KnowledgeIntegrationTest,QueryToolServiceTest,QueryToolsIntegrationTest,CacheReadTraceTest,ExperienceServiceTest,ExperienceIntegrationTest,MapperArchitectureTest,MessagingIntegrationTest,RocketMqIntegrationTest,BehaviorAggregationIntegrationTest,KafkaBehaviorIntegrationTest,ReliabilityIntegrationTest,SeckillMessageTest,CacheConcurrencyTest,AccessGuardTest,LoginCodeTest,VoucherOrderReliabilityTest,ShopCacheCompatibilityTest,ShopSearchBoundaryTest,MockPaymentTest,UserLogoutTest,RequestCacheScopeTest,CacheInvalidationRecoveryIntegrationTest,CacheLayersIntegrationTest,CanalBatchTest,CacheChangeProjectorTest,CacheCdcIntegrationTest,CacheBenchmarkIntegrationTest', test]
 volumes:
   kafka-data:
   rocketmq-data:
   canal-meta:
   maven-cache:
     external: true
-    name: hm-dianping_maven-cache
+    name: citymate_maven-cache

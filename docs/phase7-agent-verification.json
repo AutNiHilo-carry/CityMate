@@ -1,0 +1,211 @@
+{
+  "date": "2026-11-09",
+  "stage": "PHASE7_READ_ONLY_AGENT",
+  "runId": "92639463b1844c7f99e287bd73abc6bd",
+  "backend": {
+    "tests": 184,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "newAgentAndTransportTests": 23,
+    "checkstyle": "passed",
+    "realMySqlRedis": true,
+    "model": "mock and loopback HTTP server",
+    "suites": [
+      {
+        "name": "com.hmdp.agent.tool.QueryToolServiceTest",
+        "tests": 11
+      },
+      {
+        "name": "com.hmdp.agent.tool.QueryToolsIntegrationTest",
+        "tests": 3
+      },
+      {
+        "name": "com.hmdp.agent.tool.ReadOnlyAgentToolsTest",
+        "tests": 7
+      },
+      {
+        "name": "com.hmdp.analytics.BehaviorAggregationIntegrationTest",
+        "tests": 5
+      },
+      {
+        "name": "com.hmdp.cache.CacheChangeProjectorTest",
+        "tests": 3
+      },
+      {
+        "name": "com.hmdp.cache.CacheInvalidationRecoveryIntegrationTest",
+        "tests": 3
+      },
+      {
+        "name": "com.hmdp.cache.CacheLayersIntegrationTest",
+        "tests": 7
+      },
+      {
+        "name": "com.hmdp.cache.CacheReadTraceTest",
+        "tests": 3
+      },
+      {
+        "name": "com.hmdp.cache.CanalBatchTest",
+        "tests": 3
+      },
+      {
+        "name": "com.hmdp.cache.MetricsPathSecurityTest",
+        "tests": 1
+      },
+      {
+        "name": "com.hmdp.cache.RequestCacheScopeTest",
+        "tests": 2
+      },
+      {
+        "name": "com.hmdp.experience.ExperienceServiceTest",
+        "tests": 5
+      },
+      {
+        "name": "com.hmdp.knowledge.AgentQueryIntegrationTest",
+        "tests": 3
+      },
+      {
+        "name": "com.hmdp.knowledge.DeepSeekClientTest",
+        "tests": 8
+      },
+      {
+        "name": "com.hmdp.knowledge.KnowledgeAccessTest",
+        "tests": 2
+      },
+      {
+        "name": "com.hmdp.knowledge.KnowledgeAnswerTest",
+        "tests": 10
+      },
+      {
+        "name": "com.hmdp.knowledge.KnowledgeIntegrationTest",
+        "tests": 4
+      },
+      {
+        "name": "com.hmdp.knowledge.KnowledgeUnitTest",
+        "tests": 7
+      },
+      {
+        "name": "com.hmdp.knowledge.ReadOnlyAgentServiceTest",
+        "tests": 12
+      },
+      {
+        "name": "com.hmdp.MapperArchitectureTest",
+        "tests": 3
+      },
+      {
+        "name": "com.hmdp.messaging.MessagingIntegrationTest",
+        "tests": 14
+      },
+      {
+        "name": "com.hmdp.MockPaymentTest",
+        "tests": 1
+      },
+      {
+        "name": "com.hmdp.NormalTest",
+        "tests": 1
+      },
+      {
+        "name": "com.hmdp.reliability.AccessGuardRoutingTest",
+        "tests": 2
+      },
+      {
+        "name": "com.hmdp.reliability.AccessGuardTest",
+        "tests": 4
+      },
+      {
+        "name": "com.hmdp.reliability.CacheConcurrencyTest",
+        "tests": 1
+      },
+      {
+        "name": "com.hmdp.reliability.LoginCodeTest",
+        "tests": 1
+      },
+      {
+        "name": "com.hmdp.reliability.OrderExpiryBatchTest",
+        "tests": 2
+      },
+      {
+        "name": "com.hmdp.reliability.RedisScriptLoadingIntegrationTest",
+        "tests": 1
+      },
+      {
+        "name": "com.hmdp.reliability.RedisScriptsTest",
+        "tests": 4
+      },
+      {
+        "name": "com.hmdp.reliability.ReliabilityIntegrationTest",
+        "tests": 21
+      },
+      {
+        "name": "com.hmdp.reliability.SeckillCompensationIntegrationTest",
+        "tests": 9
+      },
+      {
+        "name": "com.hmdp.reliability.SeckillMessageTest",
+        "tests": 1
+      },
+      {
+        "name": "com.hmdp.reliability.SeckillOrderExpiryIntegrationTest",
+        "tests": 10
+      },
+      {
+        "name": "com.hmdp.ShopCacheCompatibilityTest",
+        "tests": 2
+      },
+      {
+        "name": "com.hmdp.ShopSearchBoundaryTest",
+        "tests": 3
+      },
+      {
+        "name": "com.hmdp.UserLogoutTest",
+        "tests": 1
+      },
+      {
+        "name": "com.hmdp.VoucherOrderReliabilityTest",
+        "tests": 4
+      }
+    ]
+  },
+  "frontend": {
+    "tests": 21,
+    "failures": 0,
+    "syntaxCheck": "passed",
+    "vue2TemplateCompile": "passed",
+    "browserVisualCheck": false
+  },
+  "liveModelCalledThisStage": false,
+  "paidModelQualityEvaluation": false,
+  "writesOrClaimsByAgent": false,
+  "newLoadTestMetrics": false,
+  "sourceHashes": {
+    "src/main/java/com/hmdp/knowledge/DeepSeekClient.java": "fcaed0e583f98f09d791a3f2df48c4ae9019d08bf3fa0ebd7603fad7ee3ce668",
+    "src/main/java/com/hmdp/service/IReadOnlyAgentService.java": "0e799ceee935edfea38d36c619dc76f7cd29d874765068da0fa109acb0aca281",
+    "src/main/java/com/hmdp/service/impl/ReadOnlyAgentService.java": "5048adcb71df25a9cc98fcb7ee4c79db917ef0ee41d162d5f6a3ddabcdaa4d65",
+    "src/main/java/com/hmdp/agent/tool/ReadOnlyAgentTools.java": "7d3e67530e8ef8ce3cc4ebb6ecdfe80986368109aa90a8c4e60f029fdad786d5",
+    "src/main/java/com/hmdp/controller/AgentQueryController.java": "48adfa86707fabba4337d537b6989278dd10da0d68f812e3a720f20db8a959f4",
+    "src/main/java/com/hmdp/dto/AgentQueryRequest.java": "67e81b65759b013795cdd2fd2cda4de0d563f72ff6f9cb88ff7c06d83cb3555c",
+    "src/main/resources/agent-readonly-tools.json": "71d2ba6dae3578bb14e66d680c257e61670c210376ea1a27b48ad506b4d2bc43",
+    "frontend/scripts/assistant.js": "e3274b8c7f3e7bed5c8f49709e08d5214ffce421f7de71cb2f9fb8ad23157bb8",
+    "frontend/scripts/assistant-helpers.js": "e2571789b2426b18afab19633b5931d916ac88cf18037304cef3913021eee1b8",
+    "frontend/assets/assistant.css": "64e0fd0312a5805a74c13b72bdbe10baf35ec3ee1a1d2cf7cd1ed4a4b1d5ec08",
+    "frontend/tests/assistant.test.js": "8bdad2ec05d6f1338f1f185d12d2949e571639910d781cdaaeb5654561a5dbb6"
+  },
+  "sanitizedReports": "docs/agent-verifications/2026-11-09/92639463b1844c7f99e287bd73abc6bd",
+  "deployment": {
+    "status": "JAVA_UPDATED_HEALTHY",
+    "runId": "4897a16587084bb1beebbcff77b59f5b",
+    "jarSha256": "bca1fd72ad892f1b6e6c80024cc838f7ae91d7565ee7f54e9c11d925b0b38aa1",
+    "evidence": "docs/agent-releases/4897a16587084bb1beebbcff77b59f5b",
+    "existingReleaseSmokeChecks": 17,
+    "agentSmokeChecks": 6,
+    "databaseContainersPreserved": true,
+    "previousJarRetained": true,
+    "liveModelCalled": false,
+    "browserVisualInspection": false
+  },
+  "failedAttemptsNotCounted": [
+    "5cf93f66e0404b3bbc2bce99d7e6d039",
+    "0ee4c2e2e2b643298da90cb701d786c2",
+    "30c355c370364cf69de3946ba6cce2ab"
+  ]
+}

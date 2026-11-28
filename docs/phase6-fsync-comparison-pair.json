@@ -1,0 +1,20 @@
+{
+    "repeatedPair":  false,
+    "diagnosticOnly":  true,
+    "pairId":  "9477aa52687740b89256787695bffce1",
+    "runs":  [
+                 {
+                     "archive":  "docs/transaction-profiles/f7ad3592261d411c8c5d1aad791aff85",
+                     "runId":  "f7ad3592261d411c8c5d1aad791aff85",
+                     "mode":  "always"
+                 },
+                 {
+                     "archive":  "docs/transaction-profiles/abe2ea943f874807b8f2beed232b4def",
+                     "runId":  "abe2ea943f874807b8f2beed232b4def",
+                     "mode":  "everysec"
+                 }
+             ],
+    "generatedAt":  "2026-11-06T03:41:10.8362627+00:00",
+    "productionDurabilityChanged":  false,
+    "deliberateVariable":  "isolated Redis appendfsync"
+}

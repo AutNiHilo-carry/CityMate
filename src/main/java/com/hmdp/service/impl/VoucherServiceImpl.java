@@ -127,7 +127,7 @@ public class VoucherServiceImpl extends ServiceImpl<VoucherMapper, Voucher>
   @Resource
   private IShopService shopService;
 
-  @Value("${citylens.catalog-admin-ids:}")
+  @Value("${citymate.catalog-admin-ids:}")
   private String catalogAdminIds;
 
   private boolean canManage() {

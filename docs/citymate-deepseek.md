@@ -55,10 +55,10 @@ $env:DEEPSEEK_API_KEY = [System.Net.NetworkCredential]::new('', (Read-Host '输�
 然后按原启动方式构建并启动。`dev/docker-compose.yml` 已传递以上三个环境变量；仅在宿主设置变量后重启旧容器不会更新其环境，需重新创建 Java 服务。保留原启动所用管理员等环境变量，在项目根目录执行：
 
 ```powershell
-docker compose -p hm-dianping -f dev/docker-compose.yml -f dev/docker-compose.prebuilt.yml up -d --no-deps --force-recreate java
+docker compose -p citymate -f dev/docker-compose.yml -f dev/docker-compose.prebuilt.yml up -d --no-deps --force-recreate java
 ```
 
-此命令使用 `target/hm-dianping-0.0.1-SNAPSHOT.jar`，必须先按项目原构建命令更新 JAR。不要为了启用 AI 删除数据卷。也可在 IDE Run Configuration 配置这三个环境变量后启动。
+此命令使用 `target/citymate-0.0.1-SNAPSHOT.jar`，必须先按项目原构建命令更新 JAR。不要为了启用 AI 删除数据卷。也可在 IDE Run Configuration 配置这三个环境变量后启动。
 
 检查环境变量时仅检查是否存在，不输出值。不要将 `docker compose config` 或 `docker inspect` 的完整环境输出贴到报告中。
 

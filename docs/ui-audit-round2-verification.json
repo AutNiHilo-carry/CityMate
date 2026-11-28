@@ -1,0 +1,507 @@
+{
+  "checkedAtUtc": "2026-11-11T16:00:41.730444+00:00",
+  "backend": [
+    {
+      "runId": "bcaa98f634a743738917a8f53226a6db",
+      "tests": 205,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "runId": "732601a1ddfa475c9ec4b4a2a0bb7cc1",
+      "tests": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "frontendTests": 72,
+  "frontendFailures": 0,
+  "templateWarnings": 0,
+  "browserReports": {
+    "site": {
+      "pages": [
+        {
+          "name": "home",
+          "width": 1440,
+          "scroll": 1440,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "shops",
+          "width": 1440,
+          "scroll": 1440,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "vouchers",
+          "width": 1440,
+          "scroll": 1440,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "shop",
+          "width": 1440,
+          "scroll": 1440,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "note",
+          "width": 1440,
+          "scroll": 1440,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "login",
+          "width": 1440,
+          "scroll": 1440,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "assistant",
+          "width": 1440,
+          "scroll": 1440,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "experience",
+          "width": 1440,
+          "scroll": 1440,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "other-profile",
+          "width": 1440,
+          "scroll": 1440,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "home",
+          "width": 1024,
+          "scroll": 1024,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "shops",
+          "width": 1024,
+          "scroll": 1024,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "vouchers",
+          "width": 1024,
+          "scroll": 1024,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "shop",
+          "width": 1024,
+          "scroll": 1024,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "note",
+          "width": 1024,
+          "scroll": 1024,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "login",
+          "width": 1024,
+          "scroll": 1024,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "assistant",
+          "width": 1024,
+          "scroll": 1024,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "experience",
+          "width": 1024,
+          "scroll": 1024,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "other-profile",
+          "width": 1024,
+          "scroll": 1024,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "home",
+          "width": 390,
+          "scroll": 390,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "shops",
+          "width": 390,
+          "scroll": 390,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "vouchers",
+          "width": 390,
+          "scroll": 390,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "shop",
+          "width": 390,
+          "scroll": 390,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "note",
+          "width": 390,
+          "scroll": 390,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "login",
+          "width": 390,
+          "scroll": 390,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "assistant",
+          "width": 390,
+          "scroll": 390,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "experience",
+          "width": 390,
+          "scroll": 390,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "other-profile",
+          "width": 390,
+          "scroll": 390,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "home",
+          "width": 320,
+          "scroll": 320,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "shops",
+          "width": 320,
+          "scroll": 320,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "vouchers",
+          "width": 320,
+          "scroll": 320,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "shop",
+          "width": 320,
+          "scroll": 320,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "note",
+          "width": 320,
+          "scroll": 320,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "login",
+          "width": 320,
+          "scroll": 320,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "assistant",
+          "width": 320,
+          "scroll": 320,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "experience",
+          "width": 320,
+          "scroll": 320,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "other-profile",
+          "width": 320,
+          "scroll": 320,
+          "authFixture": false,
+          "errors": []
+        },
+        {
+          "name": "profile",
+          "width": 1440,
+          "scroll": 1440,
+          "authFixture": true,
+          "errors": []
+        },
+        {
+          "name": "orders",
+          "width": 1440,
+          "scroll": 1440,
+          "authFixture": true,
+          "errors": []
+        },
+        {
+          "name": "publish",
+          "width": 1440,
+          "scroll": 1440,
+          "authFixture": true,
+          "errors": []
+        },
+        {
+          "name": "profile",
+          "width": 1024,
+          "scroll": 1024,
+          "authFixture": true,
+          "errors": []
+        },
+        {
+          "name": "orders",
+          "width": 1024,
+          "scroll": 1024,
+          "authFixture": true,
+          "errors": []
+        },
+        {
+          "name": "publish",
+          "width": 1024,
+          "scroll": 1024,
+          "authFixture": true,
+          "errors": []
+        },
+        {
+          "name": "profile",
+          "width": 390,
+          "scroll": 390,
+          "authFixture": true,
+          "errors": []
+        },
+        {
+          "name": "orders",
+          "width": 390,
+          "scroll": 390,
+          "authFixture": true,
+          "errors": []
+        },
+        {
+          "name": "publish",
+          "width": 390,
+          "scroll": 390,
+          "authFixture": true,
+          "errors": []
+        },
+        {
+          "name": "profile",
+          "width": 320,
+          "scroll": 320,
+          "authFixture": true,
+          "errors": []
+        },
+        {
+          "name": "orders",
+          "width": 320,
+          "scroll": 320,
+          "authFixture": true,
+          "errors": []
+        },
+        {
+          "name": "publish",
+          "width": 320,
+          "scroll": 320,
+          "authFixture": true,
+          "errors": []
+        }
+      ],
+      "checks": [
+        "live empty keyword state",
+        "live reset restores results",
+        "live category response matches rendered cards",
+        "write-note shortcut preserves login return",
+        "changed-price dialog requires another confirmation (mock)",
+        "confirmation dispatches once (mock)"
+      ],
+      "realBusinessWrites": 0,
+      "blockedWrites": [],
+      "stubbedPosts": 1,
+      "browser": "isolated headless Edge",
+      "authScreenshots": "mock user/order data",
+      "failures": 0
+    },
+    "faults": {
+      "checkedAt": "2026-11-11T15:56:19.344Z",
+      "checks": [
+        "delayed hot response never contaminates the selected follow feed",
+        "untrusted note titles render as text rather than HTML",
+        "failed pagination retains cards and retry clears errors without duplicates",
+        "long untrusted titles fit narrow cards",
+        "voucher outage does not hide shop details or notes",
+        "shop voucher retry recovers into an honest empty state",
+        "timeout cancellation stays uncertain and never retries its POST",
+        "sign-in success survives an independent streak-read outage"
+      ],
+      "pageErrors": [],
+      "blockedWrites": [],
+      "stubbedWrites": [
+        "/api/voucher-order/42/cancel",
+        "/api/user/sign"
+      ],
+      "realBusinessWrites": 0,
+      "failures": 0
+    },
+    "catalog": {
+      "checks": [
+        "budget score area and coupon filters combine",
+        "submitted filters are reflected in shareable URL",
+        "filters restore after reload",
+        "reset restores complete catalog",
+        "held-order tab queries server filtered list",
+        "copy retains full order number without writing system clipboard",
+        "order rules show the saved snapshot",
+        "held-order tab restores from URL",
+        "cancel action appears only for an unpaid ordinary order"
+      ],
+      "pageErrors": [],
+      "writeAttempts": [],
+      "apiFixtures": true,
+      "systemClipboardChanged": false,
+      "realBusinessWrites": 0,
+      "failures": 0
+    },
+    "business": {
+      "steps": [
+        "skip link is visible for keyboard focus only",
+        "preselected shop outside first search page retained",
+        "upload fixtures, cover reorder and automatic save",
+        "publish preview fits desktop and narrow screens",
+        "explicit draft restoration after reload",
+        "uncertain publish result blocks repeat submission",
+        "draft isolation between accounts",
+        "uncertain state survives draft restore",
+        "explicit clear removes current browser draft",
+        "coupon rules expand as readable plain text",
+        "shop note pagination appends another page",
+        "shop voucher errors retry independently of notes"
+      ],
+      "writes": [
+        {
+          "path": "/api/upload/blog",
+          "method": "POST",
+          "stubbed": true
+        },
+        {
+          "path": "/api/upload/blog",
+          "method": "POST",
+          "stubbed": true
+        },
+        {
+          "path": "/api/blog",
+          "method": "POST",
+          "stubbed": true
+        }
+      ],
+      "realBusinessWrites": 0,
+      "apiFixtures": true,
+      "pageErrors": [],
+      "failures": 0
+    },
+    "photos": {
+      "checkedAt": "2026-11-11T15:56:56.853Z",
+      "checks": [
+        "shop photos open with focus and background scroll lock",
+        "all shop photos accessible with bounded keyboard navigation",
+        "keyboard focus stays inside viewer",
+        "desktop and mobile viewer stays within viewport",
+        "escape restores scrolling background and opening focus",
+        "secondary shop picture opens matching position",
+        "horizontal touch changes photo while vertical touch does not",
+        "note thumbnail selection and viewer index stay in sync",
+        "single photo hides navigation and backdrop closes viewer",
+        "missing image falls back without trapping the user",
+        "notes without photos do not open an empty viewer"
+      ],
+      "pageErrors": [],
+      "realBusinessWrites": [],
+      "failures": 0
+    },
+    "live": {
+      "checks": [
+        "bounded cross-category catalog",
+        "combined budget rating category area filters",
+        "percent keyword is literal",
+        "budget uses yuan rather than cents",
+        "rating uses database tenths",
+        "voucher filter returns a successful catalog",
+        "matching shop has an active voucher: 4",
+        "matching shop has an active voucher: 1",
+        "reject invalid maxPrice",
+        "reject invalid minScore",
+        "reject invalid area",
+        "reject invalid size",
+        "stable pagination without duplicate IDs",
+        "held vouchers require authentication"
+      ],
+      "failures": 0,
+      "readOnly": true,
+      "catalogTotalObserved": 14,
+      "matchingVoucherShopsObserved": 2
+    }
+  },
+  "health": "UP",
+  "realDemoBusinessWrites": 0,
+  "performanceBenchmark": false,
+  "realModelCall": false,
+  "sourceSha256": {
+    "frontend/scripts/app.js": "923afcb32040a486e0f880734ca60a411b7b7136a1bb117d6068cbdae3b7b1df",
+    "frontend/index.html": "c8e1d3e67e14074f0f10201855026f02338b6eda0b9226b771457ad90151b697",
+    "frontend/assets/business-ui.css": "44723c5e010335d320d5c8bfdf40f50b35f34889aaa05f0bbf5f34e49d0686e6",
+    "frontend/tests/audit-round2.test.js": "7798324f6e2a0bc6680c150b09ee2d43e4d35cc285a356baad857426e2ade923",
+    "scripts/audit-ui-round2.cjs": "126aaad3acf278a8e2d78697fc14d5c4994ddc7c0cb52d88abb179cb968d2999"
+  }
+}

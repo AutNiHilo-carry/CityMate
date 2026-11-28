@@ -1,0 +1,44 @@
+{
+    "generatedAt": "2026-11-05T13:40:48.310Z",
+    "scenario": "same-user",
+    "passed": true,
+    "brokerEnabled": false,
+    "trace": [
+        {
+            "stage": "initial_one_unit",
+            "observedAt": "2026-11-05T13:40:47.364Z",
+            "voucherId": 900001,
+            "database": "hmdp_optimization_test",
+            "databaseStock": 1,
+            "redisStock": "1",
+            "orders": 0,
+            "streamLength": 0,
+            "pending": 0
+        },
+        {
+            "stage": "32_responses_one_admission_before_fulfillment",
+            "observedAt": "2026-11-05T13:40:48.093Z",
+            "voucherId": 900001,
+            "database": "hmdp_optimization_test",
+            "databaseStock": 1,
+            "redisStock": "0",
+            "orders": 0,
+            "streamLength": 1,
+            "pending": 0,
+            "orderId": "656661187722739728"
+        },
+        {
+            "stage": "one_fulfillment_despite_duplicate_delivery",
+            "observedAt": "2026-11-05T13:40:48.308Z",
+            "voucherId": 900001,
+            "database": "hmdp_optimization_test",
+            "databaseStock": 0,
+            "redisStock": "0",
+            "orders": 1,
+            "streamLength": 1,
+            "pending": 0,
+            "orderId": "656661187722739728",
+            "reservationState": "SUCCESS"
+        }
+    ]
+}

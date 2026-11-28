@@ -1,0 +1,56 @@
+{
+  "checkedAt": "2026-11-12T05:02:10.264868+00:00",
+  "projectPath": "<CITYMATE_PROJECT_DIR>",
+  "artifact": "citymate-0.0.1-SNAPSHOT.jar",
+  "startClass": "com.hmdp.CityMateApplication",
+  "jarSha256": "5113fc14adf4c91fdec9344855384323ec496b8667bc9d777dfe7a5acd1062f2",
+  "backendRun": "cf9a19120ecc4c7cab2586e2903ac19e",
+  "backend": {
+    "tests": 205,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "frontendTests": 74,
+  "frontendFailures": 0,
+  "templateWarnings": 0,
+  "health": "UP",
+  "volumeMigration": {
+    "checkedAt": "2026-11-12T04:56:17.587819+00:00",
+    "originalsRetained": true,
+    "volumes": [
+      {
+        "source": "hm-dianping_canal-meta",
+        "target": "citymate_canal-meta",
+        "fileTreeSha256": "daec7d5315193a12d1d29522c045d6f1fb2ff60cc7c648462ecd7340e56c0fb5"
+      },
+      {
+        "source": "hm-dianping_kafka-data",
+        "target": "citymate_kafka-data",
+        "fileTreeSha256": "b4c0a0aaa53ee37560194e7aa07b73739ce679874fbba636a574bb75d6fe6ce4"
+      },
+      {
+        "source": "hm-dianping_maven-cache",
+        "target": "citymate_maven-cache",
+        "fileTreeSha256": "f1e36631004353e0f3decf434360862d95c8deb8feb87d52428f36af25eab329"
+      },
+      {
+        "source": "hm-dianping_mysql-data",
+        "target": "citymate_mysql-data",
+        "fileTreeSha256": "ffff3b8d5fcf8dc58b5ddb13284b75bd6375011f36f8955dd893bee82a4c66aa"
+      },
+      {
+        "source": "hm-dianping_redis-data",
+        "target": "citymate_redis-data",
+        "fileTreeSha256": "b2df1c250542fb3db8c817262a416c712d139b49b221b8cfa2cb1cedabe4ad75"
+      },
+      {
+        "source": "hm-dianping_rocketmq-data",
+        "target": "citymate_rocketmq-data",
+        "fileTreeSha256": "7cfe2a8c1f049bb3c866503ce1ae4d5a20ef49f7babfc9163b24c13df4d5e8fd"
+      }
+    ]
+  },
+  "historicalEvidenceRewritten": false,
+  "gitPushed": false
+}

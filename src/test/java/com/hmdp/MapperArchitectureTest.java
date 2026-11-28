@@ -16,7 +16,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,7 +81,7 @@ class MapperArchitectureTest {
                 type == String.class
                     ? "sample"
                     : type == List.class
-                        ? Collections.singletonList(1L)
+                        ? new ArrayList<>(Arrays.asList(1L))
                         : type == Timestamp.class
                             ? new Timestamp(0)
                             : type == Integer.class ? 1 : 1L;
@@ -108,7 +109,7 @@ class MapperArchitectureTest {
     MybatisConfiguration configuration = mapperConfiguration();
     Map<String, Object> arguments = new HashMap<>();
     arguments.put("userId", 1L);
-    arguments.put("blogIds", Collections.emptyList());
+    arguments.put("blogIds", new ArrayList<Long>());
     String sql =
         configuration
             .getMappedStatement(BlogMapper.class.getName() + ".selectLikedBlogIds")

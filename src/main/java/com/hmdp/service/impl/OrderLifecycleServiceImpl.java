@@ -2,29 +2,50 @@ package com.hmdp.service.impl;
 
 import com.hmdp.enums.OrderStatus;
 import com.hmdp.enums.VoucherType;
+import com.hmdp.mapper.BusinessOutboxMapper;
+import com.hmdp.mapper.SeckillVoucherMapper;
 import com.hmdp.mapper.VoucherOrderMapper;
+import com.hmdp.reliability.ActivityInventoryLock;
 import com.hmdp.service.IBusinessOutboxService;
 import com.hmdp.service.IOrderLifecycleService;
+import com.hmdp.utils.FailureMessages;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.transaction.support.TransactionTemplate;
 
+@Slf4j
 @Service
 public class OrderLifecycleServiceImpl implements IOrderLifecycleService {
 
   @Resource
+
   private VoucherOrderMapper voucherOrderMapper;
+
+  @Resource
+
+  private SeckillVoucherMapper seckillStock;
+
+  @Resource
+
+  private BusinessOutboxMapper businessOutbox;
+
+  @Resource
+
+  private ActivityInventoryLock inventoryLock;
 
   private final IBusinessOutboxService outbox;
   private final TransactionTemplate transactions;
 
-  @Value("${citylens.reliability.order-timeout-minutes:30}")
+  @Value("${citymate.reliability.order-timeout-minutes:30}")
   private int timeoutMinutes;
+
+  private long expiryCursor;
 
   public OrderLifecycleServiceImpl(
       IBusinessOutboxService outbox, TransactionTemplate transactions) {
@@ -41,7 +62,7 @@ public class OrderLifecycleServiceImpl implements IOrderLifecycleService {
   public void registerOrderCreatedEventAndDeadline(long orderId) {
     requireTransaction();
     if (timeoutMinutes < 1 || timeoutMinutes > 1440) {
-      throw new IllegalStateException("普通订单超时必须在 1～1440 分钟之间");
+      throw new IllegalStateException("订单超时必须在 1～1440 分钟之间");
     }
     voucherOrderMapper.initializeDeadline(timeoutMinutes, orderId);
     Map<String, Object> row = voucherOrderMapper.selectDeadline(orderId);
@@ -65,12 +86,12 @@ public class OrderLifecycleServiceImpl implements IOrderLifecycleService {
   }
 
   /**
-   * 锁定订单并重新校验当前状态、类型和截止时间，再条件关闭普通券订单。
+   * 锁定订单并重新校验当前状态、类型和截止时间，再条件关闭未支付订单。
    *
    * <p>提前到达的消息只重新登记截止事件；支付或关闭已经完成时不再产生重复关闭事件。
    */
   @Override
-  public boolean closeExpiredOrdinaryOrder(long orderId) {
+  public boolean closeExpiredOrder(long orderId) {
     return Boolean.TRUE.equals(
         transactions.execute(
             tx -> {
@@ -82,12 +103,14 @@ public class OrderLifecycleServiceImpl implements IOrderLifecycleService {
               Map<String, Object> row = rows.get(0);
               if (!OrderStatus.UNPAID.matches(((Number) row.get("status")).intValue())
                   || row.get("voucher_type_snapshot") == null
-                  || !VoucherType.ORDINARY.matches(
-                      ((Number) row.get("voucher_type_snapshot")).intValue())) {
+                  || (!VoucherType.ORDINARY.matches(
+                          ((Number) row.get("voucher_type_snapshot")).intValue())
+                      && !VoucherType.SECKILL.matches(
+                          ((Number) row.get("voucher_type_snapshot")).intValue()))) {
                 return false;
               }
               if (row.get("expire_at") == null) {
-                throw new IllegalStateException("普通订单缺少截止时间");
+                throw new IllegalStateException("订单缺少截止时间");
               }
               long userId = ((Number) row.get("user_id")).longValue();
               if (((Number) row.get("due")).intValue() == 0) {
@@ -95,8 +118,21 @@ public class OrderLifecycleServiceImpl implements IOrderLifecycleService {
                     orderId, userId, (Timestamp) row.get("expire_at"));
                 return false;
               }
+              boolean seckill =
+                  VoucherType.SECKILL.matches(
+                      ((Number) row.get("voucher_type_snapshot")).intValue());
+              long voucherId = ((Number) row.get("voucher_id")).longValue();
+              if (seckill) {
+                inventoryLock.holdUntilCompletion(voucherId);
+              }
               if (voucherOrderMapper.closeExpiredOrder(orderId) == 0) {
                 return false;
+              }
+              if (seckill) {
+                if (seckillStock.returnCancelledStock(voucherId) != 1) {
+                  throw new IllegalStateException("秒杀库存记录缺失，回滚关单");
+                }
+                businessOutbox.insertSeckillStockRelease(orderId, userId);
               }
               registerOrderClosedEvent(orderId, userId);
               return true;
@@ -110,9 +146,24 @@ public class OrderLifecycleServiceImpl implements IOrderLifecycleService {
   }
 
   @Override
-  public void expireOverdueOrders() {
-    for (Long orderId : voucherOrderMapper.selectExpiredOrdinaryOrders()) {
-      closeExpiredOrdinaryOrder(orderId);
+  public synchronized void expireOverdueOrders() {
+    List<Long> ids = voucherOrderMapper.selectExpiredUnpaidOrders(expiryCursor);
+    if (ids.isEmpty() && expiryCursor != 0) {
+      expiryCursor = 0;
+      ids = voucherOrderMapper.selectExpiredUnpaidOrders(0);
+    }
+    for (Long orderId : ids) {
+      expiryCursor = orderId;
+      try {
+        closeExpiredOrder(orderId);
+      } catch (RuntimeException failure) {
+        // Each order has its own transaction. Keep the failed row eligible for a later pass.
+        log.warn(
+            "Expired order {} remains pending: {}", orderId, FailureMessages.summarize(failure));
+      }
+    }
+    if (ids.size() < 200) {
+      expiryCursor = 0;
     }
   }
 }

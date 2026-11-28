@@ -1,3 +1,4 @@
+# Preserve the Compose project identity used by existing persistent volumes.
 name: hmdp-cloud
 x-logging: &logging
   driver: json-file
@@ -64,7 +65,7 @@ services:
       - ./init-images.sh:/init-images.sh:ro
       - uploads:/uploads
   java:
-    image: hmdp-cloud-java:local
+    image: citymate-cloud-java:local
     build:
       context: .
       dockerfile: Dockerfile
@@ -91,8 +92,8 @@ services:
       HMDP_EXPERIENCE_ENABLED: 'true'
       HMDP_MONITOR_TOKEN: ${HMDP_MONITOR_TOKEN:?Run init-env.sh first}
       HMDP_UPLOAD_DIR: /uploads
-      CITYLENS_CATALOG_ADMIN_IDS: ${HMDP_ADMIN_IDS:-}
-      CITYLENS_PAYMENT_MOCK_ENABLED: ${HMDP_PAYMENT_MOCK_ENABLED:-false}
+      CITYMATE_CATALOG_ADMIN_IDS: ${HMDP_ADMIN_IDS:-}
+      CITYMATE_PAYMENT_MOCK_ENABLED: ${HMDP_PAYMENT_MOCK_ENABLED:-false}
     ports:
       - '127.0.0.1:8081:8081'
     volumes:

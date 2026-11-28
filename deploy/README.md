@@ -1,6 +1,6 @@
 # 阿里云初步体验部署：2GB 轻量版
 
-适用的已确认环境：Alibaba Cloud Linux 3、x86_64、约 2GB 内存、40GB 系统盘，Docker 26.1.3 / Compose 2.27.0。目标是先让别人通过浏览器体验当前点评项目。
+适用的已确认环境：Alibaba Cloud Linux 3、x86_64、约 2GB 内存、40GB 系统盘，Docker 26.1.3 / Compose 2.27.0。目标是让体验者通过浏览器使用 CityMate。
 
 ## 1. 这套部署运行什么
 
@@ -17,7 +17,7 @@
 先在本机终端进入包含 `pom.xml` 的 Java 项目根目录；以下构建和打包命令不是在云端 SSH 中执行。Windows PowerShell 可先运行：
 
 ```powershell
-Set-Location -LiteralPath 'C:\Users\pankesdsa\Desktop\Pr1\hm-dianping'
+Set-Location -LiteralPath '<CITYMATE_PROJECT_DIR>'
 ```
 
 打包还要求同级的 `nginx-1.18.0/html/hmdp/imgs` 原始图片目录存在；2026-10-30 本地验收已从现有发布包恢复这份外部资源；复制项目到其他位置时仍需保留，否则打包脚本会明确报错。以下是 Bash 示例；Windows 安装的 Python 命令若为 `python`，将 `python3` 换为 `python`。
@@ -32,17 +32,17 @@ python3 deploy/package-release.py
 
 ```bash
 docker run --rm -v "$PWD:/workspace" \
-  -v hm-dianping_maven-cache:/root/.m2 -w /workspace \
+  -v citymate_maven-cache:/root/.m2 -w /workspace \
   maven:3.9-eclipse-temurin-8 mvn -Dmaven.test.skip=true package
 python3 deploy/package-release.py
 ```
 
-生成 `target/hmdp-cloud-release.tar.gz`。包内只有可执行 JAR、前端、初始数据库 SQL、初始图片、云端配置与校验清单，不包含 `.env`、SSH 密钥、IDE 状态或本机数据库备份。它建立新的演示环境，不会把本机现有订单/用户/库存整体迁过去。
+生成 `target/citymate-cloud-release.tar.gz`。包内只有可执行 JAR、前端、初始数据库 SQL、初始图片、云端配置与校验清单，不包含 `.env`、SSH 密钥、IDE 状态或本机数据库备份。它建立新的演示环境，不会把本机现有订单/用户/库存整体迁过去。
 
 通过阿里云远程连接工具的文件上传功能，把这个包传到服务器 `/root`。也可在 Mac 终端使用：
 
 ```bash
-scp target/hmdp-cloud-release.tar.gz root@101.132.47.134:/root/
+scp target/citymate-cloud-release.tar.gz root@203.0.113.10:/root/
 ```
 
 当前云端登录工具生成的临时 SSH 密钥不一定被本机 scp 自动使用。需要额外认证时，使用你已有的文件上传功能或自己已有的 SSH 凭证；不必把密码/私钥发给助手。初次独立连接还要确认服务器主机指纹。
@@ -53,13 +53,15 @@ scp target/hmdp-cloud-release.tar.gz root@101.132.47.134:/root/
 
 ```bash
 mkdir -p /opt/hmdp-cloud
-tar -xzf /root/hmdp-cloud-release.tar.gz -C /opt/hmdp-cloud --strip-components=1
+tar -xzf /root/citymate-cloud-release.tar.gz -C /opt/hmdp-cloud --strip-components=1
 cd /opt/hmdp-cloud
 sh init-env.sh
 docker compose --env-file .env -f compose.yml config --quiet
 ```
 
 `init-env.sh` 生成独立随机的数据库 root、业务数据库、Redis 和监控凭证，文件权限为 600；已有 `.env` 时不覆盖。后端以 `hmdp_app` 连接数据库，不使用 root。首次创建数据库卷时导入课程初始 SQL，随后 Java 自动执行已有 Flyway 增量迁移。
+
+已有部署继续使用原 Compose 项目名 `hmdp-cloud`，以复用现有数据卷。Compose 会把 `.env` 中的 `HMDP_ADMIN_IDS` 和 `HMDP_PAYMENT_MOCK_ENABLED` 传给新版 Java 配置。直接启动 JAR 时，请把自行设置的旧应用配置前缀改为 `citymate.`，环境变量前缀改为 `CITYMATE_`。
 
 不要删除 `.env` 再生成密码后继续连接旧数据库卷：旧库密码不会因此自动更新。升级保留 `.env` 和三个数据卷。配置检查使用 `--quiet`，避免把展开的凭证输出后复制到聊天或分享材料中。
 
@@ -81,14 +83,14 @@ curl -i 'http://127.0.0.1:8080/api/shop-type/list'
 
 ## 5. 阿里云安全组开放网页端口
 
-已提供的安全组是 `sg-uf6g6341ywlxvz9zennd`，之前的入方向规则没有网页端口。进入 ECS 实例 → 安全组 → 入方向 → 添加规则：
+已提供的安全组是 `sg-EXAMPLE`，之前的入方向规则没有网页端口。进入 ECS 实例 → 安全组 → 入方向 → 添加规则：
 
 | 字段 | 本次配置 |
 | --- | --- |
 | 协议 | TCP |
 | 端口范围 | 8080/8080 |
 | 授权对象 | 小范围试用填体验者公网 IP/CIDR；需要公开网页时才使用 0.0.0.0/0 |
-| 描述 | 黑马点评网页体验 |
+| 描述 | CityMate 网页体验 |
 
 不需要开放 3306、6379、11211、8081或 MQ/Kafka端口。安全组放行与服务器防火墙是两层检查；如果 firewalld已启用，需在实际生效的 zone中放行网页端口，不直接关闭整个防火墙。
 
@@ -125,9 +127,9 @@ Docker 的标准 firewalld 集成会为 Docker 桥接接口创建专用 zone。�
 
 ## 6. 最终访问与正常登录
 
-网页：`http://101.132.47.134:8080/`。
+网页：`http://203.0.113.10:8080/`。
 
-体验页：`http://101.132.47.134:8080/experience.html`。
+体验页：`http://203.0.113.10:8080/experience.html`。
 
 先在自己的电脑浏览器打开，核对真实店铺数据、图片、筛选和缓存采样。课程店铺图片有第三方 URL，并非全部是本地文件；这些图片依赖外站可用性，页面已有加载失败占位图。本地分类、笔记图片和前端资源已打包。再让一位外部体验者打开，确认安全组范围和公网链路。
 
@@ -188,7 +190,7 @@ docker compose --env-file .env -f compose.yml up -d
 
 本地验收复用缓存 Maven/Temurin Java 8镜像执行相同 JAR。测试容器与临时数据已单独清理。
 
-2026-10-11 13:50（北京时间）：部署包上传至 `101.132.47.134` 后，SHA-256 校验通过，已解压到 `/opt/hmdp-cloud`。云端成功下载默认 `eclipse-temurin:8-jre`，完成镜像构建、MySQL 初始化、应用启动和内部防火墙修复。通过服务器本机 Nginx 入口验证了首页、体验页、优惠券页、本地图片、分类、店铺列表/详情、两次缓存读取、正常验证码登录、本人资料、签到，以及匿名和公开运维路径拒绝。MySQL、Redis、web 均 healthy；验收时运行容器没有 OOMKilled。
+2026-10-11 13:50（北京时间）：部署包上传至 `203.0.113.10` 后，SHA-256 校验通过，已解压到 `/opt/hmdp-cloud`。云端成功下载默认 `eclipse-temurin:8-jre`，完成镜像构建、MySQL 初始化、应用启动和内部防火墙修复。通过服务器本机 Nginx 入口验证了首页、体验页、优惠券页、本地图片、分类、店铺列表/详情、两次缓存读取、正常验证码登录、本人资料、签到，以及匿名和公开运维路径拒绝。MySQL、Redis、web 均 healthy；验收时运行容器没有 OOMKilled。
 
 验收按正常登录流程创建了手机号 `18800001234` 对应的普通演示用户并签到一次，没有配置管理员权限。测试不会证明完整领券、秒杀、支付流程或消息中间件链路正常，也没有进行浏览器视觉验收或并发压测。
 

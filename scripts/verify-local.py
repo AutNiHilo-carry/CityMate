@@ -17,7 +17,7 @@ import urllib.request
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--base', default='http://127.0.0.1:8080')
-    parser.add_argument('--project', default='hm-dianping')
+    parser.add_argument('--project', default='citymate')
     parser.add_argument('--admin-phone', help='Existing local demo administrator phone for repeat runs')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()

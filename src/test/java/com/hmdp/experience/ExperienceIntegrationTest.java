@@ -33,7 +33,7 @@ import org.springframework.test.annotation.DirtiesContext;
     properties = {
       "hmdp.experience.enabled=true", "hmdp.analytics.enabled=true",
       "hmdp.analytics.group=hmdp-experience-integration", "hmdp.mq.enabled=false",
-      "citylens.reliability.scheduling-enabled=false"
+      "citymate.reliability.scheduling-enabled=false"
     })
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 class ExperienceIntegrationTest {

@@ -23,7 +23,7 @@ import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 @SpringBootTest
-class HmDianPingApplicationTests {
+class CityMateApplicationTests {
 
   @Resource
   private CacheClient cacheClient;

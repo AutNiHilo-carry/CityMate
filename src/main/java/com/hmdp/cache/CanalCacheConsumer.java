@@ -46,8 +46,13 @@ public class CanalCacheConsumer {
   @Value("${hmdp.cdc.schema:hmdp}")
   private String schema;
 
+  @Value("${hmdp.cdc.max-consecutive-failures:5}")
+  private int maxConsecutiveFailures = 5;
+
   private final AtomicLong connected = new AtomicLong();
   private final AtomicLong lastPoll = new AtomicLong();
+  private final AtomicLong consecutiveFailures = new AtomicLong();
+  private final AtomicLong blocked = new AtomicLong();
 
   private final ExecutorService worker =
       Executors.newSingleThreadExecutor(
@@ -65,6 +70,8 @@ public class CanalCacheConsumer {
     this.redisson = redisson;
     this.metrics = metrics;
     metrics.gauge("hmdp.cdc.connected", connected);
+    metrics.gauge("hmdp.cdc.blocked", blocked);
+    metrics.gauge("hmdp.cdc.consecutive.failures", consecutiveFailures);
     metrics.gauge(
         "hmdp.cdc.poll.age.seconds",
         lastPoll,
@@ -155,6 +162,7 @@ public class CanalCacheConsumer {
       // Ack batches containing only excluded tables without writing another checkpoint.
       if (!relevant) {
         connector.ack(batch.getId());
+        consecutiveFailures.set(0);
         metrics.counter("hmdp.cdc.batches", "result", "ignored").increment();
         return;
       }
@@ -166,6 +174,7 @@ public class CanalCacheConsumer {
           tail.getLogfileOffset(),
           tail.getExecuteTime());
       connector.ack(batch.getId());
+      consecutiveFailures.set(0);
       metrics.counter("hmdp.cdc.batches", "result", "success").increment();
       if (tail.getExecuteTime() > 0) {
         metrics
@@ -176,7 +185,16 @@ public class CanalCacheConsumer {
       }
     } catch (Exception failure) {
       metrics.counter("hmdp.cdc.batches", "result", "retry").increment();
-      connector.rollback(batch.getId());
+      if (consecutiveFailures.incrementAndGet() >= Math.max(1, maxConsecutiveFailures)) {
+        blocked.set(1);
+        running = false;
+        log.error("CDC 连续失败，已暂停消费；批次 {} 未确认。修复后重启，禁止跳过位点", batch.getId(), failure);
+      }
+      try {
+        connector.rollback(batch.getId());
+      } catch (RuntimeException rollbackFailure) {
+        failure.addSuppressed(rollbackFailure);
+      }
       throw new IllegalStateException("缓存 CDC 批次失败，保留位点重放", failure);
     }
   }

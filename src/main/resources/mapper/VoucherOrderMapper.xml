@@ -14,17 +14,22 @@
         WHERE voucher_id=#{voucherId}
     </select>
 
-    <select id="selectExpiredOrdinaryOrders" resultType="Long">
+    <select id="countActiveInventoryOrders" resultType="Long">
+        SELECT COUNT(*) FROM tb_voucher_order
+        WHERE voucher_id=#{voucherId} AND status&lt;&gt;4
+    </select>
+
+    <select id="selectExpiredUnpaidOrders" resultType="Long">
         SELECT id
         FROM tb_voucher_order
-        WHERE status=1 AND voucher_type_snapshot=0 AND expire_at&lt;=NOW(3)
-        ORDER BY expire_at,id LIMIT 200
+        WHERE status=1 AND voucher_type_snapshot IN (0,1) AND expire_at&lt;=NOW(3) AND id&gt;#{afterId}
+        ORDER BY id LIMIT 200
     </select>
 
     <update id="initializeDeadline">
         UPDATE tb_voucher_order
         SET expire_at=TIMESTAMPADD(MINUTE,#{timeoutMinutes},NOW(3))
-        WHERE id=#{orderId} AND status=1 AND voucher_type_snapshot=0 AND expire_at IS NULL
+        WHERE id=#{orderId} AND status=1 AND voucher_type_snapshot IN (0,1) AND expire_at IS NULL
     </update>
 
     <select id="selectDeadline" resultType="map">
@@ -34,7 +39,7 @@
     </select>
 
     <select id="selectExpiryStateForUpdate" resultType="map">
-        SELECT user_id,status+0 AS status,voucher_type_snapshot,expire_at,CAST(expire_at&lt;=NOW(3) AS SIGNED) AS due
+        SELECT voucher_id,user_id,status+0 AS status,voucher_type_snapshot,expire_at,CAST(expire_at&lt;=NOW(3) AS SIGNED) AS due
         FROM tb_voucher_order
         WHERE id=#{orderId} FOR UPDATE
     </select>

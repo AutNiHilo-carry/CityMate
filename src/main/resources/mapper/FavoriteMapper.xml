@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmdp.mapper.FavoriteMapper">
+    <resultMap id="Item" type="java.util.LinkedHashMap">
+        <result column="target_id" property="id" javaType="java.lang.String"/>
+        <result column="kind" property="kind" javaType="java.lang.String"/>
+        <result column="available" property="available" javaType="java.lang.Boolean"/>
+        <result column="title" property="title" javaType="java.lang.String"/>
+        <result column="images" property="images" javaType="java.lang.String"/>
+        <result column="area" property="area" javaType="java.lang.String"/>
+        <result column="avg_price" property="avgPrice" javaType="java.lang.Integer"/>
+        <result column="created_at" property="savedAt" javaType="java.sql.Timestamp"/>
+    </resultMap>
+    <select id="countFavorite" resultType="long">
+        SELECT COUNT(*) FROM tb_user_favorite
+        WHERE user_id=#{userId} AND kind=#{kind} AND target_id=#{targetId}
+    </select>
+    <select id="lockOwner" resultType="Long">
+        SELECT id FROM tb_user WHERE id=#{userId} FOR UPDATE
+    </select>
+    <select id="countTarget" resultType="long">
+        SELECT COUNT(*) FROM
+        <choose><when test="kind == 'shop'">tb_shop</when><otherwise>tb_blog</otherwise></choose>
+        WHERE id=#{targetId}
+    </select>
+    <insert id="save">
+        INSERT INTO tb_user_favorite(user_id,kind,target_id) VALUES(#{userId},#{kind},#{targetId})
+        ON DUPLICATE KEY UPDATE user_id=VALUES(user_id)
+    </insert>
+    <delete id="remove">
+        DELETE FROM tb_user_favorite
+        WHERE user_id=#{userId} AND kind=#{kind} AND target_id=#{targetId}
+    </delete>
+    <select id="countByOwner" resultType="long">
+        SELECT COUNT(*) FROM tb_user_favorite WHERE user_id=#{userId} AND kind=#{kind}
+    </select>
+    <select id="listByOwner" resultMap="Item">
+        SELECT f.target_id,f.kind,f.created_at,(t.id IS NOT NULL) AS available,t.images,
+        <choose>
+            <when test="kind == 'shop'">t.name AS title,t.area,t.avg_price</when>
+            <otherwise>t.title,'' AS area,NULL AS avg_price</otherwise>
+        </choose>
+        FROM tb_user_favorite f LEFT JOIN
+        <choose><when test="kind == 'shop'">tb_shop</when><otherwise>tb_blog</otherwise></choose>
+        t ON t.id=f.target_id
+        WHERE f.user_id=#{userId} AND f.kind=#{kind}
+        ORDER BY f.created_at DESC,f.id DESC LIMIT #{limit} OFFSET #{offset}
+    </select>
+</mapper>

@@ -1,0 +1,133 @@
+{
+    "generatedAt":  "2026-11-05T12:55:21.7872826+00:00",
+    "status":  "SELECTED_COMPENSATION_TESTS_PASSED",
+    "checkstyle":  "passed",
+    "compilerRelease":  8,
+    "selectedTestsPassed":  33,
+    "localRegressionTestsPassed":  29,
+    "realBrokerTestsPassed":  4,
+    "newLocalIntegrationScenarios":  8,
+    "failures":  0,
+    "errors":  0,
+    "skipped":  0,
+    "suites":  [
+                   {
+                       "name":  "com.hmdp.reliability.SeckillCompensationIntegrationTest",
+                       "tests":  8,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "reportUpdatedAt":  "2026-11-05T11:33:27.7947867Z",
+                       "cases":  [
+                                     "exhaustedRetryRequiresReviewAndManualRedriveUsesSameEvent",
+                                     "committedOrderRejectsFailureConfirmationAndDelayedCompensation",
+                                     "failedStateAndEventRollBackTogetherIfEnqueueFails",
+                                     "concurrentDuplicateEventsReleaseOnceAndRecordOneInbox",
+                                     "redisSuccessBeforeInboxRollbackCanBeReplayedWithoutDoubleRelease",
+                                     "outerBusinessRollbackCannotReleaseRedisOrLeaveAnEvent",
+                                     "oldCompensationCannotReleaseNewerUserReservation",
+                                     "failedRedisCompensationRecoversThroughOneDurableEvent"
+                                 ]
+                   },
+                   {
+                       "name":  "com.hmdp.messaging.MessagingIntegrationTest",
+                       "tests":  14,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "reportUpdatedAt":  "2026-11-05T11:32:28.4828206Z",
+                       "cases":  [
+                                     "consumerCanCompleteBeforePublisherMarksSent",
+                                     "repeatedTimeoutProducesOneClosureEventAndReconciliationCoversMissingMessage",
+                                     "feedContinuationPreservesCursorAndPublicationTimeAcrossDuplicateDelivery",
+                                     "lostBrokerMessageCanBeRedrivenButFutureDeadlineIsPreserved",
+                                     "earlyTimeoutReschedulesUsingCurrentDeadline",
+                                     "persistentFailureIsQuarantinedAndManualRetryPreservesIdentity",
+                                     "failedFulfillmentRetainsReservationAndCreatesReviewTask",
+                                     "paymentAndExpirationRaceHasOneTerminalStateAndOneEvent",
+                                     "businessRollbackAlsoRollsBackEvent",
+                                     "concurrentDuplicateDeliveryCreatesOneHistoryAndOneInbox",
+                                     "invalidPayloadCannotQuarantineAnotherBusinessEvent",
+                                     "parallelRelaysClaimDisjointEventsAndExpiredLeaseCanBeRecovered",
+                                     "unknownSendResultRetriesWithSameEventId",
+                                     "deadlineIsPersistedAndPaidOrderSurvivesLateDelivery"
+                                 ]
+                   },
+                   {
+                       "name":  "com.hmdp.reliability.ReliabilityIntegrationTest",
+                       "tests":  3,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "reportUpdatedAt":  "2026-11-05T11:32:58.2016162Z",
+                       "cases":  [
+                                     "sameUserConcurrentRequestsShareOneReservation",
+                                     "databaseInsertFailureRollsBackStockAndPendingMessageCanRetry",
+                                     "poisonMessageIsQuarantinedAndCompensationIsIdempotent"
+                                 ]
+                   },
+                   {
+                       "name":  "com.hmdp.reliability.SeckillMessageTest",
+                       "tests":  1,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "reportUpdatedAt":  "2026-11-05T11:33:28.2941082Z",
+                       "cases":  [
+                                     "registrationOutageDoesNotAcknowledgeOrQuarantineAnUnregisteredRequest"
+                                 ]
+                   },
+                   {
+                       "name":  "com.hmdp.VoucherOrderReliabilityTest",
+                       "tests":  3,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "reportUpdatedAt":  "2026-11-05T11:33:28.6663159Z",
+                       "cases":  [
+                                     "persistenceFailureRollsBackAndDuplicateDeliveryDoesNotDeductAgain",
+                                     "personalReadsAlwaysUseAuthenticatedOwnerAndHeldStatus",
+                                     "lockContentionFailsConsumptionInsteadOfAcknowledgingSuccess"
+                                 ]
+                   },
+                   {
+                       "name":  "com.hmdp.messaging.RocketMqIntegrationTest",
+                       "tests":  4,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "reportUpdatedAt":  "2026-11-05T12:48:27.1499071Z",
+                       "cases":  [
+                                     "realBrokerCompensatesFailedReservationOnce",
+                                     "realBrokerAcceptsAndDeduplicatesRepeatedDelivery",
+                                     "realTimerClosesUnpaidOrderAndPreservesPaidOrder",
+                                     "luaStreamHandoffAndRocketFulfillmentRemainIdempotent"
+                                 ]
+                   }
+               ],
+    "productionCodeChanged":  true,
+    "databaseMigrationAdded":  false,
+    "businessDatabaseModified":  false,
+    "newPerformanceMetrics":  false,
+    "testDatabase":  "hmdp_optimization_test",
+    "testProjects":  [
+                         "citymate-compensation-p4",
+                         "citymate-compensation-mq-p4"
+                     ],
+    "testEnvironmentsCleaned":  true,
+    "brokerRunnerInterrupted":  true,
+    "brokerRunnerExitCode":  null,
+    "brokerJUnitPassed":  true,
+    "brokerLogComplete":  false,
+    "evidenceFile":  "phase4-compensation-evidence.json",
+    "faultInjection":  [
+                           "Real Redis Lua rejects deliberately invalid stock contents, not a server outage",
+                           "MySQL triggers reject Outbox or Inbox writes, not a database connection outage"
+                       ],
+    "limitations":  [
+                        "Manual retry eligibility advancement; no recovery SLA",
+                        "No real process kill, power loss or Redis outage experiment",
+                        "Historical FAILED records without tasks require reviewed resubmission",
+                        "Seckill unpaid order cancellation and dual-stock release remain pending"
+                    ]
+}

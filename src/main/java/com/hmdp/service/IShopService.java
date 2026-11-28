@@ -24,6 +24,8 @@ public interface IShopService extends IService<Shop> {
 
   Result catalog(String keyword, Long typeId, Integer page, Integer size, String sort);
 
+  Result catalog(ShopSearchDTO criteria);
+
   Result queryShopsByIds(List<Long> ids);
 
   Result listAreas();

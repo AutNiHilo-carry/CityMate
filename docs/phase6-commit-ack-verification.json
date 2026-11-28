@@ -1,0 +1,56 @@
+{
+  "generatedAt": "2026-11-08T18:47:53.969624+08:00",
+  "status": "COMMITTED_ORDER_CONSUMER_OFFSET_LOSS_PASSED",
+  "runId": "5019deecf9c34848a6ca35c64f3a0e18",
+  "originalRequests": 1,
+  "sigkillCount": 1,
+  "pythonDiagnosticRegressionTests": 5,
+  "checkstyleAndJava8PackagePassed": true,
+  "javaRegressionTestsRepeated": false,
+  "committedOrdersBeforeKill": 1,
+  "inboxBeforeKill": 1,
+  "brokerConsumerOffsetBeforeRestart": 0,
+  "brokerConsumerOffsetAfterReplay": 1,
+  "inboxDuplicateCounterAfterRestart": 1.0,
+  "final": {
+    "orders": 1,
+    "persistedIds": [
+      "657728847873048577"
+    ],
+    "duplicateOwners": 0,
+    "fulfillmentInbox": 1,
+    "databaseRemaining": 1,
+    "successfulReservations": 1,
+    "unfinishedFulfillmentEvents": 0,
+    "redisRemaining": "1",
+    "streamPendingGlobal": 0
+  },
+  "httpRetryReturnedOriginalOrderId": true,
+  "replayObservationSeconds": 21.25,
+  "jarSha256": "cee5e93af3c1b4808d08a233734ebb7acac9e82da844b28f3aa8d9ee65515b69",
+  "faultScope": "broker network disconnection before commit, then app SIGKILL after commit; broker process stays alive",
+  "brokerProcessRestarted": false,
+  "productionHooksAdded": false,
+  "applicationCodeOrLuaChanged": false,
+  "manualSourceReplayUsed": false,
+  "brokerOffsetResetUsed": false,
+  "databaseOrRedisCrashed": false,
+  "priorReportsPreserved": true,
+  "isolatedEnvironmentCleaned": true,
+  "isolatedImageRemoved": true,
+  "sourceHashes": {
+    "scripts/verify-commit-ack-loss.py": "bdc3b9f0f4b434bb333b9a8cd776c064a974117081cf2471f6d83b342075b3e0",
+    "scripts/measure-commit-ack-loss.ps1": "5c16855538f0848c01bcce83964f1a4bb468a16310e46b548a15ec5eb907e7ed",
+    "scripts/test-commit-ack-loss.py": "4a249359ccc506e5f536d83730d996ecb66ac0179feca6c56154bed35ca81a6a",
+    "scripts/verify-transaction-crash.py": "83a7c3e7620d8bf417df8659b3f4e6860f4779812859c7cb7182a50d3d908614",
+    "scripts/verify-process-recovery.py": "495e996476ce05c67e309621567c5bd9cb478ff2ef68cb0cb4a270c16783915d",
+    "scripts/profile-packaged-transaction.py": "177239f7b590e08fd457f35d395c7096ee808afd818e93c5559b735c977c5935",
+    "scripts/prepare-packaged-profile.py": "421beb96a6d622d3e999af3ea043562a36050a5114ebebfcaffebbc17ee1854b"
+  },
+  "limitations": [
+    "One synthetic order at one controlled window; not concurrency capacity or SLA",
+    "Broker network partition plus application SIGKILL; broker process stays alive",
+    "Classic push consumer progress, not POP per-message ACK or exactly-once delivery",
+    "Compensation, order expiry and infrastructure crashes are separate unverified fault scenarios"
+  ]
+}

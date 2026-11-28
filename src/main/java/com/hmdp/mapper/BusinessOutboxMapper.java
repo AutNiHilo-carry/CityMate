@@ -37,7 +37,13 @@ public interface BusinessOutboxMapper {
 
   int retryFulfillment(@Param("idempotencyKey") String idempotencyKey);
 
+  int insertSeckillStockRelease(@Param("orderId") Long orderId, @Param("userId") Long userId);
+
+  Long countUnfinishedStockReleases(@Param("voucherId") Long voucherId);
+
   int insertSeckillRetry(@Param("orderId") Long orderId);
+
+  int insertSeckillCompensation(@Param("orderId") Long orderId, @Param("userId") Long userId);
 
   BusinessOutboxTask selectEventForUpdate(@Param("eventId") Long eventId);
 

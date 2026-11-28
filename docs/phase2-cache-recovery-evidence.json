@@ -1,0 +1,83 @@
+{
+  "generatedAt" : "2026-11-05T07:41:58.168Z",
+  "database" : "hmdp_optimization_test",
+  "faultInjection" : "Test subclass CacheClient.invalidate throws before real invalidation",
+  "realComponents" : [ "MySQL", "Redis", "Outbox", "Relay", "Inbox" ],
+  "brokerEnabled" : false,
+  "backoffNote" : "Retry eligibility advanced by test SQL; timing is not benchmarked",
+  "passed" : true,
+  "cases" : [ {
+    "name" : "committed_write_recovers_through_same_event",
+    "passed" : true,
+    "shopId" : "982041",
+    "injectedFailures" : 2,
+    "trace" : [ {
+      "stage" : "warmed",
+      "observedAt" : "2026-11-05T07:41:56.387Z",
+      "databaseName" : "phase2-old",
+      "cacheVersion" : "1"
+    }, {
+      "stage" : "committed_immediate_invalidation_failed",
+      "observedAt" : "2026-11-05T07:41:56.904Z",
+      "databaseName" : "phase2-new",
+      "cacheVersion" : "1",
+      "eventId" : "1",
+      "outboxState" : "PENDING",
+      "attempts" : 0,
+      "inboxCount" : 0
+    }, {
+      "stage" : "relay_failed_work_retained",
+      "observedAt" : "2026-11-05T07:41:57.103Z",
+      "databaseName" : "phase2-new",
+      "cacheVersion" : "1",
+      "eventId" : "1",
+      "outboxState" : "PENDING",
+      "attempts" : 1,
+      "inboxCount" : 0
+    }, {
+      "stage" : "recovered_same_event_current_read",
+      "observedAt" : "2026-11-05T07:41:57.266Z",
+      "databaseName" : "phase2-new",
+      "cacheVersion" : "2",
+      "eventId" : "1",
+      "outboxState" : "DONE",
+      "attempts" : 1,
+      "inboxCount" : 1
+    } ]
+  }, {
+    "name" : "old_load_fenced_after_recovery",
+    "passed" : true,
+    "shopId" : "982041",
+    "injectedFailures" : 2,
+    "trace" : [ {
+      "stage" : "old_load_blocked_update_committed_retry_pending",
+      "observedAt" : "2026-11-05T07:41:57.532Z",
+      "databaseName" : "phase2-new",
+      "cacheVersion" : "4",
+      "eventId" : "2",
+      "outboxState" : "PENDING",
+      "attempts" : 1,
+      "inboxCount" : 0
+    }, {
+      "stage" : "old_load_fenced_new_request_reads_current",
+      "observedAt" : "2026-11-05T07:41:57.818Z",
+      "databaseName" : "phase2-new",
+      "cacheVersion" : "5",
+      "eventId" : "2",
+      "outboxState" : "DONE",
+      "attempts" : 1,
+      "inboxCount" : 1
+    } ]
+  }, {
+    "name" : "rollback_does_not_publish_or_invalidate",
+    "passed" : true,
+    "shopId" : "982041",
+    "injectedFailures" : 0,
+    "trace" : [ {
+      "stage" : "rollback_preserves_old_database_and_cache",
+      "observedAt" : "2026-11-05T07:41:58.085Z",
+      "databaseName" : "phase2-old",
+      "cacheVersion" : "7"
+    } ]
+  } ]
+}

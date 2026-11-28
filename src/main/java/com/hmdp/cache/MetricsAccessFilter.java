@@ -14,17 +14,19 @@ import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.util.UrlPathHelper;
 
 /** Actuator uses its own handler mapping, so MVC interceptors do not secure these endpoints. */
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE + 10)
 public class MetricsAccessFilter extends OncePerRequestFilter {
+  private static final UrlPathHelper PATHS = new UrlPathHelper();
   private final StringRedisTemplate redis;
 
   @Value("${hmdp.monitor-token:}")
   private String monitorToken;
 
-  @Value("${citylens.catalog-admin-ids:}")
+  @Value("${citymate.catalog-admin-ids:}")
   private String admins;
 
   public MetricsAccessFilter(StringRedisTemplate redis) {
@@ -33,10 +35,7 @@ public class MetricsAccessFilter extends OncePerRequestFilter {
 
   @Override
   protected boolean shouldNotFilter(HttpServletRequest request) {
-    String path = request.getServletPath();
-    if (path.isEmpty()) {
-      path = request.getRequestURI().substring(request.getContextPath().length());
-    }
+    String path = PATHS.getPathWithinApplication(request);
     return !path.startsWith("/actuator/")
         || path.equals("/actuator/health")
         || path.equals("/actuator/health/");

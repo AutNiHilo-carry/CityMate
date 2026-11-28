@@ -1,0 +1,177 @@
+{
+  "generatedAt" : "2026-11-05T13:42:08.493Z",
+  "database" : "hmdp_optimization_test",
+  "brokerEnabled" : false,
+  "passed" : true,
+  "cases" : [ {
+    "name" : "ended_activity_stays_closed",
+    "passed" : true,
+    "trace" : [ {
+      "stage" : "stock_return_does_not_override_activity_window",
+      "observedAt" : "2026-11-05T13:42:04.039Z",
+      "orderId" : "656661514140254257",
+      "orderStatus" : 4,
+      "databaseStock" : 1,
+      "redisStock" : "1",
+      "releaseEvents" : 1,
+      "closedEvents" : 1,
+      "redisReleaseMarker" : "656661514140254257"
+    } ]
+  }, {
+    "name" : "expired_payment_close_race",
+    "passed" : true,
+    "trace" : [ {
+      "stage" : "expired_payment_rejected_one_close",
+      "observedAt" : "2026-11-05T13:42:04.470Z",
+      "orderId" : "656661518435221555",
+      "orderStatus" : 4,
+      "databaseStock" : 1,
+      "redisStock" : "1",
+      "releaseEvents" : 1,
+      "closedEvents" : 1,
+      "redisReleaseMarker" : "656661518435221555"
+    } ]
+  }, {
+    "name" : "free_order_preserved",
+    "passed" : true,
+    "trace" : [ {
+      "stage" : "free_claim_is_not_an_unpaid_order",
+      "observedAt" : "2026-11-05T13:42:04.926Z",
+      "orderId" : "656661518435221556",
+      "orderStatus" : 2,
+      "databaseStock" : 0,
+      "redisStock" : "0",
+      "releaseEvents" : 0,
+      "closedEvents" : 0,
+      "redisReleaseMarker" : null
+    } ]
+  }, {
+    "name" : "timeout_dual_inventory_return_once",
+    "passed" : true,
+    "trace" : [ {
+      "stage" : "cancel_and_database_return_committed_redis_return_pending",
+      "observedAt" : "2026-11-05T13:42:05.418Z",
+      "orderId" : "656661522730188853",
+      "orderStatus" : 4,
+      "databaseStock" : 1,
+      "redisStock" : "0",
+      "releaseEvents" : 1,
+      "closedEvents" : 1,
+      "redisReleaseMarker" : null
+    }, {
+      "stage" : "duplicate_release_noop_and_user_cannot_readmit",
+      "observedAt" : "2026-11-05T13:42:05.510Z",
+      "orderId" : "656661522730188853",
+      "orderStatus" : 4,
+      "databaseStock" : 1,
+      "redisStock" : "1",
+      "releaseEvents" : 1,
+      "closedEvents" : 1,
+      "redisReleaseMarker" : "656661522730188853"
+    } ]
+  }, {
+    "name" : "payment_before_deadline",
+    "passed" : true,
+    "trace" : [ {
+      "stage" : "paid_order_preserved_after_deadline",
+      "observedAt" : "2026-11-05T13:42:05.895Z",
+      "orderId" : "656661522730188855",
+      "orderStatus" : 2,
+      "databaseStock" : 0,
+      "redisStock" : "0",
+      "releaseEvents" : 0,
+      "closedEvents" : 0,
+      "redisReleaseMarker" : null
+    } ]
+  }, {
+    "name" : "recovery_inventory_coordination",
+    "passed" : true,
+    "trace" : [ {
+      "stage" : "rebuild_after_completed_return_kept_stock_and_qualification",
+      "observedAt" : "2026-11-05T13:42:06.408Z",
+      "orderId" : "656661527025156152",
+      "orderStatus" : 4,
+      "databaseStock" : 1,
+      "redisStock" : "1",
+      "releaseEvents" : 1,
+      "closedEvents" : 1,
+      "redisReleaseMarker" : "656661527025156152"
+    } ]
+  }, {
+    "name" : "cancellation_stock_event_atomicity",
+    "passed" : true,
+    "trace" : [ {
+      "stage" : "failed_release_enqueue_rolled_back_close_and_stock",
+      "observedAt" : "2026-11-05T13:42:06.809Z",
+      "orderId" : "656661527025156153",
+      "orderStatus" : 1,
+      "databaseStock" : 0,
+      "redisStock" : "0",
+      "releaseEvents" : 0,
+      "closedEvents" : 0,
+      "redisReleaseMarker" : null
+    } ]
+  }, {
+    "name" : "redis_release_durable_retry",
+    "passed" : true,
+    "trace" : [ {
+      "stage" : "redis_rejected_release_database_stock_already_returned_once",
+      "observedAt" : "2026-11-05T13:42:07.357Z",
+      "orderId" : "656661531320123450",
+      "orderStatus" : 4,
+      "databaseStock" : 1,
+      "redisStock" : "invalid",
+      "releaseEvents" : 1,
+      "closedEvents" : 1,
+      "redisReleaseMarker" : null
+    }, {
+      "stage" : "same_task_retried_redis_release_completed",
+      "observedAt" : "2026-11-05T13:42:07.461Z",
+      "orderId" : "656661531320123450",
+      "orderStatus" : 4,
+      "databaseStock" : 1,
+      "redisStock" : "1",
+      "releaseEvents" : 1,
+      "closedEvents" : 1,
+      "redisReleaseMarker" : "656661531320123450"
+    } ]
+  }, {
+    "name" : "missing_message_database_fallback",
+    "passed" : true,
+    "trace" : [ {
+      "stage" : "periodic_scan_closed_order_without_deadline_message",
+      "observedAt" : "2026-11-05T13:42:07.924Z",
+      "orderId" : "656661531320123451",
+      "orderStatus" : 4,
+      "databaseStock" : 1,
+      "redisStock" : "1",
+      "releaseEvents" : 1,
+      "closedEvents" : 1,
+      "redisReleaseMarker" : "656661531320123451"
+    } ]
+  }, {
+    "name" : "redis_success_inbox_failure_replay",
+    "passed" : true,
+    "trace" : [ {
+      "stage" : "redis_return_applied_but_database_ack_rolled_back",
+      "observedAt" : "2026-11-05T13:42:08.391Z",
+      "orderId" : "656661535615090748",
+      "orderStatus" : 4,
+      "databaseStock" : 1,
+      "redisStock" : "1",
+      "releaseEvents" : 1,
+      "closedEvents" : 1,
+      "redisReleaseMarker" : "656661535615090748"
+    }, {
+      "stage" : "replay_marker_prevented_double_return",
+      "observedAt" : "2026-11-05T13:42:08.460Z",
+      "orderId" : "656661535615090748",
+      "orderStatus" : 4,
+      "databaseStock" : 1,
+      "redisStock" : "1",
+      "releaseEvents" : 1,
+      "closedEvents" : 1,
+      "redisReleaseMarker" : "656661535615090748"
+    } ]
+  } ]
+}

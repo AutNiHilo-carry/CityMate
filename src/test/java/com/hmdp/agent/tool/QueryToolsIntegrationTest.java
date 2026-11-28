@@ -23,7 +23,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 /** 只允许在现有隔离测试 Compose 的独立数据库中执行。 */
 @SpringBootTest(
     properties = {
-      "citylens.reliability.scheduling-enabled=false",
+      "citymate.reliability.scheduling-enabled=false",
       "hmdp.cdc.enabled=false",
       "hmdp.mq.enabled=false",
       "hmdp.analytics.enabled=false",

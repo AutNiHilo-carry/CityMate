@@ -11,7 +11,7 @@ public class OrderMaintenance {
   private IOrderLifecycleService orderLifecycleService;
 
   @Scheduled(fixedDelay = 60000)
-  public void expireOrdinaryOrders() {
+  public void expireUnpaidOrders() {
     orderLifecycleService.expireOverdueOrders();
   }
 }

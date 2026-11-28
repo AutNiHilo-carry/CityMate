@@ -17,6 +17,8 @@ public interface SeckillVoucherMapper extends BaseMapper<SeckillVoucher> {
 
   List<Map<String, Object>> selectPublicationStates();
 
+  int returnCancelledStock(@Param("voucherId") Long voucherId);
+
   int markPublished(@Param("voucherId") Long voucherId);
 
   SeckillPublication selectPublicationDetails(@Param("voucherId") Long voucherId);

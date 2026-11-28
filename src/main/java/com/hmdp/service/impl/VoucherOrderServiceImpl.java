@@ -10,6 +10,7 @@ import com.hmdp.entity.VoucherOrder;
 import com.hmdp.enums.OrderStatus;
 import com.hmdp.enums.VoucherType;
 import com.hmdp.mapper.VoucherOrderMapper;
+import com.hmdp.reliability.RedisScripts;
 import com.hmdp.service.IOrderLifecycleService;
 import com.hmdp.service.ISeckillService;
 import com.hmdp.service.ISeckillVoucherService;
@@ -33,7 +34,6 @@ import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Service;
@@ -50,39 +50,41 @@ import org.springframework.transaction.support.TransactionTemplate;
 public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, VoucherOrder>
     implements IVoucherOrderService {
 
-  @Value("${citylens.payment.mock-enabled:false}")
+  @Value("${citymate.payment.mock-enabled:false}")
   private boolean mockPaymentEnabled;
 
   @Resource
+
   private ISeckillVoucherService seckillVoucherService;
 
   @Resource
+
   private IVoucherService voucherService;
 
   @Resource
+
   private RedisIdWorker redisIdWorker;
 
   @Resource
+
   private RedissonClient redissonClient;
 
   @Resource
+
   private StringRedisTemplate stringRedisTemplate;
 
   @Resource
+
   private TransactionTemplate transactionTemplate;
 
   @Resource
+
   private IOrderLifecycleService lifecycle;
 
-  private static final DefaultRedisScript<Long> SECKILL_SCRIPT;
-
-  static {
-    SECKILL_SCRIPT = new DefaultRedisScript<>();
-    SECKILL_SCRIPT.setLocation(new ClassPathResource("seckill.lua"));
-    SECKILL_SCRIPT.setResultType(Long.class);
-  }
+  private static final DefaultRedisScript<Long> SECKILL_SCRIPT = RedisScripts.number("seckill.lua");
 
   @Resource
+
   private ISeckillService coordinator;
 
   @Override
@@ -139,6 +141,7 @@ public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, Vou
             if (coordinator != null) {
               coordinator.markReservationSuccessful(voucherOrder.getId());
             }
+            lifecycle.registerOrderCreatedEventAndDeadline(voucherOrder.getId());
             return null;
           });
     } finally {
@@ -242,6 +245,7 @@ public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, Vou
                 || voucher.getStatus() != 1
                 || voucher.getType() == null
                 || !VoucherType.ORDINARY.matches(voucher.getType())) {
+              tx.setRollbackOnly();
               return Result.fail("普通券不存在或已下架");
             }
             VoucherOrder existing =

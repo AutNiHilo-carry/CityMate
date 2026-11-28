@@ -1,6 +1,50 @@
 # CityMate｜本地生活智能服务平台
 
+基础验证：`python scripts/run-ci.py`。范围、证据归档和 CDC 连续失败恢复见 [审查整改记录](docs/AUDIT_REMEDIATION_2026-11-27.md)；来源与升级贡献见 [CONTRIBUTIONS](CONTRIBUTIONS.md)。GitHub CI 以实际 Actions 结果为准。
+
+RAG 查询改进：[口语词项扩展与基线对照](docs/RAG_QUERY_EXPANSION_2026-11-27.md)。保留逐题漏召回和误检，不以小型合成评测冒充线上效果。
+
+回答证据控制：[有界复核与摘录校验](docs/RAG_ANSWER_SUPPORT_2026-11-27.md)。复核失败不展示草稿；模型复核仍可能误判，真实质量和延迟尚未验收。
+
 **当前实现、验证结果与下一步：[项目进度与交接](docs/PROJECT_STATUS.md)**
+
+**界面调整：[全站页面与文案整理](docs/UI_REFINEMENT_2026-11-10.md)**。前端 31 项测试及全站模板编译通过，已由本地 Web 挂载生效；浏览器视觉验收尚未完成。
+
+**当前运行版：[用户确认领券与履约追踪](docs/CLAIM_CONFIRMATION.md)**。模型只查询，领取必须本人点击确认；193 项后端、31 项前端测试通过，本地服务已更新并通过 HTTP 检查。
+
+**前阶段记录：[真实模型联调与三类问题修复](docs/PHASE7_AGENT_LIVE.md)**。当时 188 项后端回归、四类选定真实模型场景通过；当前模型工具继续保持只读，用户确认业务入口见上方。
+
+**新增单 Agent：[只读业务查询与 RAG](docs/PHASE7_READ_ONLY_AGENT.md)**。支持模型选择查店、查券、本人订单及规则工具，当前不执行领取或付款；测试与部署状态以本阶段记录为准。
+
+**最新逻辑审计：[六类问题修复与回归](docs/LOGIC_AUDIT_2026-11-09.md) · [2026-11-09 本地修复版已更新并通过 17 项 HTTP 验收](docs/LOCAL_RELEASE_2026-11-09.md)**。未推送 GitHub。
+
+**面试交付入口：[10 分钟演示与证据导航](docs/DEMO_AND_EVIDENCE.md) · [简历条目与项目讲解](docs/RESUME_AND_INTERVIEW.md)**。本轮为文档整理，现场演示需按自己的环境走查。
+
+**最新方向：[高并发交易与可靠订单主线](docs/PROJECT_DIRECTION.md) · [Phase 1 现状盘点](docs/PHASE1_INVENTORY.md)**。后端可靠性为 P0，既有 AI/RAG 保留为 P1，暂缓 SSE 扩展。
+
+验证记录：[缓存恢复（19 项）](docs/PHASE2_CACHE_RECOVERY.md) · [秒杀正确性（15 项）](docs/PHASE3_SECKILL_CORRECTNESS.md)。另见 [持久补偿（33 项）](docs/PHASE4_DURABLE_COMPENSATION.md)。另见 [秒杀超时关单（45 项）](docs/PHASE5_ORDER_EXPIRY.md)。各组为不同阶段的选定回归，存在重复用例，不累计为全量测试数或系统容量。
+
+交易实测：[2026-11-06 有限 HTTP 基线](docs/PHASE6_TRANSACTION_BASELINE.md)，含真实 MQ 履约和库存对账；不代表系统最大容量。
+
+独立进程观测：[2026-11-06 资源与 SQL/Redis 统计](docs/PHASE6_INDEPENDENT_PROFILE.md)，与原同 JVM 基线条件不同，不作为优化前后对照。
+
+跨存储中断：[Redis 已释放、Inbox 未提交时的崩溃重试](docs/PHASE6_RELEASE_GAP_CRASH.md)，核验释放标记防重复回库。
+
+关单恢复：[数据库已回库、Redis 待释放时的 SIGKILL 验证](docs/PHASE6_EXPIRY_CRASH.md)，原释放任务自动续跑。
+
+事务中断：[库存更新后的 SIGKILL、回滚与重试](docs/PHASE6_TRANSACTION_CRASH.md)，重启前独立核验回滚。
+
+提交后重投：[订单已提交、消费位点未推进时的去重验证](docs/PHASE6_COMMIT_ACK_LOSS.md)，受控断网加 SIGKILL，非全故障覆盖。
+
+真实进程故障：[SIGKILL、重启与幂等对账](docs/PHASE6_PROCESS_RECOVERY.md)，已验证两个选定窗口，非全故障覆盖。
+
+独立 JAR 复测：[资源打包与真实交易对账](docs/PHASE6_PACKAGED_JAR_PROFILE.md)，无源码挂载，非生产容量结论。
+
+Lua 加载优化：[改造与隔离对照](docs/PHASE6_LUA_LOADING_OPTIMIZATION.md)，保留持久化与业务校验；收益范围仅限本轮开发挂载环境。
+
+请求分段诊断：[脚本 SHA 热点](docs/PHASE6_REQUEST_STAGE_PROFILE.md)，仅针对当前开发挂载环境，尚未宣称生产优化收益。
+
+诊断对照：[Redis fsync 模式](docs/PHASE6_FSYNC_COMPARISON.md)，本轮未见稳定收益，未改变生产持久性。
 
 基于 Spring Boot 的本地生活平台，包含店铺搜索、探店笔记、点赞关注、签到、普通领券、异步秒杀和个人订单。在课程业务基础上，增加多层缓存、Canal 数据变更同步、RocketMQ 可靠业务消息、Kafka 行为分析、订单超时关闭及网页体验验证。
 
@@ -17,7 +61,7 @@
 | 探店社区 | 发布笔记、图片上传、点赞状态、关注关系、共同关注与关注动态 |
 | 签到 | 按月 Bitmap 签到、当前月截至今天的连续签到天数 |
 | 优惠券与订单 | 普通领券、一人一单、订单快照、本人订单、未付款普通订单取消 |
-| 秒杀 | 活动发布、Lua 预占、异步履约、请求状态、指定补偿与库存对账 |
+| 秒杀 | 活动发布、Lua 预占、异步履约、付费订单超时回库、请求状态与持久补偿 |
 | 行为分析 | 浏览、订单及模拟付款事件，5/60 分钟商家热榜 |
 | 体验与运维 | 缓存路径、Kafka 持久回执、本人订单任务进度、管理员复核与监控 |
 
@@ -31,9 +75,9 @@
 | 缓存一致性 | 更新后旧加载重新回填 | 版本与锁 owner 校验、源到期时间、事务 Outbox 失效、Canal 补充直接数据库变更 | [缓存](wiki/05-五层缓存与一致性.md)、[CDC](wiki/06-Canal与数据库变更同步.md) |
 | 普通券幂等 | 双击重复建单与历史价格变化 | 用户锁、稳定数据库槽位、事务、订单金额与规则快照 | [订单](wiki/07-优惠券与订单生命周期.md) |
 | 异步秒杀 | 超卖、重复资格与服务中断 | Lua 入口预占、Stream pending 接管、持久预约、Outbox 交接、条件扣库存 | [秒杀](wiki/08-秒杀Lua与RedisStream.md) |
-| 精确补偿与复核 | 旧失败释放新订单资格 | 核对 userId/voucherId/orderId、幂等补偿、REVIEW、死信与只读对账 | [秒杀恢复](wiki/08-秒杀Lua与RedisStream.md) |
+| 精确补偿与复核 | 旧失败释放新订单资格 | 核对 userId/voucherId/orderId、FAILED 与补偿 Outbox 同事务、幂等重放、REVIEW 与只读对账 | [秒杀恢复](wiki/08-秒杀Lua与RedisStream.md) |
 | RocketMQ 可靠消息 | 提交后任务丢失、重复投递与工作者竞争 | 业务与 Outbox 同事务、租约认领、owner 条件写回、退避重投、Inbox 消费去重 | [可靠消息](wiki/09-RocketMQ可靠消息.md) |
-| 延迟关单 | 未付款订单长期占用业务状态 | 到期时间、定时消息、条件状态迁移、数据库定期扫描兜底 | [订单](wiki/07-优惠券与订单生命周期.md)、[消息](wiki/09-RocketMQ可靠消息.md) |
+| 延迟关单 | 未付款订单长期占用业务状态 | 普通/秒杀付费订单截止时间、条件关单、DB 回库与释放 Outbox、Redis 幂等归还、定期扫描兜底 | [订单](wiki/07-优惠券与订单生命周期.md)、[消息](wiki/09-RocketMQ可靠消息.md) |
 | Kafka 分析 | 统计阻塞请求、重放重复累计 | 有界浏览采集、订单分析 Outbox、eventId 去重、事务聚合、提交数据库后确认 offset | [行为分析](wiki/10-Kafka行为分析与热榜.md) |
 | 社区可靠性 | 重试切换点赞、Feed 分页遗漏、图片删除竞争 | 明确点赞状态、持久关系、分批 Feed 续传、时间游标与 offset、图片归属和引用锁 | [社区](wiki/11-社区搜索与页面验证.md) |
 
@@ -72,14 +116,22 @@ flowchart LR
 
 ## 快速启动
 
-准备已启动的 Docker 与 Compose v2，并能下载项目镜像和 Maven 依赖。以下命令均在 **`hm-dianping` 项目根目录（包含 `pom.xml`）** 执行。
+准备已启动的 Docker 与 Compose v2，并能下载项目镜像和 Maven 依赖。以下命令均在 **`citymate` 项目根目录（包含 `pom.xml`）** 执行。
+
+Windows 本地已有构建包时，推荐使用统一启动入口：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\start-citymate.ps1
+```
+
+脚本检查 Docker、启动完整依赖，并等待网页代理的健康检查和分类查询都通过后显示访问地址；不会删除数据卷。未构建 JAR 时加 `-FromSource`，由 Java 容器使用 Maven 从源码启动。修改 Java 代码后须重新构建 JAR，或使用 `-FromSource`；仅修改前端可刷新页面。存在项目根目录 `.env` 时，脚本使用其中的 AI 配置，并在完成后恢复终端原有环境变量。
 
 开发 Compose 将 `../nginx-1.18.0/html/hmdp/imgs` 用作图片与上传目录，本地验收已从现有发布包恢复 57 个文件。该目录位于 Java 仓库之外；首次复制项目时需确认图片资源完整，或明确配置一个 Java 可写、Nginx 可读的共享图片目录并调整两处挂载；空目录只能支持后续上传，不能恢复演示数据中的历史图片。云端打包脚本也要求原始图片目录存在，缺失时会拒绝打包。
 
 ```bash
-docker compose -p hm-dianping -f dev/docker-compose.yml up -d
-docker compose -p hm-dianping -f dev/docker-compose.yml ps -a
-docker compose -p hm-dianping -f dev/docker-compose.yml logs -f java
+docker compose -p citymate -f dev/docker-compose.yml up -d
+docker compose -p citymate -f dev/docker-compose.yml ps -a
+docker compose -p citymate -f dev/docker-compose.yml logs -f java
 ```
 
 完整环境启动 MySQL、Redis、Memcache、Canal、RocketMQ、Kafka、Java 和 Nginx；首次初始化导入演示数据、创建消息 Topic，并由 Java 执行 Flyway 增量迁移。首次启动需要等待镜像、依赖下载与 Java 初始化；`mq-init`、`kafka-init` 等任务正常完成后退出是预期行为。
@@ -101,7 +153,7 @@ curl -i 'http://127.0.0.1:8080/api/shop-type/list'
 浏览器经 Nginx 请求时加 `/api`，直接请求 Java 时不加。数据卷保留数据库和消息数据，日常停止使用：
 
 ```bash
-docker compose -p hm-dianping -f dev/docker-compose.yml down
+docker compose -p citymate -f dev/docker-compose.yml down
 ```
 
 业务环境不使用 `down -v` 清理。已有数据库升级、独立 IDE 启动、上传路径和依赖地址配置见 [环境搭建](wiki/02-环境搭建与启动.md)。只执行 `mvn spring-boot:run` 不会自动启动网页或消息服务。
@@ -158,7 +210,7 @@ docker compose -p hm-dianping -f dev/docker-compose.yml down
 ## 项目结构与开发规范
 
 ```text
-hm-dianping/
+citymate/
 ├── src/main/java/com/hmdp/
 │   ├── controller/       HTTP 接口
 │   ├── service/          业务接口与实现
@@ -203,7 +255,7 @@ npm --prefix frontend test
 [测试 Compose](dev/docker-compose.test.yml) 使用独立项目与数据库 `hmdp_optimization_test`。先创建 Maven 缓存卷，再运行：
 
 ```bash
-docker volume create hm-dianping_maven-cache
+docker volume create citymate_maven-cache
 docker compose -p hmdp-optimization-test -f dev/docker-compose.test.yml run --rm test
 # 仅清理这套明确命名的隔离测试环境
 docker compose -p hmdp-optimization-test -f dev/docker-compose.test.yml down -v
@@ -220,14 +272,14 @@ docker compose -p hmdp-optimization-test -f dev/docker-compose.test.yml down -v
 ### 可选监控
 
 ```bash
-docker compose -p hm-dianping -f dev/docker-compose.yml --profile monitoring up -d
+docker compose -p citymate -f dev/docker-compose.yml --profile monitoring up -d
 ```
 
 默认 [Prometheus :9091](http://127.0.0.1:9091/) 与 [Alertmanager :9094](http://127.0.0.1:9094/)，关注缓存回源、CDC 延迟、Stream pending、Outbox 积压、消费失败和 Kafka lag。基础健康 UP 不等于所有后台任务都已完成，具体事件仍以业务回执判断。指标凭证只用于监控读取，不授予管理员业务权限。
 
 ## CityMate 查询工具
 
-已新增 4 个内部只读工具：商户搜索、店铺优惠券、本人订单与领取进度，包含参数白名单、认证身份传递、输出字段限制和超时边界。尚未接入模型或 AI 对话页面，详见 [查询工具说明](docs/citymate-query-tools.md)。网页产品名已更新为 CityMate，课程底座与历史资料保留来源说明。
+已新增 4 个内部只读业务工具：商户搜索、店铺优惠券、本人订单与领取进度，包含参数白名单、认证身份传递、输出字段限制和超时边界。单 Agent 在此基础上增加分类、商圈和知识检索工具，详见 [查询工具说明](docs/citymate-query-tools.md) 与 [单 Agent 阶段](docs/PHASE7_READ_ONLY_AGENT.md)。网页产品名已更新为 CityMate，课程底座与历史资料保留来源说明。
 
 ## CityMate 公开知识检索
 
@@ -235,7 +287,7 @@ docker compose -p hm-dianping -f dev/docker-compose.yml --profile monitoring up 
 
 ## CityMate DeepSeek 规则问答
 
-新增需要登录的 `POST /knowledge/answer`：复用 BM25 证据，调用 DeepSeek，返回回答和服务器来源，并在生成后复查版本。含无证据兜底、引用校验、限流、并发上限和超时处理。默认关闭，需通过环境变量配置 Key；已完成一次真实模型联调，系统性质量评测尚待完成。详见 [DeepSeek 接入说明](docs/citymate-deepseek.md)。已接入 [AI 助手页面](http://127.0.0.1:8080/assistant.html)，支持登录问答、范围选择和原文查看；尚未接 SSE 或模型工具调用。
+新增需要登录的 `POST /knowledge/answer`：复用 BM25 证据，调用 DeepSeek，返回回答和服务器来源，并在生成后复查版本。含无证据兜底、引用校验、限流、并发上限和超时处理。默认关闭，需通过环境变量配置 Key；已完成一次真实模型联调，系统性质量评测尚待完成。详见 [DeepSeek 接入说明](docs/citymate-deepseek.md)。[AI 助手页面](http://127.0.0.1:8080/assistant.html) 保留规则问答，并新增 `/agent/query` 智能查询入口；尚未接 SSE，单 Agent 的验证范围独立记录。
 
 ## 当前实现范围
 

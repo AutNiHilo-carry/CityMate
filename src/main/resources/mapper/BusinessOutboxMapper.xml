@@ -66,6 +66,24 @@
         VALUES('SECKILL_RETRY',#{orderId})
     </insert>
 
+    <insert id="insertSeckillStockRelease">
+        INSERT INTO tb_business_outbox(kind,aggregate_id,user_id,idempotency_key)
+        VALUES('SECKILL_RELEASE',#{orderId},#{userId},CONCAT('seckill-release:',#{orderId}))
+        ON DUPLICATE KEY UPDATE id=id
+    </insert>
+
+    <select id="countUnfinishedStockReleases" resultType="Long">
+        SELECT COUNT(*) FROM tb_business_outbox b
+        JOIN tb_voucher_order o ON o.id=b.aggregate_id
+        WHERE b.kind='SECKILL_RELEASE' AND o.voucher_id=#{voucherId} AND b.state&lt;&gt;'DONE'
+    </select>
+
+    <insert id="insertSeckillCompensation">
+        INSERT INTO tb_business_outbox(kind,aggregate_id,user_id,idempotency_key)
+        VALUES('SECKILL_COMPENSATE',#{orderId},#{userId},CONCAT('seckill-compensate:',#{orderId}))
+        ON DUPLICATE KEY UPDATE id=id
+    </insert>
+
     <select id="selectEventForUpdate" resultMap="BusinessOutboxTaskMap">
         SELECT *
         FROM tb_business_outbox

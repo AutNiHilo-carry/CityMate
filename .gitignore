@@ -43,3 +43,7 @@ build/
 !/.env.example
 /dev/.env.*
 !/dev/.env.example
+
+# Generated Python profiling bytecode
+__pycache__/
+*.py[cod]

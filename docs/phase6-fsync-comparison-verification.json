@@ -1,0 +1,113 @@
+{
+  "generatedAt": "2026-11-06T11:58:25.148567+08:00",
+  "pairId": "9477aa52687740b89256787695bffce1",
+  "status": "ISOLATED_FSYNC_COMPARISON_PASSED",
+  "runs": [
+    {
+      "archive": "docs/transaction-profiles/f7ad3592261d411c8c5d1aad791aff85",
+      "runId": "f7ad3592261d411c8c5d1aad791aff85",
+      "mode": "always"
+    },
+    {
+      "archive": "docs/transaction-profiles/abe2ea943f874807b8f2beed232b4def",
+      "runId": "abe2ea943f874807b8f2beed232b4def",
+      "mode": "everysec"
+    }
+  ],
+  "junitExecutions": 2,
+  "uniqueJunitCases": 1,
+  "allExecutionsPassed": true,
+  "measuredHttpRequests": 1200,
+  "measuredOrders": 600,
+  "warmupRequestsExcluded": 40,
+  "actualRedisConfigsVerified": true,
+  "aofEnabledInBoth": true,
+  "matchingEnvironmentFields": {
+    "databaseVersion": "8.0.46",
+    "jvm": "1.8.0_504",
+    "availableProcessors": 28,
+    "jvmMaxMemoryBytes": 477626368,
+    "brokerEnabled": true,
+    "automaticScheduling": true,
+    "generatorSharesApplicationJvm": false,
+    "generatorHost": "Windows host; published localhost port, independent Python process"
+  },
+  "roundComparison": [
+    {
+      "concurrency": 8,
+      "always": {
+        "httpResponsesPerSecond": 22.237191311098368,
+        "allResponseP99Ms": 689.7827000066172,
+        "observedEndToEndOrdersPerSecond": 6.989327063431683
+      },
+      "everysec": {
+        "httpResponsesPerSecond": 22.87131523103557,
+        "allResponseP99Ms": 709.1096000222024,
+        "observedEndToEndOrdersPerSecond": 7.364318598181759
+      },
+      "httpResponseRateChangePercent": 2.8516367515384777,
+      "p99ChangePercent": 2.8018823921504232,
+      "observedCompletionRateChangePercent": 5.365202276940795
+    },
+    {
+      "concurrency": 16,
+      "always": {
+        "httpResponsesPerSecond": 23.420669047285664,
+        "allResponseP99Ms": 1218.2447999948636,
+        "observedEndToEndOrdersPerSecond": 6.358556558987631
+      },
+      "everysec": {
+        "httpResponsesPerSecond": 23.673889333555156,
+        "allResponseP99Ms": 1285.5812999769114,
+        "observedEndToEndOrdersPerSecond": 7.323319637119607
+      },
+      "httpResponseRateChangePercent": 1.0811829745693835,
+      "p99ChangePercent": 5.527337361286633,
+      "observedCompletionRateChangePercent": 15.172674319744983
+    },
+    {
+      "concurrency": 32,
+      "always": {
+        "httpResponsesPerSecond": 21.4710238602286,
+        "allResponseP99Ms": 2879.4740000157617,
+        "observedEndToEndOrdersPerSecond": 6.714426152494125
+      },
+      "everysec": {
+        "httpResponsesPerSecond": 21.518114605162904,
+        "allResponseP99Ms": 2872.520100005204,
+        "observedEndToEndOrdersPerSecond": 5.9311066778416315
+      },
+      "httpResponseRateChangePercent": 0.21932230731451785,
+      "p99ChangePercent": -0.24149896857966757,
+      "observedCompletionRateChangePercent": -11.666216246365657
+    }
+  ],
+  "priorProfilePreserved": true,
+  "productionDurabilityChanged": false,
+  "productionCodeChanged": false,
+  "businessDatabaseModified": false,
+  "testEnvironmentsCleaned": true,
+  "optimizationClaimed": false,
+  "diagnosticOnly": true,
+  "rootCauseProven": false,
+  "observedConclusion": "No consistent throughput or latency gain from everysec in this finite pair; does not support Redis fsync policy as the dominant limit",
+  "observerSampleCounts": {
+    "always": 19,
+    "everysec": 16
+  },
+  "observerErrorCounts": {
+    "always": 0,
+    "everysec": 0
+  },
+  "sourceHashes": {
+    "src/test/java/com/hmdp/reliability/IndependentTransactionProfileIntegrationTest.java": "d7f731aee1182fcfb792094599fede467c8400e56085d2d5dd56956dd717f313",
+    "scripts/profile-transaction-load.py": "b618d99d6c82e93f0674fb0019e79abfc40ab1e7fe8ed67a9f708f92e3607d50"
+  },
+  "limitations": [
+    "One always-then-everysec pair; no order reversal or confidence intervals",
+    "Same host and shared disk resources, not maximum capacity",
+    "Fresh JVMs and fixtures; filesystem caches and Maven parent memory can differ",
+    "Normal reconciliation only, not power-loss durability verification",
+    "Do not interpret a diagnostic fsync policy change as a production optimization"
+  ]
+}

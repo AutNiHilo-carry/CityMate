@@ -33,7 +33,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 @SpringBootTest(
     properties = {
-      "citylens.reliability.scheduling-enabled=false",
+      "citymate.reliability.scheduling-enabled=false",
       "hmdp.mq.enabled=true",
       "hmdp.mq.seckill-enabled=true",
       "hmdp.mq.group-prefix=hmdp-integration"
@@ -81,6 +81,126 @@ class RocketMqIntegrationTest {
       Thread.sleep(100);
     }
     fail("真实 RocketMQ 消费未在 45 秒内完成");
+  }
+
+  @Test
+  void realBrokerExpiresSeckillAndReturnsRedisStockThroughReleaseEvent() throws Exception {
+    long sku = 917111;
+    long orderId = 917110;
+    jdbc.update("DELETE FROM tb_voucher_order WHERE voucher_id=?", sku);
+    jdbc.update("DELETE FROM tb_seckill_reservation WHERE voucher_id=?", sku);
+    jdbc.update("DELETE FROM tb_seckill_voucher WHERE voucher_id=?", sku);
+    jdbc.update("DELETE FROM tb_voucher WHERE id=?", sku);
+    jdbc.update(
+        "INSERT INTO tb_voucher(id,shop_id,title,rules,pay_value,actual_value,type,status) "
+            + "VALUES(?,1,'paid seckill','one admission',100,200,1,1)",
+        sku);
+    jdbc.update(
+        "INSERT INTO tb_seckill_voucher(voucher_id,stock,begin_time,end_time) "
+            + "VALUES(?,1,TIMESTAMPADD(HOUR,-1,NOW()),TIMESTAMPADD(DAY,1,NOW()))",
+        sku);
+    jdbc.update(
+        "INSERT INTO tb_seckill_reservation(order_id,voucher_id,user_id) VALUES(?,?,?)",
+        orderId,
+        sku,
+        USER);
+    redis.opsForValue().set("seckill:stock:" + sku, "0");
+    redis.opsForSet().add("seckill:order:" + sku, String.valueOf(USER));
+    redis
+        .opsForHash()
+        .put("seckill:requests:" + sku, String.valueOf(USER), String.valueOf(orderId));
+    redis.delete("seckill:released:" + orderId);
+    orders.persistSeckill(
+        new com.hmdp.entity.VoucherOrder().setId(orderId).setVoucherId(sku).setUserId(USER));
+    jdbc.update(
+        "UPDATE tb_voucher_order SET expire_at=TIMESTAMPADD(SECOND,4,NOW(3)) WHERE id=?", orderId);
+    jdbc.update(
+        "UPDATE tb_business_outbox SET deliver_at="
+            + "(SELECT expire_at FROM tb_voucher_order WHERE id=?) "
+            + "WHERE aggregate_id=? AND kind='ORDER_EXPIRE'",
+        orderId,
+        orderId);
+    relay.relayOutboxBatch();
+    await(
+        () ->
+            jdbc.queryForObject(
+                    "SELECT status FROM tb_voucher_order WHERE id=?", Integer.class, orderId)
+                == 4);
+    assertEquals(
+        1,
+        jdbc.queryForObject(
+            "SELECT stock FROM tb_seckill_voucher WHERE voucher_id=?", Integer.class, sku));
+    long event =
+        jdbc.queryForObject(
+            "SELECT id FROM tb_business_outbox WHERE aggregate_id=? AND kind='SECKILL_RELEASE'",
+            Long.class,
+            orderId);
+    relay.relayOutboxBatch();
+    await(
+        () ->
+            "DONE"
+                .equals(
+                    jdbc.queryForObject(
+                        "SELECT state FROM tb_business_outbox WHERE id=?", String.class, event)));
+    assertEquals("1", redis.opsForValue().get("seckill:stock:" + sku));
+    transport.publish(BusinessEvent.from(businessOutboxMapper.selectEventById(event)));
+    assertEquals("1", redis.opsForValue().get("seckill:stock:" + sku));
+    assertEquals(String.valueOf(orderId), redis.opsForValue().get("seckill:released:" + orderId));
+  }
+
+  @Test
+  void realBrokerCompensatesFailedReservationOnce() throws Exception {
+    long orderId = 916099;
+    jdbc.update("DELETE FROM tb_seckill_reservation WHERE order_id=?", orderId);
+    jdbc.update(
+        "INSERT INTO tb_seckill_reservation(order_id,voucher_id,user_id,state) "
+            + "VALUES(?,?,?,'FAILED')",
+        orderId,
+        SKU,
+        USER);
+    redis.delete(
+        Arrays.asList(
+            "seckill:stock:" + SKU,
+            "seckill:order:" + SKU,
+            "seckill:requests:" + SKU,
+            "seckill:request:" + orderId));
+    redis.opsForValue().set("seckill:stock:" + SKU, "0");
+    redis.opsForSet().add("seckill:order:" + SKU, String.valueOf(USER));
+    redis
+        .opsForHash()
+        .put("seckill:requests:" + SKU, String.valueOf(USER), String.valueOf(orderId));
+    transactions.execute(
+        tx -> {
+          businessOutboxMapper.insertSeckillCompensation(orderId, USER);
+          return null;
+        });
+    long eventId =
+        jdbc.queryForObject(
+            "SELECT id FROM tb_business_outbox "
+                + "WHERE kind='SECKILL_COMPENSATE' AND aggregate_id=?",
+            Long.class,
+            orderId);
+    BusinessEvent event = BusinessEvent.from(businessOutboxMapper.selectEventById(eventId));
+    relay.relayOutboxBatch();
+    await(
+        () ->
+            "DONE"
+                .equals(
+                    jdbc.queryForObject(
+                        "SELECT state FROM tb_business_outbox WHERE id=?", String.class, eventId)));
+    for (int i = 0; i < 3; i++) {
+      transport.publish(event);
+    }
+    await(
+        () ->
+            jdbc.queryForObject(
+                    "SELECT COUNT(*) FROM tb_message_inbox "
+                        + "WHERE event_id=? AND consumer_group='activities'",
+                    Integer.class,
+                    eventId)
+                == 1);
+    assertEquals("1", redis.opsForValue().get("seckill:stock:" + SKU));
+    assertEquals("FAILED", coordinator.queryReservationState(orderId));
   }
 
   @Test

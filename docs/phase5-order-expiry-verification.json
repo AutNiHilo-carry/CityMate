@@ -1,0 +1,171 @@
+{
+  "generatedAt": "2026-11-05T21:51:18.542745+08:00",
+  "status": "SELECTED_EXPIRY_AND_STOCK_RELEASE_TESTS_PASSED",
+  "selectedTestsPassed": 45,
+  "localRegressionTestsPassed": 40,
+  "realBrokerTestsPassed": 5,
+  "newLocalIntegrationScenarios": 10,
+  "newBrokerScenarios": 1,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "checkstyle": "passed",
+  "compilerRelease": 8,
+  "suites": [
+    {
+      "name": "com.hmdp.reliability.SeckillOrderExpiryIntegrationTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "returningStockAfterActivityEndDoesNotAllowNewAdmission",
+        "expiredPaymentAndCloseRaceCancelsOnlyOnce",
+        "freeOrderHasNoDeadlineAndNeverReturnsStock",
+        "expiryReturnsBothStocksOnceAndPreservesPurchaseQualification",
+        "paymentBeforeDeadlineWinsAndLateTimeoutDoesNotReleaseStock",
+        "recoveryRefusesPendingReleaseThenRebuildsWithoutDoubleStock",
+        "releaseTaskInsertFailureRollsBackCancellationAndDatabaseReturn",
+        "redisReleaseFailureKeepsTaskAndRecoversWithoutSecondDatabaseReturn",
+        "missingDeadlineMessageIsCoveredByDatabaseScan",
+        "redisReleasedBeforeInboxFailureReplaysUsingPermanentMarker"
+      ],
+      "reportUpdatedAt": "2026-11-05T13:42:08.545048+00:00"
+    },
+    {
+      "name": "com.hmdp.reliability.SeckillCompensationIntegrationTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "exhaustedRetryRequiresReviewAndManualRedriveUsesSameEvent",
+        "committedOrderRejectsFailureConfirmationAndDelayedCompensation",
+        "failedStateAndEventRollBackTogetherIfEnqueueFails",
+        "concurrentDuplicateEventsReleaseOnceAndRecordOneInbox",
+        "redisSuccessBeforeInboxRollbackCanBeReplayedWithoutDoubleRelease",
+        "outerBusinessRollbackCannotReleaseRedisOrLeaveAnEvent",
+        "oldCompensationCannotReleaseNewerUserReservation",
+        "failedRedisCompensationRecoversThroughOneDurableEvent"
+      ],
+      "reportUpdatedAt": "2026-11-05T13:41:30.284872+00:00"
+    },
+    {
+      "name": "com.hmdp.messaging.MessagingIntegrationTest",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "consumerCanCompleteBeforePublisherMarksSent",
+        "repeatedTimeoutProducesOneClosureEventAndReconciliationCoversMissingMessage",
+        "feedContinuationPreservesCursorAndPublicationTimeAcrossDuplicateDelivery",
+        "lostBrokerMessageCanBeRedrivenButFutureDeadlineIsPreserved",
+        "earlyTimeoutReschedulesUsingCurrentDeadline",
+        "persistentFailureIsQuarantinedAndManualRetryPreservesIdentity",
+        "failedFulfillmentRetainsReservationAndCreatesReviewTask",
+        "paymentAndExpirationRaceHasOneTerminalStateAndOneEvent",
+        "businessRollbackAlsoRollsBackEvent",
+        "concurrentDuplicateDeliveryCreatesOneHistoryAndOneInbox",
+        "invalidPayloadCannotQuarantineAnotherBusinessEvent",
+        "parallelRelaysClaimDisjointEventsAndExpiredLeaseCanBeRecovered",
+        "unknownSendResultRetriesWithSameEventId",
+        "deadlineIsPersistedAndPaidOrderSurvivesLateDelivery"
+      ],
+      "reportUpdatedAt": "2026-11-05T13:40:05.148087+00:00"
+    },
+    {
+      "name": "com.hmdp.reliability.ReliabilityIntegrationTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "sameUserConcurrentRequestsShareOneReservation",
+        "databaseInsertFailureRollsBackStockAndPendingMessageCanRetry",
+        "poisonMessageIsQuarantinedAndCompensationIsIdempotent"
+      ],
+      "reportUpdatedAt": "2026-11-05T13:40:50.321020+00:00"
+    },
+    {
+      "name": "com.hmdp.MockPaymentTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "validatesOwnerAmountStateAndIdempotence"
+      ],
+      "reportUpdatedAt": "2026-11-05T13:40:05.737358+00:00"
+    },
+    {
+      "name": "com.hmdp.VoucherOrderReliabilityTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "persistenceFailureRollsBackAndDuplicateDeliveryDoesNotDeductAgain",
+        "personalReadsAlwaysUseAuthenticatedOwnerAndHeldStatus",
+        "lockContentionFailsConsumptionInsteadOfAcknowledgingSuccess"
+      ],
+      "reportUpdatedAt": "2026-11-05T13:42:08.770407+00:00"
+    },
+    {
+      "name": "com.hmdp.reliability.SeckillMessageTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "registrationOutageDoesNotAcknowledgeOrQuarantineAnUnregisteredRequest"
+      ],
+      "reportUpdatedAt": "2026-11-05T13:41:30.558264+00:00"
+    },
+    {
+      "name": "com.hmdp.messaging.RocketMqIntegrationTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "realBrokerCompensatesFailedReservationOnce",
+        "realBrokerAcceptsAndDeduplicatesRepeatedDelivery",
+        "realTimerClosesUnpaidOrderAndPreservesPaidOrder",
+        "realBrokerExpiresSeckillAndReturnsRedisStockThroughReleaseEvent",
+        "luaStreamHandoffAndRocketFulfillmentRemainIdempotent"
+      ],
+      "reportUpdatedAt": "2026-11-05T13:46:34.209743+00:00"
+    }
+  ],
+  "packagePassed": true,
+  "packageVerification": "phase5-package-verification.json",
+  "scenarioEvidence": "phase5-order-expiry-evidence.json",
+  "productionCodeChanged": true,
+  "databaseMigrationAdded": false,
+  "businessDatabaseModified": false,
+  "businessApplicationRestarted": false,
+  "resourcesDirectoryRestored": true,
+  "resourcesPath": "src/main/resources",
+  "testDatabase": "hmdp_optimization_test",
+  "testProjects": [
+    "citymate-expiry-p5",
+    "citymate-expiry-mq-p5"
+  ],
+  "testEnvironmentsCleaned": true,
+  "newPerformanceMetrics": false,
+  "policy": {
+    "qualificationRestoredAfterCancellation": false,
+    "freeOrdersExpire": false,
+    "paidOrdersCancelled": false,
+    "historicalMissingDeadlinesBackfilled": false,
+    "timeoutStartsAt": "formal order creation",
+    "redisReleaseMarkerTTL": null
+  },
+  "limitations": [
+    "Mock payments only; no real payment/refund/redemption",
+    "Faults injected with invalid Redis data and MySQL test triggers, not actual process termination",
+    "No new throughput or latency measurement; permanent markers require coordinated archival",
+    "Redis data loss still requires recovery gates and reviewed repair"
+  ]
+}

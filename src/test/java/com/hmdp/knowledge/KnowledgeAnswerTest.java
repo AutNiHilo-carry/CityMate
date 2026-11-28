@@ -3,9 +3,11 @@ package com.hmdp.knowledge;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -55,6 +57,11 @@ class KnowledgeAnswerTest {
     when(model.isAvailable()).thenReturn(true);
     when(model.complete(anyString(), anyString()))
         .thenReturn("{\"answerable\":true,\"answer\":\"SUCCESS 表示落库，不代表付款。\",\"citations\":[1]}");
+    when(model.completeBounded(anyString(), anyString(), anyInt()))
+        .thenReturn(
+            "{\"supported\":true,\"checks\":[{\"sentenceId\":1,"
+                + "\"sourceType\":\"KNOWLEDGE\",\"sourceId\":1,"
+                + "\"quote\":\"SUCCESS 表示落库，不表示付款。\"}]}");
   }
 
   @AfterEach
@@ -72,7 +79,35 @@ class KnowledgeAnswerTest {
     assertTrue(result.getSuccess());
     assertEquals("ANSWERED", result.getData().get("status"));
     assertTrue(result.getData().get("sources").toString().contains("version=2"));
-    verify(knowledge).source("claim-progress", 2);
+    verify(knowledge, times(2)).source("claim-progress", 2);
+  }
+
+  @Test
+  void validCitationCannotBypassRejectedAnswerSupport() {
+    when(model.complete(anyString(), anyString()))
+        .thenReturn("{\"answerable\":true,\"answer\":\"可以无条件退款。\",\"citations\":[1]}");
+    when(model.completeBounded(anyString(), anyString(), anyInt()))
+        .thenReturn("{\"supported\":false}");
+    Map<String, Object> result = service.answer(request).getData();
+    assertEquals("INSUFFICIENT_EVIDENCE", result.get("status"));
+    assertFalse(result.get("answer").toString().contains("无条件退款"));
+    assertTrue(((java.util.List<?>) result.get("sources")).isEmpty());
+  }
+
+  @Test
+  void failedReviewNeverFallsBackToTheUncheckedAnswerAndPermitIsReleased() {
+    when(model.completeBounded(anyString(), anyString(), anyInt()))
+        .thenThrow(new DeepSeekClient.Failure("MODEL_TIMEOUT"));
+    for (int index = 0; index < 3; index++) {
+      assertEquals("SUPPORT_CHECK_UNAVAILABLE", status());
+    }
+  }
+
+  @Test
+  void sourceChangedDuringReviewDiscardsTheAnswer() {
+    when(knowledge.source("claim-progress", 2))
+        .thenReturn(Result.ok(new LinkedHashMap<>()), Result.fail("已更新"));
+    assertEquals("STALE_EVIDENCE", status());
   }
 
   @Test

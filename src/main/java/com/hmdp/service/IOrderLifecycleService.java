@@ -8,7 +8,7 @@ public interface IOrderLifecycleService {
 
   void registerOrderClosedEvent(long orderId, long userId);
 
-  boolean closeExpiredOrdinaryOrder(long orderId);
+  boolean closeExpiredOrder(long orderId);
 
   void expireOverdueOrders();
 }

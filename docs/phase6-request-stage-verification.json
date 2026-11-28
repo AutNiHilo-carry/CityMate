@@ -1,0 +1,26 @@
+{
+  "generatedAt": "2026-11-07T13:36:36.790151+08:00",
+  "status": "REQUEST_STAGE_DIAGNOSIS_PASSED",
+  "runId": "92502feab3584c9da7b15f7264537bd3",
+  "preliminaryRunId": "ff4d5136ae5c492db318208af060a643",
+  "junitExecutionsPassed": 2,
+  "uniqueJunitCases": 1,
+  "measuredRequests": 1200,
+  "measuredOrders": 600,
+  "warmupRequestsExcluded": 40,
+  "preliminaryCompileFailureRun": "454b760a63994b6d9daea6354a8190bc",
+  "preliminaryCompileFailureExcluded": true,
+  "checkstylePassed": true,
+  "java8BuildPassed": true,
+  "originalProfilePreserved": true,
+  "testEnvironmentsCleaned": true,
+  "productionCodeChanged": false,
+  "productionDurabilityChanged": false,
+  "optimizationClaimed": false,
+  "finding": "getSha1 path dominates sampled server request time; filesystem versus monitor wait not separately measured",
+  "sources": {
+    "src/test/java/com/hmdp/reliability/RequestStageProbe.java": "6f10e383670c013559229391123e6e27aa742d1adf1d8b2c9f92c40d72017297",
+    "src/test/java/com/hmdp/reliability/IndependentTransactionProfileIntegrationTest.java": "fb9c685a4ae79d8bcb825b2a4d31f1487d5f607309415cedc5a141e99d913545",
+    "scripts/analyze-request-stages.py": "443bf3f1a9e49933af2cb79f3a4cc638d5c1e7c608775b2cba8938730a02dd8f"
+  }
+}

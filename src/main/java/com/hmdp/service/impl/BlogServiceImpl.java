@@ -270,25 +270,32 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
 
   @Override
   public Result queryMyBlog(Integer current) {
+    if (current == null || current < 1 || current > 100000) {
+      return Result.fail("页码无效");
+    }
     // 获取登录用户
     UserDTO user = UserHolder.getUser();
     // 根据用户查询
     Page<Blog> page =
         query()
             .eq("user_id", user.getId())
+            .orderByDesc("id")
             .page(new Page<>(current, SystemConstants.MAX_PAGE_SIZE));
     // 获取当前页数据
     List<Blog> records = page.getRecords();
+    enrich(records);
     return Result.ok(records);
   }
 
   @Override
   public Result queryBlogByShop(Long shopId, Integer current) {
-    if (shopId == null || shopId <= 0 || current < 1 || current > 100000) {
+    if (shopId == null || shopId <= 0 || current == null || current < 1 || current > 100000) {
       return Result.fail("shopId 和 current 必须是正整数");
     }
     Page<Blog> page =
-        query().eq("shop_id", shopId).orderByDesc("create_time").page(new Page<>(current, 5));
+        query().eq("shop_id", shopId).orderByDesc("create_time").orderByDesc("id")
+            .page(new Page<>(current, 5));
+    enrich(page.getRecords());
     return Result.ok(page.getRecords(), page.getTotal());
   }
 
@@ -318,11 +325,16 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
 
   @Override
   public Result queryBlogByUserId(Integer current, Long id) {
+    if (id == null || id <= 0 || current == null || current < 1 || current > 100000) {
+      return Result.fail("用户或页码无效");
+    }
     // 根据用户查询
     Page<Blog> page =
-        query().eq("user_id", id).page(new Page<>(current, SystemConstants.MAX_PAGE_SIZE));
+        query().eq("user_id", id).orderByDesc("id")
+            .page(new Page<>(current, SystemConstants.MAX_PAGE_SIZE));
     // 获取当前页数据
     List<Blog> records = page.getRecords();
+    enrich(records);
     return Result.ok(records);
   }
 }

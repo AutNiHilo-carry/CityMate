@@ -13,16 +13,19 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.util.UrlPathHelper;
 
 @Component
 public class AccessGuard implements HandlerInterceptor {
+  private static final UrlPathHelper PATHS = new UrlPathHelper();
 
   @Resource
+
   private IOperationAuditService operationAuditService;
 
   private final RateLimiter limits;
 
-  @Value("${citylens.catalog-admin-ids:}")
+  @Value("${citymate.catalog-admin-ids:}")
   private String admins;
 
   @Value("${hmdp.monitor-token:}")
@@ -42,7 +45,7 @@ public class AccessGuard implements HandlerInterceptor {
   @Override
   public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler)
       throws Exception {
-    String path = req.getRequestURI();
+    String path = PATHS.getPathWithinApplication(req);
     String method = req.getMethod();
     if (path.equals("/actuator/prometheus")
         && "GET".equals(method)
@@ -125,15 +128,15 @@ public class AccessGuard implements HandlerInterceptor {
   @Override
   public void afterCompletion(
       HttpServletRequest req, HttpServletResponse res, Object handler, Exception ex) {
-    if (!(req.getRequestURI().startsWith("/ops/") || req.getRequestURI().equals("/shop"))
-        || "GET".equals(req.getMethod())) {
+    String path = PATHS.getPathWithinApplication(req);
+    if (!(path.startsWith("/ops/") || path.equals("/shop")) || "GET".equals(req.getMethod())) {
       return;
     }
     // No request body, authentication token or personal text is stored in the audit.
     operationAuditService.recordAudit(
         UserHolder.getUser() == null ? null : UserHolder.getUser().getId(),
         req.getMethod(),
-        req.getRequestURI(),
+        path,
         res.getStatus());
   }
 }

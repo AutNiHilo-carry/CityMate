@@ -105,6 +105,19 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
 
   @Override
   public Result queryShopByType(Integer typeId, Integer current, Double x, Double y) {
+    if (typeId == null || typeId <= 0 || current == null || current < 1 || current > 10000) {
+      return Result.fail("分类或分页参数无效");
+    }
+    if ((x == null) != (y == null)
+        || (x != null
+            && (!Double.isFinite(x)
+                || !Double.isFinite(y)
+                || x < -180
+                || x > 180
+                || y < -85.05112878
+                || y > 85.05112878))) {
+      return Result.fail("附近查询坐标无效");
+    }
     // 1.判断是否需要根据坐标查询
     if (x == null || y == null) {
       // 不需要坐标查询，按数据库查询
@@ -293,19 +306,63 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
 
   @Override
   public Result catalog(String keyword, Long typeId, Integer page, Integer size, String sort) {
-    if (page < 1
+    ShopSearchDTO criteria = new ShopSearchDTO();
+    criteria.setKeyword(keyword);
+    criteria.setTypeId(typeId);
+    criteria.setPage(page);
+    criteria.setSize(size);
+    criteria.setSort(sort);
+    return catalog(criteria);
+  }
+
+  @Override
+  public Result catalog(ShopSearchDTO criteria) {
+    if (criteria == null) {
+      return Result.fail("店铺查询参数无效");
+    }
+    Integer page = criteria.getPage();
+    Integer size = criteria.getSize();
+    Long typeId = criteria.getTypeId();
+    String keyword = criteria.getKeyword() == null ? "" : criteria.getKeyword().trim();
+    String sort = criteria.getSort();
+    if (page == null || size == null || page < 1
         || page > 10000
         || size < 1
         || size > 20
         || keyword.length() > 50
         || (typeId != null && typeId <= 0)
+        || (criteria.getArea() != null && criteria.getArea().length() > 50)
+        || (criteria.getMaxPrice() != null
+            && (criteria.getMaxPrice() < 0 || criteria.getMaxPrice() > 100000))
+        || (criteria.getMinScore() != null
+            && (criteria.getMinScore() < 0 || criteria.getMinScore() > 50))
         || !("score".equals(sort) || "price".equals(sort))) {
       return Result.fail("店铺查询参数无效");
     }
     QueryWrapper<Shop> query = new QueryWrapper<>();
     query
-        .eq(typeId != null, "type_id", typeId)
-        .like(StrUtil.isNotBlank(keyword), "name", keyword.trim());
+        .eq(typeId != null, "type_id", typeId);
+    if (StrUtil.isNotBlank(keyword)) {
+      query.apply("name LIKE {0} ESCAPE '!'", literalContains(keyword));
+    }
+    if (StrUtil.isNotBlank(criteria.getArea())) {
+      String area = literalContains(criteria.getArea().trim());
+      query.and(q -> q.apply("area LIKE {0} ESCAPE '!'", area)
+          .or().apply("address LIKE {0} ESCAPE '!'", area));
+    }
+    if (criteria.getMaxPrice() != null) {
+      query.le("avg_price", criteria.getMaxPrice());
+    }
+    if (criteria.getMinScore() != null) {
+      query.ge("score", criteria.getMinScore());
+    }
+    if (Boolean.TRUE.equals(criteria.getHasVoucher())) {
+      query.apply("EXISTS (SELECT 1 FROM tb_voucher v "
+          + "LEFT JOIN tb_seckill_voucher sv ON sv.voucher_id=v.id "
+          + "WHERE v.shop_id=tb_shop.id AND v.status=1 "
+          + "AND (v.type=0 OR (v.type=1 AND sv.stock>0 "
+          + "AND sv.begin_time<=NOW() AND sv.end_time>=NOW())))");
+    }
     if ("price".equals(sort)) {
       query.orderByAsc("avg_price");
     } else {
@@ -314,6 +371,10 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
     query.orderByAsc("id");
     Page<Shop> result = page(new Page<>(page, size), query);
     return Result.ok(result.getRecords(), result.getTotal());
+  }
+
+  private String literalContains(String value) {
+    return "%" + value.replace("!", "!!").replace("%", "!%").replace("_", "!_") + "%";
   }
 
   @Override
@@ -349,6 +410,12 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
 
   @Override
   public Result queryShopByName(String name, Integer current) {
+    if (current == null
+        || current < 1
+        || current > 10000
+        || (name != null && name.length() > 100)) {
+      return Result.fail("搜索或分页参数无效");
+    }
     // 根据类型分页查询
     Page<Shop> page =
         query()

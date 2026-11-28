@@ -71,11 +71,12 @@ public class SeckillServiceImpl implements ISeckillService {
   public static final String GROUP = "g1";
 
   private static final DefaultRedisScript<Long> STREAM_LAG = RedisScripts.number("stream-lag.lua");
-  private static final DefaultRedisScript<Long> COMPENSATE =
-      RedisScripts.number("seckill-compensate.lua");
 
   @Resource
   private BusinessOutboxMapper businessOutboxMapper;
+
+  @Resource
+  private SeckillCompensationService compensation;
 
   @Resource
   private SeckillReservationMapper seckillReservationMapper;
@@ -105,13 +106,13 @@ public class SeckillServiceImpl implements ISeckillService {
   private final AtomicLong reviewSize = new AtomicLong();
   private final AtomicLong pendingSize = new AtomicLong();
 
-  @Value("${citylens.reliability.max-deliveries:5}")
+  @Value("${citymate.reliability.max-deliveries:5}")
   private int maxDeliveries;
 
-  @Value("${citylens.reliability.claim-idle-ms:30000}")
+  @Value("${citymate.reliability.claim-idle-ms:30000}")
   private long idleMillis;
 
-  @Value("${citylens.reliability.scheduling-enabled:true}")
+  @Value("${citymate.reliability.scheduling-enabled:true}")
   private boolean enabled;
 
   @Value("${hmdp.mq.enabled:false}")
@@ -582,6 +583,8 @@ public class SeckillServiceImpl implements ISeckillService {
       if (!recovering && seckillReservationMapper.countByVoucherId(voucherId) > 0) {
         return Result.fail("已有抢购记录，请走核对恢复流程");
       }
+      // Read inventory after unfinished work is ruled out, not from the earlier snapshot.
+      activity = seckillVoucherMapper.selectPublicationDetails(voucherId);
       rebuildBuyerIndex(voucherId);
       activatePublication(activity, activityKey);
       return Result.ok();
@@ -617,7 +620,8 @@ public class SeckillServiceImpl implements ISeckillService {
     boolean unreadMessages = hasUnreadStreamMessages();
     return !pending.isEmpty()
         || unreadMessages
-        || seckillReservationMapper.countUnfinishedRequests(voucherId) > 0;
+        || seckillReservationMapper.countUnfinishedRequests(voucherId) > 0
+        || businessOutboxMapper.countUnfinishedStockReleases(voucherId) > 0;
   }
 
   private boolean hasUnreadStreamMessages() {
@@ -679,11 +683,9 @@ public class SeckillServiceImpl implements ISeckillService {
   }
 
   /**
-   * 人工确认失败后，保存 FAILED 状态并尝试补偿 Redis 预扣库存。
+   * 人工确认失败时，同事务登记补偿事件；提交后尝试一次，未完成的任务由 Outbox 重试。
    *
-   * <p>数据库先提交，Redis 随后执行 Lua；两者不属于同一事务，补偿失败会保留已提交的状态。
-   *
-   * <p>Lua 只释放与当前订单号匹配的购买资格，重复调用不会重复加库存或释放后续订单资格。
+   * <p>Redis 效果不参与 MySQL 事务。按订单号校验资格归属，使成功后未确认的任务可安全重放。
    */
   @Override
   public Result markReservationFailedAndCompensateRedis(long orderId) {
@@ -703,27 +705,23 @@ public class SeckillServiceImpl implements ISeckillService {
                 return Result.fail("订单已经落库，不能回补库存");
               }
               seckillReservationMapper.markFailed(orderId);
+              businessOutboxMapper.insertSeckillCompensation(orderId, reservation.getUserId());
               return Result.ok(reservation);
             });
     if (!Boolean.TRUE.equals(result.getSuccess())) {
       return result;
     }
-    SeckillReservation reservation = result.getData();
-    String voucherIdText = reservation.getVoucherId().toString();
-    Long compensationResultCode =
-        redis.execute(
-            COMPENSATE,
-            Arrays.asList(
-                "seckill:stock:" + voucherIdText,
-                "seckill:order:" + voucherIdText,
-                "seckill:requests:" + voucherIdText,
-                "seckill:request:" + orderId),
-            reservation.getUserId().toString(),
-            String.valueOf(orderId));
-    if (compensationResultCode == null || compensationResultCode < 0) {
-      return Result.fail("失败状态已保存，Redis 尚未补偿，请重试或核对恢复");
+    // An outer transaction has not committed yet: leave Redis work to the durable relay.
+    if (TransactionSynchronizationManager.isActualTransactionActive()) {
+      return Result.ok();
     }
-    return Result.ok();
+    try {
+      compensation.compensate(orderId);
+      return Result.ok();
+    } catch (RuntimeException failure) {
+      log.warn("预约 {} 补偿未完成，持久任务将重试: {}", orderId, summarizeFailureReason(failure));
+      return Result.fail("失败状态和补偿任务已保存，后台将重试或转人工复核");
+    }
   }
 
   /**
@@ -742,7 +740,7 @@ public class SeckillServiceImpl implements ISeckillService {
     long initialStock = ((Number) inventoryRows.get(0).get("total_stock")).longValue();
     long databaseRemainingStock = ((Number) inventoryRows.get(0).get("stock")).longValue();
 
-    long persistedOrderCount = voucherOrderMapper.countByVoucherId(voucherId);
+    long persistedOrderCount = voucherOrderMapper.countActiveInventoryOrders(voucherId);
     long unresolvedReservationCount = seckillReservationMapper.countUnfinishedRequests(voucherId);
     String redisRemainingStock = redis.opsForValue().get("seckill:stock:" + voucherId);
     report.put("initial_stock", initialStock);

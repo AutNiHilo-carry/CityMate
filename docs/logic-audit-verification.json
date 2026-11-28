@@ -1,0 +1,88 @@
+{
+  "generatedAt": "2026-11-09T19:24:01.170139+08:00",
+  "status": "LOGIC_AUDIT_FIXES_AND_SELECTED_REGRESSIONS_PASSED",
+  "fixedFindings": 6,
+  "localRunId": "a56e0315f3f14dfeb09d69147237f7bf",
+  "local": {
+    "tests": 161,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "brokerRunId": "db9ac0c04fb74180b115c9d56281abdb",
+  "broker": {
+    "tests": 13,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "uniqueBackendCases": 174,
+  "frontendTests": 18,
+  "frontendFailures": 0,
+  "frontendSyntaxPassed": true,
+  "checkstyleAndJava8CompilationPassed": true,
+  "packagedJarRebuilt": false,
+  "businessContainersUpdated": false,
+  "businessDatabaseModified": false,
+  "pushed": false,
+  "previousFaultExperimentsRepeated": false,
+  "previousPerformanceExperimentsRepeated": false,
+  "liveModelApiUsed": false,
+  "sourceHashes": {
+    "src/main/java/com/hmdp/reliability/AccessGuard.java": "423c0d61864acf0c649e3aafb1137f98bb3783f217286bf510d2184cd7ac20c1",
+    "src/main/java/com/hmdp/cache/MetricsAccessFilter.java": "bfab0c188d3c6e5de9f4d29b4cabbc40ff33b19c1128b07f88aa155a5091fd6d",
+    "src/main/java/com/hmdp/service/impl/OrderLifecycleServiceImpl.java": "37c76d22bd46137c8750396cf799538cbe5021b20e4dd9fe932eb187b3b78e95",
+    "src/main/java/com/hmdp/service/impl/VoucherOrderServiceImpl.java": "5fbff296561d4d266011a0a9f54b880acbb60af230611d22e31c4169f59fad16",
+    "src/main/java/com/hmdp/service/impl/ShopServiceImpl.java": "7dc986f18e0c58e79ad90122cf73402979274219c99ffd39ddb464a99c512848",
+    "src/main/java/com/hmdp/mapper/VoucherOrderMapper.java": "90df4d7f33fcff71b89d0fc03363d8437f1b53023c4891e4fcffd122cdda9aaf",
+    "src/main/resources/mapper/VoucherOrderMapper.xml": "7bef7448d2f761dcb01b7d58477536b4a0fb58605287b0fc1d8335ff0ef7fed2",
+    "src/main/resources/seckill-compensate.lua": "ac973c4c0bca9c62ef9109f7ef20ff87d1db679507316bd0812fe04e5230de7e"
+  },
+  "priorCanonicalProfilesPreserved": true,
+  "testGeneratedDocumentsIsolated": true,
+  "isolatedEnvironmentsCleaned": true,
+  "excluded": [
+    "Course Redisson demo and HmDianPingApplicationTests",
+    "Cache benchmark and opt-in transaction load profiles",
+    "Six historical SIGKILL windows not rerun",
+    "Dependency CVE scanning, browser visual QA and live external model calls"
+  ],
+  "unsuccessfulAttempts": [
+    {
+      "runId": "196f8c9d262d4028bd29fb7ef19ad356",
+      "mode": "regression",
+      "exitCode": 2,
+      "includedInFinalPassCount": false
+    },
+    {
+      "runId": "1c153db7949644f39fac6025b972ee2f",
+      "mode": "reproduce",
+      "exitCode": 1,
+      "includedInFinalPassCount": false
+    },
+    {
+      "runId": "2cf7b7d12c024d49a5851dcf533baf2f",
+      "mode": "reproduce",
+      "exitCode": 1,
+      "includedInFinalPassCount": false
+    },
+    {
+      "runId": "5ab00deb0791457895d171d43ed2a949",
+      "mode": "regression",
+      "exitCode": 1,
+      "includedInFinalPassCount": false
+    },
+    {
+      "runId": "9787aa018c934b01ab15bd50099adf76",
+      "mode": "regression",
+      "exitCode": 137,
+      "includedInFinalPassCount": false
+    },
+    {
+      "runId": "fa89d4a993fd4bf4b700939b2dfa9c0e",
+      "mode": "redis-reproduce",
+      "exitCode": 1,
+      "includedInFinalPassCount": false
+    }
+  ]
+}

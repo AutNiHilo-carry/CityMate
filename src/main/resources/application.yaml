@@ -2,16 +2,16 @@ server:
   port: 8081
 spring:
   application:
-    name: hmdp
+    name: citymate
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/hmdp?useSSL=false&serverTimezone=UTC
-    username: root
-    password: 123
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://127.0.0.1:3306/hmdp?useSSL=false&serverTimezone=UTC}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
   redis:
-    host: 192.168.150.101
+    host: ${SPRING_REDIS_HOST:127.0.0.1}
     port: 6379
-    password: 123321
+    password: ${SPRING_REDIS_PASSWORD:}
     lettuce:
       pool:
         max-active: 10
@@ -51,13 +51,6 @@ management:
   endpoint:
     health:
       show-details: never
-citylens:
-  reliability:
-    scheduling-enabled: true
-    max-deliveries: 5
-    claim-idle-ms: 30000
-    order-timeout-minutes: 30
-
 hmdp:
   experience:
     enabled: ${HMDP_EXPERIENCE_ENABLED:false}
@@ -87,6 +80,7 @@ hmdp:
     timeout-ms: 100
   cdc:
     enabled: ${HMDP_CDC_ENABLED:false}
+    max-consecutive-failures: ${HMDP_CDC_MAX_CONSECUTIVE_FAILURES:5}
     host: ${HMDP_CDC_HOST:127.0.0.1}
     port: ${HMDP_CDC_PORT:11111}
     schema: ${HMDP_CDC_SCHEMA:hmdp}
@@ -94,6 +88,11 @@ hmdp:
 
 # Disabled until explicitly enabled; credentials never belong in source control.
 citymate:
+  reliability:
+    scheduling-enabled: true
+    max-deliveries: 5
+    claim-idle-ms: 30000
+    order-timeout-minutes: 30
   ai:
     enabled: ${CITYMATE_AI_ENABLED:false}
     api-key: ${DEEPSEEK_API_KEY:}

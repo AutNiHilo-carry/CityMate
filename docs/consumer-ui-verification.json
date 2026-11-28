@@ -1,0 +1,255 @@
+{
+  "checkedAtUtc": "2026-11-16T09:52:22.856706+00:00",
+  "frontendTests": 83,
+  "frontendFailures": 0,
+  "templateWarnings": 0,
+  "browser": {
+    "checkedAt": "2026-11-16T09:51:07.761Z",
+    "pages": [
+      {
+        "name": "home",
+        "width": 1440
+      },
+      {
+        "name": "shops",
+        "width": 1440
+      },
+      {
+        "name": "shop",
+        "width": 1440
+      },
+      {
+        "name": "note",
+        "width": 1440
+      },
+      {
+        "name": "vouchers",
+        "width": 1440
+      },
+      {
+        "name": "orders",
+        "width": 1440
+      },
+      {
+        "name": "profile",
+        "width": 1440
+      },
+      {
+        "name": "assistant",
+        "width": 1440
+      },
+      {
+        "name": "login",
+        "width": 1440
+      },
+      {
+        "name": "publish",
+        "width": 1440
+      },
+      {
+        "name": "home",
+        "width": 1024
+      },
+      {
+        "name": "shops",
+        "width": 1024
+      },
+      {
+        "name": "shop",
+        "width": 1024
+      },
+      {
+        "name": "note",
+        "width": 1024
+      },
+      {
+        "name": "vouchers",
+        "width": 1024
+      },
+      {
+        "name": "orders",
+        "width": 1024
+      },
+      {
+        "name": "profile",
+        "width": 1024
+      },
+      {
+        "name": "assistant",
+        "width": 1024
+      },
+      {
+        "name": "login",
+        "width": 1024
+      },
+      {
+        "name": "publish",
+        "width": 1024
+      },
+      {
+        "name": "home",
+        "width": 800
+      },
+      {
+        "name": "shops",
+        "width": 800
+      },
+      {
+        "name": "shop",
+        "width": 800
+      },
+      {
+        "name": "note",
+        "width": 800
+      },
+      {
+        "name": "vouchers",
+        "width": 800
+      },
+      {
+        "name": "orders",
+        "width": 800
+      },
+      {
+        "name": "profile",
+        "width": 800
+      },
+      {
+        "name": "assistant",
+        "width": 800
+      },
+      {
+        "name": "login",
+        "width": 800
+      },
+      {
+        "name": "publish",
+        "width": 800
+      },
+      {
+        "name": "home",
+        "width": 390
+      },
+      {
+        "name": "shops",
+        "width": 390
+      },
+      {
+        "name": "shop",
+        "width": 390
+      },
+      {
+        "name": "note",
+        "width": 390
+      },
+      {
+        "name": "vouchers",
+        "width": 390
+      },
+      {
+        "name": "orders",
+        "width": 390
+      },
+      {
+        "name": "profile",
+        "width": 390
+      },
+      {
+        "name": "assistant",
+        "width": 390
+      },
+      {
+        "name": "login",
+        "width": 390
+      },
+      {
+        "name": "publish",
+        "width": 390
+      },
+      {
+        "name": "home",
+        "width": 320
+      },
+      {
+        "name": "shops",
+        "width": 320
+      },
+      {
+        "name": "shop",
+        "width": 320
+      },
+      {
+        "name": "note",
+        "width": 320
+      },
+      {
+        "name": "vouchers",
+        "width": 320
+      },
+      {
+        "name": "orders",
+        "width": 320
+      },
+      {
+        "name": "profile",
+        "width": 320
+      },
+      {
+        "name": "assistant",
+        "width": 320
+      },
+      {
+        "name": "login",
+        "width": 320
+      },
+      {
+        "name": "publish",
+        "width": 320
+      }
+    ],
+    "checks": [
+      "responsive navigation fits all ten consumer pages and stays hidden during login or editing",
+      "header voucher search keeps category and shop filters on the voucher page",
+      "voucher shows face value and a correctly calculated saving",
+      "mobile order entry opens orders directly with correct active state",
+      "shop shortcut scrolls to its real coupon section",
+      "confirmation covers and disables mobile navigation without submitting a claim",
+      "photo viewer stays above the bottom navigation",
+      "discovery search opens the shop catalog with its keyword"
+    ],
+    "pageErrors": [],
+    "writeAttempts": [],
+    "apiFixtures": true,
+    "realBusinessWrites": 0,
+    "failures": 0
+  },
+  "voucherRegression": {
+    "checkedAt": "2026-11-16T09:48:05.824Z",
+    "checks": [
+      "shared URL restores keyword category and selected shop",
+      "failed shop options retain an explicit selection and voucher results",
+      "retrying shop options does not query or clear vouchers",
+      "submitted Unicode filters update URL while keeping unrelated parameters",
+      "refresh restores the submitted combination",
+      "category switch clears the old shop from the URL",
+      "clear filters resets the URL and results",
+      "first-page retry retains the failed submitted query rather than unsent edits",
+      "filter and retry controls fit desktop and narrow mobile viewports"
+    ],
+    "pageErrors": [],
+    "writeAttempts": [],
+    "apiFixtures": true,
+    "realBusinessWrites": 0,
+    "failures": 0
+  },
+  "realBackendChecked": false,
+  "backendChanged": false,
+  "sourceSha256": {
+    "frontend/index.html": "dbbf8e5549fb04cbac3a6dcad77f9bd69bf2ce3bdd7632ff28b2be4e754d037d",
+    "frontend/scripts/app.js": "70ae54c4f24124c8469b3d6144750fbe78f3bec950fcb1a7c1499a816325deb5",
+    "frontend/scripts/components.js": "85900c1d85ebbb821fa2a26a661465d93ea552fad5dc11bc10e9c9117a73a2d9",
+    "frontend/assets/business-ui.css": "d396a9a60656cfaaab42a87b9b4134d9b8792ee3b082140bd84b1763a0073a27",
+    "frontend/tests/consumer-navigation.test.js": "68fa9405678c639b944244518c470f07a1a5b8ffda8c4af7741a172f10aa5e37",
+    "scripts/audit-consumer-ui.cjs": "a65647d956e71542c9646cc54655f26d2dac320ec7a1ead975e839c8f15c0d2f"
+  }
+}

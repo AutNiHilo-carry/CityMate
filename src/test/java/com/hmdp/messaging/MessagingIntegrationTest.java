@@ -46,7 +46,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.transaction.support.TransactionTemplate;
 
 @SpringBootTest(
-    properties = {"citylens.reliability.scheduling-enabled=false", "hmdp.mq.enabled=false"})
+    properties = {"citymate.reliability.scheduling-enabled=false", "hmdp.mq.enabled=false"})
 class MessagingIntegrationTest {
   @Autowired JdbcTemplate jdbc;
   @Autowired StringRedisTemplate redis;
@@ -370,7 +370,7 @@ class MessagingIntegrationTest {
     assertTrue(orders.payMockOrder(id, 100L).getSuccess());
     jdbc.update(
         "UPDATE tb_voucher_order SET expire_at=TIMESTAMPADD(SECOND,-1,NOW()) WHERE id=?", id);
-    assertFalse(lifecycle.closeExpiredOrdinaryOrder(id));
+    assertFalse(lifecycle.closeExpiredOrder(id));
     assertEquals(
         2,
         jdbc.queryForObject("SELECT status FROM tb_voucher_order WHERE id=?", Integer.class, id));
@@ -388,8 +388,8 @@ class MessagingIntegrationTest {
     jdbc.update("DELETE FROM tb_business_outbox WHERE aggregate_id=? AND kind='ORDER_EXPIRE'", id);
     jdbc.update(
         "UPDATE tb_voucher_order SET expire_at=TIMESTAMPADD(SECOND,-1,NOW()) WHERE id=?", id);
-    maintenance.expireOrdinaryOrders();
-    maintenance.expireOrdinaryOrders();
+    maintenance.expireUnpaidOrders();
+    maintenance.expireUnpaidOrders();
     assertEquals(
         4,
         jdbc.queryForObject("SELECT status FROM tb_voucher_order WHERE id=?", Integer.class, id));
@@ -430,7 +430,7 @@ class MessagingIntegrationTest {
         "UPDATE tb_voucher_order SET expire_at=TIMESTAMPADD(SECOND,-1,NOW()) WHERE id=?", id);
     ExecutorService pool = Executors.newFixedThreadPool(2);
     try {
-      Future<?> close = pool.submit(() -> lifecycle.closeExpiredOrdinaryOrder(id));
+      Future<?> close = pool.submit(() -> lifecycle.closeExpiredOrder(id));
       Future<Result> pay =
           pool.submit(
               () -> {

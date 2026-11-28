@@ -18,7 +18,7 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
-    compose = ['docker', 'compose', '-p', 'hm-dianping', '-f', str(root / 'dev/docker-compose.yml')]
+    compose = ['docker', 'compose', '-p', 'citymate', '-f', str(root / 'dev/docker-compose.yml')]
     checks = []
     report = {'generatedAt': datetime.datetime.now(datetime.timezone.utc).isoformat(),
               'scope': 'Local keyword retrieval only; no embeddings or generated answer',

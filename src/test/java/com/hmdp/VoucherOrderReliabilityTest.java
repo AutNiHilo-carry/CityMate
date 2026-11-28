@@ -1,5 +1,6 @@
 package com.hmdp;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -22,6 +23,7 @@ import com.hmdp.dto.UserDTO;
 import com.hmdp.entity.SeckillVoucher;
 import com.hmdp.entity.Voucher;
 import com.hmdp.entity.VoucherOrder;
+import com.hmdp.mapper.VoucherOrderMapper;
 import com.hmdp.service.ISeckillVoucherService;
 import com.hmdp.service.IVoucherService;
 import com.hmdp.service.impl.VoucherOrderServiceImpl;
@@ -32,10 +34,62 @@ import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.AbstractPlatformTransactionManager;
+import org.springframework.transaction.support.DefaultTransactionStatus;
 import org.springframework.transaction.support.TransactionTemplate;
 
 class VoucherOrderReliabilityTest {
+  static class RecordingTransactions extends AbstractPlatformTransactionManager {
+    int commits;
+    int rollbacks;
+
+    @Override
+    protected Object doGetTransaction() {
+      return new Object();
+    }
+
+    @Override
+    protected void doBegin(Object transaction, TransactionDefinition definition) {}
+
+    @Override
+    protected void doCommit(DefaultTransactionStatus status) {
+      commits++;
+    }
+
+    @Override
+    protected void doRollback(DefaultTransactionStatus status) {
+      rollbacks++;
+    }
+  }
+
+  @Test
+  void nonexistentOrdinaryVoucherDoesNotCommitItsSerializationSlot() {
+    Service service = new Service();
+    RLock lock = mock(RLock.class);
+    when(lock.tryLock()).thenReturn(true);
+    RedissonClient redis = mock(RedissonClient.class);
+    when(redis.getLock(anyString())).thenReturn(lock);
+    IVoucherService vouchers = mock(IVoucherService.class);
+    VoucherOrderMapper mapper = mock(VoucherOrderMapper.class);
+    RecordingTransactions manager = new RecordingTransactions();
+    ReflectionTestUtils.setField(service, "redissonClient", redis);
+    ReflectionTestUtils.setField(service, "voucherService", vouchers);
+    ReflectionTestUtils.setField(service, "baseMapper", mapper);
+    ReflectionTestUtils.setField(service, "transactionTemplate", new TransactionTemplate(manager));
+    UserDTO user = new UserDTO();
+    user.setId(7L);
+    UserHolder.saveUser(user);
+    try {
+      assertFalse(service.orderOrdinaryVoucher(999L).getSuccess());
+      assertEquals(1, manager.rollbacks);
+      assertEquals(0, manager.commits);
+    } finally {
+      UserHolder.removeUser();
+    }
+  }
+
   static class Service extends VoucherOrderServiceImpl {
     VoucherOrder existing;
     boolean saveResult = true;

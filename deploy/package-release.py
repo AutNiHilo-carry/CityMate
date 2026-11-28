@@ -36,9 +36,9 @@ def copy_tree(source, destination, images_only=False):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--output', type=Path, default=ROOT / 'target/hmdp-cloud-release.tar.gz')
+    parser.add_argument('--output', type=Path, default=ROOT / 'target/citymate-cloud-release.tar.gz')
     args = parser.parse_args()
-    jar = ROOT / 'target/hm-dianping-0.0.1-SNAPSHOT.jar'
+    jar = ROOT / 'target/citymate-0.0.1-SNAPSHOT.jar'
     if not jar.is_file():
         parser.error('Build the current Java project with Maven package first.')
     inputs = [ROOT / 'pom.xml', *ROOT.glob('src/main/**/*')]
@@ -48,8 +48,8 @@ def main():
     if not images.is_dir():
         parser.error(f'Initial image directory is missing: {images}')
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory(prefix='hmdp-cloud-package-') as temporary:
-        bundle = Path(temporary) / 'hmdp-cloud'
+    with tempfile.TemporaryDirectory(prefix='citymate-cloud-package-') as temporary:
+        bundle = Path(temporary) / 'citymate-cloud'
         bundle.mkdir()
         for name in CONFIG_FILES:
             shutil.copy2(ROOT / 'deploy' / name, bundle / name)
@@ -60,7 +60,7 @@ def main():
         copy_tree(ROOT / 'frontend', bundle / 'frontend')
         copy_tree(images, bundle / 'images', images_only=True)
         manifest = {
-            str(p.relative_to(bundle)): hashlib.sha256(p.read_bytes()).hexdigest()
+            p.relative_to(bundle).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
             for p in sorted(bundle.rglob('*')) if p.is_file()
         }
         (bundle / 'manifest.json').write_text(
@@ -68,7 +68,7 @@ def main():
         )
         # Explicit config whitelist and tree filter exclude .env, private keys and dev logs.
         with tarfile.open(args.output, 'w:gz') as archive:
-            archive.add(bundle, arcname='hmdp-cloud', recursive=True)
+            archive.add(bundle, arcname='citymate-cloud', recursive=True)
     print(args.output.resolve())
     print('SHA256:', hashlib.sha256(args.output.read_bytes()).hexdigest())
     print('Bytes:', args.output.stat().st_size)

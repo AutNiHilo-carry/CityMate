@@ -1,0 +1,84 @@
+{
+  "generatedAt": "2026-11-08T17:49:20.112504+08:00",
+  "status": "SELECTED_PROCESS_RECOVERY_PASSED",
+  "runId": "ce0e441eec1e43c9ae74307d8d9ce291",
+  "successfulFaultCheckpoints": 2,
+  "sigkillCountInFinalRun": 2,
+  "sameContainerRestartsInFinalRun": 2,
+  "originalAcceptedRequests": 2,
+  "finalBusinessOrders": 2,
+  "injectedSourceReplayRecordsAfterRecovery": 4,
+  "duplicateHttpRetries": 2,
+  "pythonDiagnosticRegressionTests": 3,
+  "javaRegressionTestsRepeated": false,
+  "checkstyleAndJava8PackagePassed": true,
+  "jarSha256": "2ac742c857ca0021f91bf0e94a2d9ccda1b34695789fd77dad0a2b8da8ef4170",
+  "imageId": "sha256:1a4042d88dea3ff07b3f8b5b932d9e6834d4c2da01864330b55632456d28f339",
+  "cases": [
+    {
+      "voucherId": 980701,
+      "checkpoint": "Stream 未交接给 Outbox",
+      "originalOrderId": "657713686638493697",
+      "frozen": {
+        "orders": 0,
+        "fulfillments": 0,
+        "reservations": 1,
+        "fulfillmentInbox": 0,
+        "databaseRemaining": 2
+      },
+      "recoveryObservationSeconds": 30.953999999999724,
+      "eventAfterRecovery": {
+        "state": "DONE",
+        "eventId": 1,
+        "orderId": "657713686638493697",
+        "leaseOwner": null,
+        "leaseUntil": null
+      }
+    },
+    {
+      "voucherId": 980702,
+      "checkpoint": "Outbox 已 SENT，订单未落库",
+      "originalOrderId": "657713832667381763",
+      "frozen": {
+        "orders": 0,
+        "fulfillments": 1,
+        "reservations": 1,
+        "fulfillmentInbox": 0,
+        "databaseRemaining": 2
+      },
+      "recoveryObservationSeconds": 48.4380000000001,
+      "eventAfterRecovery": {
+        "state": "DONE",
+        "eventId": 3,
+        "orderId": "657713832667381763",
+        "leaseOwner": null,
+        "leaseUntil": null
+      }
+    }
+  ],
+  "applicationCodeOrLuaChanged": false,
+  "productionFaultHooksAdded": false,
+  "manualBusinessRepairUsed": false,
+  "databaseOrRedisCrashed": false,
+  "persistenceChanged": false,
+  "priorReportsPreserved": true,
+  "isolatedEnvironmentCleaned": true,
+  "isolatedImageRemoved": true,
+  "businessEnvironmentChanged": false,
+  "partialAttempt": "docs/process-recovery-attempts/9fc0ac86684a40d98680879d0632e722",
+  "sourceHashes": {
+    "scripts/verify-process-recovery.py": "495e996476ce05c67e309621567c5bd9cb478ff2ef68cb0cb4a270c16783915d",
+    "scripts/measure-process-recovery.ps1": "8db7fa1cd7e949a74813bed5e9425f9f3c4675f5c4abb189801d1c56bb463876",
+    "scripts/test-process-recovery.py": "8e42e21cd62498d67be28fae1e3864d3004222be087e7fd5b4ccf29cb8aa28e2",
+    "scripts/profile-packaged-transaction.py": "177239f7b590e08fd457f35d395c7096ee808afd818e93c5559b735c977c5935",
+    "scripts/prepare-packaged-profile.py": "421beb96a6d622d3e999af3ea043562a36050a5114ebebfcaffebbc17ee1854b"
+  },
+  "limitations": [
+    "Only the application is killed; Redis, MySQL and broker remain healthy",
+    "Two controlled windows with one original request each, not concurrency or availability capacity",
+    "The order-table gate blocks the pre-write SELECT, not an after-stock-update rollback window",
+    "SENT event recovery observed; expired SENDING lease and after-commit/before-ACK crash not separately forced",
+    "User already received admission reply; lost HTTP response not covered",
+    "Observed recovery times include restart, polling and idle/reconnect waits; not a recovery SLA"
+  ]
+}

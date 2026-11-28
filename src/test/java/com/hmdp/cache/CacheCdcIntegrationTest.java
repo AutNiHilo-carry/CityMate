@@ -24,7 +24,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 @SpringBootTest(
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-    properties = {"citylens.reliability.scheduling-enabled=false", "hmdp.cdc.enabled=true"})
+    properties = {"citymate.reliability.scheduling-enabled=false", "hmdp.cdc.enabled=true"})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 class CacheCdcIntegrationTest {
   @Autowired JdbcTemplate jdbc;

@@ -27,7 +27,7 @@
   "desktop": "顶部导航与搜索、紧凑城市横幅、十类入口、三列探店卡片、附近商家与优惠券侧栏",
   "mobile": "不实现手机端",
   "implementation_constraints": [
-    "实现仅位于点评目录，新版前端保存在 hm-dianping/frontend",
+    "实现仅位于点评目录，新版前端保存在 citymate/frontend",
     "桌面布局最小宽度 1100px，不实现手机端",
     "沿用现有后端接口、鉴权、数据与订单逻辑，不写入设计示例数据",
     "保留原课程前端，可通过 HMDP_FRONTEND_DIR 切换",

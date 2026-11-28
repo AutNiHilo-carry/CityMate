@@ -31,7 +31,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 @SpringBootTest(
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
     properties = {
-      "citylens.reliability.scheduling-enabled=false",
+      "citymate.reliability.scheduling-enabled=false",
       "hmdp.cdc.enabled=false",
       "logging.level.com.hmdp=info"
     })
@@ -76,10 +76,10 @@ class CacheBenchmarkIntegrationTest {
           "scope",
           "Isolated Docker MySQL 8 / Redis 7 / Memcached 1.6. One Java instance; "
               + "warm hot-key HTTP test, not a production capacity claim.");
-      Files.createDirectories(Paths.get("docs"));
+      Files.createDirectories(Paths.get("target/benchmarks"));
       new ObjectMapper()
           .writerWithDefaultPrettyPrinter()
-          .writeValue(Paths.get("docs/cache-benchmark.json").toFile(), report);
+          .writeValue(Paths.get("target/benchmarks/cache-benchmark.json").toFile(), report);
     } finally {
       ReflectionTestUtils.setField(cache, "enabled", true);
       cache.invalidate("cache:shop:1");

@@ -1,6 +1,6 @@
 # CityMate 本地启动与业务基线验收（2026-10-30）
 
-本次在 Windows 桌面项目 `C:\Users\pankesdsa\Desktop\Pr1\hm-dianping` 实际构建并验证。未接入 Agent、RAG 或真实支付，未重新压测。历史性能 JSON 未修改。
+本次在 Windows 桌面项目 `<CITYMATE_PROJECT_DIR>` 实际构建并验证。未接入 Agent、RAG 或真实支付，未重新压测。历史性能 JSON 未修改。
 
 ## 环境与修复
 
@@ -36,8 +36,8 @@ HTTP 检查覆盖：Nginx 首页、恢复图片、健康检查、商户组合搜
 
 ```powershell
 $env:HMDP_ADMIN_IDS = '1010' # 仅本次本地演示管理员；不要照搬到共享环境
-docker compose -p hm-dianping -f dev/docker-compose.yml -f dev/docker-compose.prebuilt.yml up -d
-docker compose -p hm-dianping -f dev/docker-compose.yml logs --tail 50 java
+docker compose -p citymate -f dev/docker-compose.yml -f dev/docker-compose.prebuilt.yml up -d
+docker compose -p citymate -f dev/docker-compose.yml logs --tail 50 java
 ```
 
 去掉 prebuilt 覆盖文件即可回到原来的容器 Maven 启动方式。首次启动需要等待 Java 初始化；容器 running 不等于健康接口已可用。

@@ -50,6 +50,64 @@ class DeepSeekClientTest {
   }
 
   @Test
+  void boundedCompletionSetsReviewTemperatureAndRejectsExpiredBudget() throws Exception {
+    AtomicReference<String> body = new AtomicReference<>();
+    server.createContext(
+        "/chat/completions",
+        exchange -> {
+          body.set(StreamUtils.copyToString(exchange.getRequestBody(), StandardCharsets.UTF_8));
+          byte[] response =
+              ("{\"choices\":[{\"finish_reason\":\"stop\",\"message\":" + "{\"content\":\"ok\"}}]}")
+                  .getBytes(StandardCharsets.UTF_8);
+          exchange.sendResponseHeaders(200, response.length);
+          exchange.getResponseBody().write(response);
+          exchange.close();
+        });
+    DeepSeekClient client = new DeepSeekClient(true, "test-only", "deepseek-flash", url, 3000);
+    assertEquals(
+        "MODEL_TIMEOUT",
+        assertThrows(DeepSeekClient.Failure.class, () -> client.completeBounded("s", "q", 0))
+            .getMessage());
+    assertEquals(null, body.get());
+    assertEquals("ok", client.completeBounded("s", "q", 1000));
+    JsonNode temperature = new ObjectMapper().readTree(body.get()).path("temperature");
+    assertEquals(true, temperature.isNumber());
+    assertEquals(0, temperature.asInt());
+  }
+
+  @Test
+  void nativeToolTurnPreservesToolReplyIdsAndDisablesThinking() throws Exception {
+    AtomicReference<String> body = new AtomicReference<>();
+    server.createContext(
+        "/chat/completions",
+        exchange -> {
+          body.set(StreamUtils.copyToString(exchange.getRequestBody(), StandardCharsets.UTF_8));
+          byte[] response =
+              ("{\"choices\":[{\"finish_reason\":\"tool_calls\",\"message\":{\"tool_calls\":["
+                      + "{\"id\":\"call_2\",\"type\":\"function\",\"function\":{"
+                      + "\"name\":\"listAreas\",\"arguments\":\"{}\"}}]}}]}")
+                  .getBytes(StandardCharsets.UTF_8);
+          exchange.sendResponseHeaders(200, response.length);
+          exchange.getResponseBody().write(response);
+          exchange.close();
+        });
+    java.util.Map<String, Object> reply = new java.util.LinkedHashMap<>();
+    reply.put("role", "tool");
+    reply.put("content", "{\"status\":\"OK\"}");
+    reply.put("tool_call_id", "call_1");
+    DeepSeekClient client = new DeepSeekClient(true, "test-only", "deepseek-flash", url, 3000);
+    JsonNode result =
+        client.toolTurn(
+            java.util.Collections.singletonList(reply), java.util.Collections.emptyList(), 3000);
+    assertEquals("call_2", result.path("message").path("tool_calls").get(0).path("id").asText());
+    JsonNode sent = new ObjectMapper().readTree(body.get());
+    assertEquals("call_1", sent.path("messages").get(0).path("tool_call_id").asText());
+    assertEquals("auto", sent.path("tool_choice").asText());
+    assertEquals("disabled", sent.path("thinking").path("type").asText());
+    assertEquals("json_object", sent.path("response_format").path("type").asText());
+  }
+
+  @Test
   void disabledAndMissingKeyNeverMakeRequest() {
     assertFalse(new DeepSeekClient(false, "test-only", "deepseek-flash", url, 500).isAvailable());
     DeepSeekClient missing = new DeepSeekClient(true, "", "deepseek-flash", url, 500);

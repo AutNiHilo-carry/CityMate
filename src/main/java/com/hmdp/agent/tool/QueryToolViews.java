@@ -73,6 +73,39 @@ final class QueryToolViews {
     put(row, "payCents", source.get("pay_cents"), false);
     put(row, "voucherType", source.get("voucher_type"), false);
     put(row, "rules", source.get("rules"), false);
+    if (source.get("status") instanceof Number) {
+      int status = ((Number) source.get("status")).intValue();
+      boolean free =
+          source.get("pay_cents") instanceof Number
+              && ((Number) source.get("pay_cents")).longValue() == 0;
+      String meaning;
+      switch (status) {
+        case 1:
+          meaning = "待付款，尚未支付";
+          break;
+        case 2:
+          meaning = free ? "免费券已领取，不涉及真实收款" : "订单已标记完成，不证明真实付款";
+          break;
+        case 3:
+          meaning = "订单标记已核销，外部真实核销未验证";
+          break;
+        case 4:
+          meaning = "订单已取消";
+          break;
+        case 5:
+          meaning = "订单标记退款中，真实退款未验证";
+          break;
+        case 6:
+          meaning = "订单标记已退款，真实退款未验证";
+          break;
+        default:
+          meaning = "订单状态待确认";
+      }
+      row.put("statusMeaning", meaning);
+    }
+    if (source.get("pay_cents") != null) {
+      row.put("priceMeaning", "payCents为券价分，不是实际付款或收款金额");
+    }
     return row;
   }
 

@@ -1,9 +1,9 @@
 package com.hmdp.utils;
 
 import cn.hutool.core.lang.UUID;
+import com.hmdp.reliability.RedisScripts;
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 
@@ -19,13 +19,7 @@ public class SimpleRedisLock implements ILock {
 
   private static final String KEY_PREFIX = "lock:";
   private static final String ID_PREFIX = UUID.randomUUID().toString(true) + "-";
-  private static final DefaultRedisScript<Long> UNLOCK_SCRIPT;
-
-  static {
-    UNLOCK_SCRIPT = new DefaultRedisScript<>();
-    UNLOCK_SCRIPT.setLocation(new ClassPathResource("unlock.lua"));
-    UNLOCK_SCRIPT.setResultType(Long.class);
-  }
+  private static final DefaultRedisScript<Long> UNLOCK_SCRIPT = RedisScripts.number("unlock.lua");
 
   @Override
   public boolean tryLock(long timeoutSec) {

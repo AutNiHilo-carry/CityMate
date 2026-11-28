@@ -1,0 +1,320 @@
+{
+  "generatedAt": "2026-11-06T11:02:52.389816+08:00",
+  "runId": "5726d1830c7d4c96bd56e9fca58f0d67",
+  "status": "INDEPENDENT_PROCESS_PROFILE_PASSED",
+  "junitTests": 1,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "checkstyle": "passed",
+  "compilerRelease": 8,
+  "measuredRequests": 600,
+  "measuredOrders": 300,
+  "warmupRequestsExcluded": 20,
+  "generatorSharesApplicationJvm": false,
+  "hostShared": true,
+  "observerSamples": 19,
+  "metricsReadErrors": 0,
+  "dockerStatsErrors": 0,
+  "sampledMaxHikariPending": 0.0,
+  "sampledMaxHikariActive": 4.0,
+  "sampledMaxHeapUsedBytes": 92641568.0,
+  "observedGcPauseDeltaSeconds": 0.07899999999999996,
+  "observedAdmissionTimerCallsDelta": 600.0,
+  "observedAdmissionTimerMeanMs": 35.492855838333334,
+  "dockerObservations": {
+    "citymate-profile-p6-app": {
+      "sampledMaxCpuPercent": 76.02,
+      "firstBlockIO": "302MB / 434kB",
+      "lastMemoryUsage": "1.372GiB / 7.639GiB",
+      "lastBlockIO": "302MB / 676kB"
+    },
+    "citymate-profile-p6-mysql-1": {
+      "sampledMaxCpuPercent": 16.38,
+      "firstBlockIO": "105MB / 314MB",
+      "lastMemoryUsage": "474.6MiB / 7.639GiB",
+      "lastBlockIO": "105MB / 373MB"
+    },
+    "citymate-profile-p6-redis-1": {
+      "sampledMaxCpuPercent": 4.48,
+      "firstBlockIO": "31MB / 668kB",
+      "lastMemoryUsage": "11.5MiB / 7.639GiB",
+      "lastBlockIO": "31MB / 22.7MB"
+    },
+    "citymate-profile-p6-rocketmq-1": {
+      "sampledMaxCpuPercent": 173.58,
+      "firstBlockIO": "1.07MB / 12.7MB",
+      "lastMemoryUsage": "836.8MiB / 7.639GiB",
+      "lastBlockIO": "1.84MB / 18.6MB"
+    }
+  },
+  "roundAnalysis": [
+    {
+      "concurrency": 8,
+      "meanHttpMs": 345.1783319994138,
+      "redisCommandDeltas": {
+        "cmdstat_evalsha": {
+          "calls": 602.0,
+          "usec": 19606.0,
+          "failed_calls": 0.0
+        },
+        "cmdstat_incr": {
+          "calls": 600.0,
+          "usec": 2090.0,
+          "failed_calls": 0.0
+        },
+        "cmdstat_expire": {
+          "calls": 100.0,
+          "usec": 160.0,
+          "failed_calls": 0.0
+        }
+      },
+      "mysqlCounterDeltas": {
+        "Innodb_row_lock_time": 1145.0,
+        "Innodb_row_lock_waits": 79.0,
+        "Questions": 5612.0
+      },
+      "topVisibleSqlDeltas": [
+        {
+          "digest": "COMMIT",
+          "COUNT_STAR": 253.0,
+          "SUM_TIMER_WAIT": 5099145694000.0,
+          "SUM_LOCK_TIME": 0.0,
+          "SUM_ROWS_EXAMINED": 0.0
+        },
+        {
+          "digest": "UPDATE `tb_business_outbox` SET `lease_until` = TIMESTAMPADD ( SQL_TSI_SECOND , ? , NOW (?) ) WHERE `id` = ? AND `state` = ? AND `lease_owner` = ?",
+          "COUNT_STAR": 146.0,
+          "SUM_TIMER_WAIT": 2927736852000.0,
+          "SUM_LOCK_TIME": 225000000.0,
+          "SUM_ROWS_EXAMINED": 146.0
+        },
+        {
+          "digest": "UPDATE `tb_business_outbox` SET `state` = ? , `sent_at` = NOW (?) , `lease_owner` = ? , `lease_until` = ? , `last_error` = ? WHERE `id` = ? AND `state` = ? AND `lease_owner` = ?",
+          "COUNT_STAR": 146.0,
+          "SUM_TIMER_WAIT": 2638570119000.0,
+          "SUM_LOCK_TIME": 299000000.0,
+          "SUM_ROWS_EXAMINED": 146.0
+        },
+        {
+          "digest": "INSERT IGNORE INTO `tb_seckill_reservation` ( `order_id` , `voucher_id` , `user_id` ) VALUES (...)",
+          "COUNT_STAR": 100.0,
+          "SUM_TIMER_WAIT": 1817828497000.0,
+          "SUM_LOCK_TIME": 203000000.0,
+          "SUM_ROWS_EXAMINED": 0.0
+        },
+        {
+          "digest": "SELECT * FROM `tb_business_outbox` WHERE `id` = ? FOR UPDATE",
+          "COUNT_STAR": 146.0,
+          "SUM_TIMER_WAIT": 1150254220000.0,
+          "SUM_LOCK_TIME": 1125319000000.0,
+          "SUM_ROWS_EXAMINED": 146.0
+        },
+        {
+          "digest": "SELECT @@SESSION . `transaction_read_only`",
+          "COUNT_STAR": 1579.0,
+          "SUM_TIMER_WAIT": 116403234000.0,
+          "SUM_LOCK_TIME": 0.0,
+          "SUM_ROWS_EXAMINED": 1580.0
+        },
+        {
+          "digest": "UPDATE `tb_business_outbox` SET `state` = ? , `consumed_at` = NOW (?) , `lease_owner` = ? , `lease_until` = ? , `last_error` = ? WHERE `id` = ?",
+          "COUNT_STAR": 186.0,
+          "SUM_TIMER_WAIT": 96189703000.0,
+          "SUM_LOCK_TIME": 139000000.0,
+          "SUM_ROWS_EXAMINED": 186.0
+        },
+        {
+          "digest": "INSERT IGNORE INTO `tb_business_outbox` ( `kind` , `aggregate_id` , `user_id` , `idempotency_key` ) VALUES (...)",
+          "COUNT_STAR": 120.0,
+          "SUM_TIMER_WAIT": 94654146000.0,
+          "SUM_LOCK_TIME": 19949000000.0,
+          "SUM_ROWS_EXAMINED": 0.0
+        }
+      ]
+    },
+    {
+      "concurrency": 16,
+      "meanHttpMs": 671.0092065008939,
+      "redisCommandDeltas": {
+        "cmdstat_evalsha": {
+          "calls": 602.0,
+          "usec": 19835.0,
+          "failed_calls": 0.0
+        },
+        "cmdstat_incr": {
+          "calls": 600.0,
+          "usec": 2106.0,
+          "failed_calls": 0.0
+        },
+        "cmdstat_expire": {
+          "calls": 100.0,
+          "usec": 164.0,
+          "failed_calls": 0.0
+        }
+      },
+      "mysqlCounterDeltas": {
+        "Innodb_row_lock_time": 1239.0,
+        "Innodb_row_lock_waits": 89.0,
+        "Questions": 5890.0
+      },
+      "topVisibleSqlDeltas": [
+        {
+          "digest": "COMMIT",
+          "COUNT_STAR": 268.0,
+          "SUM_TIMER_WAIT": 5094969514000.0,
+          "SUM_LOCK_TIME": 0.0,
+          "SUM_ROWS_EXAMINED": 0.0
+        },
+        {
+          "digest": "UPDATE `tb_business_outbox` SET `lease_until` = TIMESTAMPADD ( SQL_TSI_SECOND , ? , NOW (?) ) WHERE `id` = ? AND `state` = ? AND `lease_owner` = ?",
+          "COUNT_STAR": 160.0,
+          "SUM_TIMER_WAIT": 2813010550000.0,
+          "SUM_LOCK_TIME": 220000000.0,
+          "SUM_ROWS_EXAMINED": 160.0
+        },
+        {
+          "digest": "UPDATE `tb_business_outbox` SET `state` = ? , `sent_at` = NOW (?) , `lease_owner` = ? , `lease_until` = ? , `last_error` = ? WHERE `id` = ? AND `state` = ? AND `lease_owner` = ?",
+          "COUNT_STAR": 160.0,
+          "SUM_TIMER_WAIT": 2694446782000.0,
+          "SUM_LOCK_TIME": 313000000.0,
+          "SUM_ROWS_EXAMINED": 160.0
+        },
+        {
+          "digest": "INSERT IGNORE INTO `tb_seckill_reservation` ( `order_id` , `voucher_id` , `user_id` ) VALUES (...)",
+          "COUNT_STAR": 100.0,
+          "SUM_TIMER_WAIT": 1808660828000.0,
+          "SUM_LOCK_TIME": 179000000.0,
+          "SUM_ROWS_EXAMINED": 0.0
+        },
+        {
+          "digest": "SELECT * FROM `tb_business_outbox` WHERE `id` = ? FOR UPDATE",
+          "COUNT_STAR": 160.0,
+          "SUM_TIMER_WAIT": 1265500787000.0,
+          "SUM_LOCK_TIME": 1239600000000.0,
+          "SUM_ROWS_EXAMINED": 160.0
+        },
+        {
+          "digest": "SELECT @@SESSION . `transaction_read_only`",
+          "COUNT_STAR": 1660.0,
+          "SUM_TIMER_WAIT": 115543328000.0,
+          "SUM_LOCK_TIME": 0.0,
+          "SUM_ROWS_EXAMINED": 1658.0
+        },
+        {
+          "digest": "SELECT `state` FROM `tb_seckill_reservation` WHERE `order_id` = ?",
+          "COUNT_STAR": 440.0,
+          "SUM_TIMER_WAIT": 60947997000.0,
+          "SUM_LOCK_TIME": 714000000.0,
+          "SUM_ROWS_EXAMINED": 440.0
+        },
+        {
+          "digest": "UPDATE `tb_business_outbox` SET `state` = ? , `lease_owner` = ? , `lease_until` = TIMESTAMPADD ( SQL_TSI_SECOND , ? , NOW (?) ) WHERE `id` = ?",
+          "COUNT_STAR": 369.0,
+          "SUM_TIMER_WAIT": 59512866000.0,
+          "SUM_LOCK_TIME": 258000000.0,
+          "SUM_ROWS_EXAMINED": 369.0
+        }
+      ]
+    },
+    {
+      "concurrency": 32,
+      "meanHttpMs": 1394.1450885002996,
+      "redisCommandDeltas": {
+        "cmdstat_evalsha": {
+          "calls": 601.0,
+          "usec": 20875.0,
+          "failed_calls": 0.0
+        },
+        "cmdstat_incr": {
+          "calls": 600.0,
+          "usec": 2335.0,
+          "failed_calls": 0.0
+        },
+        "cmdstat_expire": {
+          "calls": 100.0,
+          "usec": 171.0,
+          "failed_calls": 0.0
+        }
+      },
+      "mysqlCounterDeltas": {
+        "Innodb_row_lock_time": 1154.0,
+        "Innodb_row_lock_waits": 79.0,
+        "Questions": 5954.0
+      },
+      "topVisibleSqlDeltas": [
+        {
+          "digest": "COMMIT",
+          "COUNT_STAR": 272.0,
+          "SUM_TIMER_WAIT": 5029085982000.0,
+          "SUM_LOCK_TIME": 0.0,
+          "SUM_ROWS_EXAMINED": 0.0
+        },
+        {
+          "digest": "UPDATE `tb_business_outbox` SET `lease_until` = TIMESTAMPADD ( SQL_TSI_SECOND , ? , NOW (?) ) WHERE `id` = ? AND `state` = ? AND `lease_owner` = ?",
+          "COUNT_STAR": 164.0,
+          "SUM_TIMER_WAIT": 2894848882000.0,
+          "SUM_LOCK_TIME": 204000000.0,
+          "SUM_ROWS_EXAMINED": 164.0
+        },
+        {
+          "digest": "UPDATE `tb_business_outbox` SET `state` = ? , `sent_at` = NOW (?) , `lease_owner` = ? , `lease_until` = ? , `last_error` = ? WHERE `id` = ? AND `state` = ? AND `lease_owner` = ?",
+          "COUNT_STAR": 164.0,
+          "SUM_TIMER_WAIT": 2820179812000.0,
+          "SUM_LOCK_TIME": 370000000.0,
+          "SUM_ROWS_EXAMINED": 164.0
+        },
+        {
+          "digest": "INSERT IGNORE INTO `tb_seckill_reservation` ( `order_id` , `voucher_id` , `user_id` ) VALUES (...)",
+          "COUNT_STAR": 100.0,
+          "SUM_TIMER_WAIT": 1749893576000.0,
+          "SUM_LOCK_TIME": 221000000.0,
+          "SUM_ROWS_EXAMINED": 0.0
+        },
+        {
+          "digest": "SELECT * FROM `tb_business_outbox` WHERE `id` = ? FOR UPDATE",
+          "COUNT_STAR": 164.0,
+          "SUM_TIMER_WAIT": 1179856142000.0,
+          "SUM_LOCK_TIME": 1153990000000.0,
+          "SUM_ROWS_EXAMINED": 164.0
+        },
+        {
+          "digest": "SELECT @@SESSION . `transaction_read_only`",
+          "COUNT_STAR": 1680.0,
+          "SUM_TIMER_WAIT": 111303372000.0,
+          "SUM_LOCK_TIME": 0.0,
+          "SUM_ROWS_EXAMINED": 1680.0
+        },
+        {
+          "digest": "SELECT COUNT ( * ) FROM `tb_message_inbox` WHERE `consumer_group` = ? AND `event_id` = ?",
+          "COUNT_STAR": 555.0,
+          "SUM_TIMER_WAIT": 69840580000.0,
+          "SUM_LOCK_TIME": 546000000.0,
+          "SUM_ROWS_EXAMINED": 0.0
+        },
+        {
+          "digest": "UPDATE `tb_business_outbox` SET `state` = ? , `lease_owner` = ? , `lease_until` = TIMESTAMPADD ( SQL_TSI_SECOND , ? , NOW (?) ) WHERE `id` = ?",
+          "COUNT_STAR": 160.0,
+          "SUM_TIMER_WAIT": 40523365000.0,
+          "SUM_LOCK_TIME": 99000000.0,
+          "SUM_ROWS_EXAMINED": 160.0
+        }
+      ]
+    }
+  ],
+  "productionCodeChanged": false,
+  "businessDatabaseModified": false,
+  "testEnvironmentCleaned": true,
+  "testProject": "citymate-profile-p6",
+  "maximumCapacityClaimed": false,
+  "rootCauseProven": false,
+  "nextExperiment": "Controlled isolated persistence and round-trip attribution; do not weaken production durability to improve a benchmark",
+  "limitations": [
+    "Published localhost port instead of previous same-JVM loopback; not a single-variable speedup comparison",
+    "Instrumentation adds overhead and 19 sparse samples do not rule out short resource spikes",
+    "SQL windows also include asynchronous prior-round order events and observer queries",
+    "Redis command CPU statistics are not network/fsync/pool waiting times",
+    "SQL timer deltas retained in original performance_schema units; no wall-clock CPU attribution",
+    "No production optimization or real failure experiment in this run"
+  ]
+}

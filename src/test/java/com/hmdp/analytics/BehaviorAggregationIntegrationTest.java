@@ -19,7 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @SpringBootTest(
-    properties = {"citylens.reliability.scheduling-enabled=false", "hmdp.analytics.enabled=false"})
+    properties = {"citymate.reliability.scheduling-enabled=false", "hmdp.analytics.enabled=false"})
 class BehaviorAggregationIntegrationTest {
   @Autowired JdbcTemplate jdbc;
   @Autowired BehaviorAggregationServiceImpl aggregation;

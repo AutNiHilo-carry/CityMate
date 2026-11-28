@@ -9,6 +9,8 @@ public enum BusinessEventType {
   SHOP_INVALIDATE("cache"),
   SECKILL_PUBLISH("activities"),
   SECKILL_RETRY("activities"),
+  SECKILL_COMPENSATE("activities"),
+  SECKILL_RELEASE("activities"),
   SECKILL_FULFILL("fulfillment"),
   ORDER_EXPIRE("deadlines"),
   ORDER_CREATED("orders"),

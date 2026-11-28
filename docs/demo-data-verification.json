@@ -1,0 +1,51 @@
+{
+  "checkedAt": "2026-11-17T13:22:47.256056+00:00",
+  "synthetic": true,
+  "planned": {
+    "tb_shop": 22,
+    "tb_blog": 22,
+    "tb_voucher": 24,
+    "tb_user": 3
+  },
+  "inserted": {
+    "tb_shop": 22,
+    "tb_blog": 22,
+    "tb_voucher": 24,
+    "tb_user": 3
+  },
+  "existingRowsUpdated": 0,
+  "ordersCreated": 0,
+  "seckillChanged": false,
+  "shopHttpChecks": [
+    880001,
+    880002,
+    880003,
+    880004,
+    880005,
+    880006,
+    880007,
+    880008,
+    880009,
+    880010,
+    880011,
+    880012,
+    880013,
+    880014,
+    880015,
+    880016,
+    880017,
+    880018,
+    880019,
+    880020,
+    880021,
+    880022
+  ],
+  "knowledgePublished": false,
+  "note": "Illustrated fictional stores. No real ratings, purchases, payment, or model calls.",
+  "idempotentReplayInserted": {
+    "tb_shop": 0,
+    "tb_blog": 0,
+    "tb_voucher": 0,
+    "tb_user": 0
+  }
+}

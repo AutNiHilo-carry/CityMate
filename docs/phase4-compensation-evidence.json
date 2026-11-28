@@ -1,0 +1,154 @@
+{
+  "generatedAt" : "2026-11-05T13:41:29.902Z",
+  "database" : "hmdp_optimization_test",
+  "brokerEnabled" : false,
+  "passed" : true,
+  "cases" : [ {
+    "name" : "retry_exhaustion_and_review",
+    "passed" : true,
+    "trace" : [ {
+      "stage" : "bounded_retries_quarantined",
+      "observedAt" : "2026-11-05T13:41:27.113Z",
+      "orderId" : "656661355226464296",
+      "reservation" : "FAILED",
+      "redisStock" : "invalid",
+      "redisOwner" : "656661355226464296",
+      "databaseStock" : 1,
+      "eventId" : "74",
+      "eventState" : "REVIEW",
+      "inbox" : 0
+    }, {
+      "stage" : "same_event_manual_redrive_completed",
+      "observedAt" : "2026-11-05T13:41:27.203Z",
+      "orderId" : "656661355226464296",
+      "reservation" : "FAILED",
+      "redisStock" : "1",
+      "redisOwner" : null,
+      "databaseStock" : 1,
+      "eventId" : "74",
+      "eventState" : "DONE",
+      "inbox" : 1
+    } ]
+  }, {
+    "name" : "existing_order_protection",
+    "passed" : true,
+    "trace" : [ {
+      "stage" : "inconsistent_existing_order_blocked_release",
+      "observedAt" : "2026-11-05T13:41:27.613Z",
+      "orderId" : "656661359521431593",
+      "reservation" : "FAILED",
+      "redisStock" : "0",
+      "redisOwner" : "656661359521431593",
+      "databaseStock" : 1,
+      "eventId" : "75",
+      "eventState" : "PENDING",
+      "inbox" : 0
+    } ]
+  }, {
+    "name" : "failed_state_and_event_atomicity",
+    "passed" : true,
+    "trace" : [ {
+      "stage" : "event_insert_failure_rolled_back_failed_state",
+      "observedAt" : "2026-11-05T13:41:27.937Z",
+      "orderId" : "656661359521431594",
+      "reservation" : "REVIEW",
+      "redisStock" : "0",
+      "redisOwner" : "656661359521431594",
+      "databaseStock" : 1
+    } ]
+  }, {
+    "name" : "concurrent_duplicate_compensation",
+    "passed" : true,
+    "trace" : [ {
+      "stage" : "eight_deliveries_one_release_one_inbox",
+      "observedAt" : "2026-11-05T13:41:28.299Z",
+      "orderId" : "656661363816398891",
+      "reservation" : "FAILED",
+      "redisStock" : "1",
+      "redisOwner" : null,
+      "databaseStock" : 1,
+      "eventId" : "76",
+      "eventState" : "DONE",
+      "inbox" : 1
+    } ]
+  }, {
+    "name" : "redis_success_database_ack_failure",
+    "passed" : true,
+    "trace" : [ {
+      "stage" : "redis_release_survived_inbox_transaction_rollback",
+      "observedAt" : "2026-11-05T13:41:28.685Z",
+      "orderId" : "656661363816398892",
+      "reservation" : "FAILED",
+      "redisStock" : "1",
+      "redisOwner" : null,
+      "databaseStock" : 1,
+      "eventId" : "77",
+      "eventState" : "PENDING",
+      "inbox" : 0
+    }, {
+      "stage" : "replay_acknowledged_without_second_release",
+      "observedAt" : "2026-11-05T13:41:28.791Z",
+      "orderId" : "656661363816398892",
+      "reservation" : "FAILED",
+      "redisStock" : "1",
+      "redisOwner" : null,
+      "databaseStock" : 1,
+      "eventId" : "77",
+      "eventState" : "DONE",
+      "inbox" : 1
+    } ]
+  }, {
+    "name" : "outer_transaction_rollback",
+    "passed" : true,
+    "trace" : [ {
+      "stage" : "outer_rollback_no_redis_side_effect",
+      "observedAt" : "2026-11-05T13:41:29.051Z",
+      "orderId" : "656661368111366189",
+      "reservation" : "REVIEW",
+      "redisStock" : "0",
+      "redisOwner" : "656661368111366189",
+      "databaseStock" : 1
+    } ]
+  }, {
+    "name" : "old_task_preserves_newer_reservation",
+    "passed" : true,
+    "trace" : [ {
+      "stage" : "old_task_preserved_newer_owner_and_preoccupation",
+      "observedAt" : "2026-11-05T13:41:29.359Z",
+      "orderId" : "656661368111366190",
+      "reservation" : "FAILED",
+      "redisStock" : "0",
+      "redisOwner" : "656661368111366191",
+      "databaseStock" : 1,
+      "eventId" : "79",
+      "eventState" : "DONE",
+      "inbox" : 1
+    } ]
+  }, {
+    "name" : "redis_failure_durable_retry",
+    "passed" : true,
+    "trace" : [ {
+      "stage" : "failed_state_and_event_retained_after_redis_rejection",
+      "observedAt" : "2026-11-05T13:41:29.753Z",
+      "orderId" : "656661368111366192",
+      "reservation" : "FAILED",
+      "redisStock" : "invalid",
+      "redisOwner" : "656661368111366192",
+      "databaseStock" : 1,
+      "eventId" : "80",
+      "eventState" : "PENDING",
+      "inbox" : 0
+    }, {
+      "stage" : "same_event_completed_exactly_one_release",
+      "observedAt" : "2026-11-05T13:41:29.871Z",
+      "orderId" : "656661368111366192",
+      "reservation" : "FAILED",
+      "redisStock" : "1",
+      "redisOwner" : null,
+      "databaseStock" : 1,
+      "eventId" : "80",
+      "eventState" : "DONE",
+      "inbox" : 1
+    } ]
+  } ]
+}

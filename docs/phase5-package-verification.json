@@ -1,0 +1,19 @@
+{
+    "generatedAt":  "2026-11-05T13:49:43.9043389+00:00",
+    "passed":  true,
+    "requiredEntries":  [
+                            "BOOT-INF/classes/application.yaml",
+                            "BOOT-INF/classes/mapper/VoucherOrderMapper.xml",
+                            "BOOT-INF/classes/mapper/BusinessOutboxMapper.xml",
+                            "BOOT-INF/classes/db/hmdp.sql",
+                            "BOOT-INF/classes/db/migration/V10__versioned_public_knowledge.sql",
+                            "BOOT-INF/classes/seckill.lua",
+                            "BOOT-INF/classes/seckill-compensate.lua",
+                            "BOOT-INF/classes/seckill-release.lua",
+                            "BOOT-INF/classes/com/hmdp/reliability/ActivityInventoryLock.class",
+                            "BOOT-INF/classes/com/hmdp/service/impl/SeckillInventoryReleaseService.class"
+                        ],
+    "envFilePackaged":  false,
+    "sha256":  "3A2E0759D006AB3D63BF502D1D6E4310683B60DB2B9820C9E87E7F9FDD887231",
+    "jar":  "target/hm-dianping-0.0.1-SNAPSHOT.jar"
+}

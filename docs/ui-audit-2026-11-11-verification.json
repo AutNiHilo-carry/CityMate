@@ -1,0 +1,395 @@
+{
+  "date": "2026-11-11",
+  "backendRuns": [
+    {
+      "runId": "e56876cb29614e6d847d4689cef0ee09",
+      "mode": "regression",
+      "tests": 198,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "runId": "2c02f62ec1ad4416a90c01593c99eac6",
+      "mode": "broker",
+      "tests": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "backendTotal": 211,
+  "frontendTests": 48,
+  "frontendFailures": 0,
+  "vue2TemplateWarnings": 0,
+  "browser": {
+    "pages": [
+      {
+        "name": "home",
+        "width": 1440,
+        "scroll": 1440,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "shops",
+        "width": 1440,
+        "scroll": 1440,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "vouchers",
+        "width": 1440,
+        "scroll": 1440,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "shop",
+        "width": 1440,
+        "scroll": 1440,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "note",
+        "width": 1440,
+        "scroll": 1440,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "login",
+        "width": 1440,
+        "scroll": 1440,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "assistant",
+        "width": 1440,
+        "scroll": 1440,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "experience",
+        "width": 1440,
+        "scroll": 1440,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "other-profile",
+        "width": 1440,
+        "scroll": 1440,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "home",
+        "width": 1024,
+        "scroll": 1024,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "shops",
+        "width": 1024,
+        "scroll": 1024,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "vouchers",
+        "width": 1024,
+        "scroll": 1024,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "shop",
+        "width": 1024,
+        "scroll": 1024,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "note",
+        "width": 1024,
+        "scroll": 1024,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "login",
+        "width": 1024,
+        "scroll": 1024,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "assistant",
+        "width": 1024,
+        "scroll": 1024,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "experience",
+        "width": 1024,
+        "scroll": 1024,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "other-profile",
+        "width": 1024,
+        "scroll": 1024,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "home",
+        "width": 390,
+        "scroll": 390,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "shops",
+        "width": 390,
+        "scroll": 390,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "vouchers",
+        "width": 390,
+        "scroll": 390,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "shop",
+        "width": 390,
+        "scroll": 390,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "note",
+        "width": 390,
+        "scroll": 390,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "login",
+        "width": 390,
+        "scroll": 390,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "assistant",
+        "width": 390,
+        "scroll": 390,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "experience",
+        "width": 390,
+        "scroll": 390,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "other-profile",
+        "width": 390,
+        "scroll": 390,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "home",
+        "width": 320,
+        "scroll": 320,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "shops",
+        "width": 320,
+        "scroll": 320,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "vouchers",
+        "width": 320,
+        "scroll": 320,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "shop",
+        "width": 320,
+        "scroll": 320,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "note",
+        "width": 320,
+        "scroll": 320,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "login",
+        "width": 320,
+        "scroll": 320,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "assistant",
+        "width": 320,
+        "scroll": 320,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "experience",
+        "width": 320,
+        "scroll": 320,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "other-profile",
+        "width": 320,
+        "scroll": 320,
+        "authFixture": false,
+        "errors": []
+      },
+      {
+        "name": "profile",
+        "width": 1440,
+        "scroll": 1440,
+        "authFixture": true,
+        "errors": []
+      },
+      {
+        "name": "orders",
+        "width": 1440,
+        "scroll": 1440,
+        "authFixture": true,
+        "errors": []
+      },
+      {
+        "name": "publish",
+        "width": 1440,
+        "scroll": 1440,
+        "authFixture": true,
+        "errors": []
+      },
+      {
+        "name": "profile",
+        "width": 1024,
+        "scroll": 1024,
+        "authFixture": true,
+        "errors": []
+      },
+      {
+        "name": "orders",
+        "width": 1024,
+        "scroll": 1024,
+        "authFixture": true,
+        "errors": []
+      },
+      {
+        "name": "publish",
+        "width": 1024,
+        "scroll": 1024,
+        "authFixture": true,
+        "errors": []
+      },
+      {
+        "name": "profile",
+        "width": 390,
+        "scroll": 390,
+        "authFixture": true,
+        "errors": []
+      },
+      {
+        "name": "orders",
+        "width": 390,
+        "scroll": 390,
+        "authFixture": true,
+        "errors": []
+      },
+      {
+        "name": "publish",
+        "width": 390,
+        "scroll": 390,
+        "authFixture": true,
+        "errors": []
+      },
+      {
+        "name": "profile",
+        "width": 320,
+        "scroll": 320,
+        "authFixture": true,
+        "errors": []
+      },
+      {
+        "name": "orders",
+        "width": 320,
+        "scroll": 320,
+        "authFixture": true,
+        "errors": []
+      },
+      {
+        "name": "publish",
+        "width": 320,
+        "scroll": 320,
+        "authFixture": true,
+        "errors": []
+      }
+    ],
+    "checks": [
+      "live empty keyword state",
+      "live reset restores results",
+      "live category response matches rendered cards",
+      "write-note shortcut preserves login return",
+      "changed-price dialog requires another confirmation (mock)",
+      "confirmation dispatches once (mock)"
+    ],
+    "realBusinessWrites": 0,
+    "blockedWrites": [],
+    "stubbedPosts": 1,
+    "browser": "isolated headless Edge",
+    "authScreenshots": "mock user/order data",
+    "failures": 0
+  },
+  "liveReadOnlyApiChecks": 19,
+  "jarSha256": "0397f27ccf7559e880d6c65cfe0cbe1252159f37a1ce1df9736ddd34950553b6",
+  "sourceHashes": {
+    "frontend/index.html": "21e1a7d37b186d30bf3b0bb742e9b3e54d76fd8119eea2f01f16217b05816f8b",
+    "frontend/scripts/app.js": "c000957cadd8c5f618dfb4f7448a312f50e2ad0f2c68d1d2eb05110b71b05d5d",
+    "frontend/scripts/components.js": "e69cfaaa5cafd9dd983a0ba31e013a0fc3a8dfca79d8cb8f8c4e9cc0025729cd",
+    "frontend/assets/business-ui.css": "ecdc741b3c060218969869a2653add513d9ee184ae3a6053983dc981976d8dd3",
+    "src/main/java/com/hmdp/service/IVoucherBrowseService.java": "193f7d59652db26f9c578083faab6facd3fa97a81c5b3de759395f9b225c4d17",
+    "src/main/java/com/hmdp/service/impl/VoucherBrowseService.java": "2f046d0829d6280a4263013da5025d3fda97d4e616db564f40a4b6e159796d6c",
+    "src/main/java/com/hmdp/controller/VoucherBrowseController.java": "0da4f6dd5fa699421bdcb5540d5ca9bb863f84a2d022cabd3a4b20d9ad2464bc",
+    "src/main/resources/mapper/VoucherBrowseMapper.xml": "4c1190e8a26bd7488f28d90684e809bfd8514723a44dbff6f488405db5ed70a1",
+    "scripts/audit-ui.cjs": "c0b0a93a268f97e94fa510b99f57cac477fc609e54698fe3505276922457ef8b"
+  },
+  "noRealModelCalls": true,
+  "noLiveBusinessWrites": true,
+  "newPerformanceBenchmark": false
+}

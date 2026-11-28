@@ -60,6 +60,12 @@ public class BusinessProjectionServiceImpl implements IBusinessProjectionService
   private MediaStorage mediaStorage;
 
   @Resource
+  private SeckillCompensationService compensation;
+
+  @Resource
+  private SeckillInventoryReleaseService inventoryRelease;
+
+  @Resource
   private ObjectProvider<IOrderLifecycleService> lifecycle;
 
   @Resource
@@ -103,7 +109,7 @@ public class BusinessProjectionServiceImpl implements IBusinessProjectionService
   private ProjectionResult apply(BusinessOutboxTask task, BusinessEventType type) {
     switch (type) {
       case ORDER_EXPIRE:
-        lifecycle.getObject().closeExpiredOrdinaryOrder(task.getAggregateId());
+        lifecycle.getObject().closeExpiredOrder(task.getAggregateId());
         break;
       case SECKILL_FULFILL:
         coordinator.fulfillReservationFromMessage(task.getAggregateId());
@@ -118,6 +124,12 @@ public class BusinessProjectionServiceImpl implements IBusinessProjectionService
         break;
       case SECKILL_PUBLISH:
         publishSeckillActivity(task.getAggregateId());
+        break;
+      case SECKILL_RELEASE:
+        inventoryRelease.release(task.getAggregateId());
+        break;
+      case SECKILL_COMPENSATE:
+        compensation.compensate(task.getAggregateId());
         break;
       case SECKILL_RETRY:
         enqueueSeckillRetry(task.getAggregateId());

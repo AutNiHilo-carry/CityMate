@@ -1,0 +1,36 @@
+{
+  "checkedAtUtc": "2026-11-12T05:00:59.304724+00:00",
+  "readOnly": true,
+  "checks": [
+    "public catalog returns bounded rows and a total",
+    "stable pagination has no repeated IDs",
+    "category and exact shop combine in the database",
+    "keyword matches shop name",
+    "keyword matches voucher title",
+    "exact voucher preview returns current price and availability",
+    "mismatched shop and category return no rows",
+    "invalid preview cannot supply any voucher",
+    "shop options are bounded and expose truncation",
+    "reject invalid page",
+    "reject invalid size",
+    "reject invalid shopId",
+    "reject invalid typeId",
+    "reject invalid keyword",
+    "literal search: %",
+    "literal search: _",
+    "literal search: !",
+    "literal search: ' OR 1=1 --",
+    "availability is explicitly returned"
+  ],
+  "failures": 0,
+  "observedTotal": 4,
+  "browserVisualCheck": false,
+  "jarSha256": "5113fc14adf4c91fdec9344855384323ec496b8667bc9d777dfe7a5acd1062f2",
+  "sourceHashes": {
+    "frontend/index.html": "604f8a0ce6cba159a607575fd2f675eddfcec5d7466afd6d78d81401308948ab",
+    "frontend/scripts/app.js": "10ef8d62b9958d256ca417bf508e3a21d4ee1e276393adf1bb34c09a3be70058",
+    "frontend/assets/business-ui.css": "1c385041c0340f0d1e51d1709f6439cd4eadaa244f83dc7dfe81b628acfaf01e",
+    "src/main/java/com/hmdp/service/impl/VoucherBrowseService.java": "2f046d0829d6280a4263013da5025d3fda97d4e616db564f40a4b6e159796d6c",
+    "src/main/resources/mapper/VoucherBrowseMapper.xml": "4c1190e8a26bd7488f28d90684e809bfd8514723a44dbff6f488405db5ed70a1"
+  }
+}

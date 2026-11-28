@@ -1,0 +1,3297 @@
+{
+  "generatedAt" : "2026-11-06T02:12:29.885Z",
+  "database" : "hmdp_optimization_test",
+  "databaseVersion" : "8.0.46",
+  "endpoint" : "POST /voucher-order/seckill/{id}",
+  "jvm" : "1.8.0_504",
+  "availableProcessors" : 28,
+  "jvmMaxMemoryBytes" : 477626368,
+  "brokerEnabled" : true,
+  "automaticScheduling" : true,
+  "generatorSharesApplicationJvm" : true,
+  "mode" : "Finite closed-loop batches; one sample per concurrency; not maximum capacity",
+  "completionRateNote" : "From first request submission to observed final order; not steady-state throughput",
+  "latencyNote" : "All HTTP responses including sold-out and rate-limited; queue wait before HTTP excluded",
+  "rounds" : [ {
+    "voucherId" : 960601,
+    "concurrency" : 8,
+    "requests" : 200,
+    "initialStock" : 100,
+    "startedAt" : "2026-11-06T02:12:38.073Z",
+    "admissionBatchSeconds" : 8.245534273,
+    "httpResponsesPerSecond" : 24.255553779565254,
+    "acceptedResponses" : 100,
+    "uniqueAcceptedRequests" : 100,
+    "acceptedRequestsPerAdmissionSecond" : 12.127776889782627,
+    "soldOutResponses" : 100,
+    "rateLimitedResponses" : 0,
+    "systemErrors" : 0,
+    "httpSystemErrorRate" : 0.0,
+    "allResponseP50Ms" : 304.721582,
+    "allResponseP95Ms" : 542.034138,
+    "allResponseP99Ms" : 599.899436,
+    "samples" : [ {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854937992429593",
+      "latencyMs" : 315.553577
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854937992429594",
+      "latencyMs" : 333.437454
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854937992429595",
+      "latencyMs" : 368.404163
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854937992429590",
+      "latencyMs" : 227.551577
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854937992429591",
+      "latencyMs" : 255.379021
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854937992429589",
+      "latencyMs" : 186.558003
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854937992429592",
+      "latencyMs" : 270.655844
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854937992429596",
+      "latencyMs" : 437.002611
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854937992429597",
+      "latencyMs" : 286.539284
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854937992429598",
+      "latencyMs" : 276.145573
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854937992429599",
+      "latencyMs" : 269.75108
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854937992429600",
+      "latencyMs" : 321.420142
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854937992429601",
+      "latencyMs" : 312.759338
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854937992429602",
+      "latencyMs" : 330.315831
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854937992429603",
+      "latencyMs" : 357.005868
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854937992429604",
+      "latencyMs" : 324.343145
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854937992429605",
+      "latencyMs" : 342.519875
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854937992429606",
+      "latencyMs" : 358.627018
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854942287396907",
+      "latencyMs" : 564.022472
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854937992429607",
+      "latencyMs" : 315.064512
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854937992429608",
+      "latencyMs" : 315.771877
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854942287396910",
+      "latencyMs" : 543.537303
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854942287396905",
+      "latencyMs" : 274.073471
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854942287396906",
+      "latencyMs" : 299.651679
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854942287396908",
+      "latencyMs" : 302.412337
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854942287396909",
+      "latencyMs" : 319.684366
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854942287396911",
+      "latencyMs" : 355.083657
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854942287396912",
+      "latencyMs" : 351.67434
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854942287396918",
+      "latencyMs" : 574.656413
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854942287396913",
+      "latencyMs" : 306.824836
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854942287396914",
+      "latencyMs" : 309.873183
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854942287396915",
+      "latencyMs" : 326.061682
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854942287396916",
+      "latencyMs" : 304.721582
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854942287396917",
+      "latencyMs" : 331.220995
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854942287396919",
+      "latencyMs" : 337.896131
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854942287396920",
+      "latencyMs" : 333.210527
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854942287396925",
+      "latencyMs" : 484.242481
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854942287396921",
+      "latencyMs" : 277.237014
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854942287396922",
+      "latencyMs" : 276.991649
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854942287396928",
+      "latencyMs" : 456.878533
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854942287396923",
+      "latencyMs" : 259.627031
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854942287396924",
+      "latencyMs" : 247.991228
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854946582364226",
+      "latencyMs" : 431.953475
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854942287396926",
+      "latencyMs" : 258.342673
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854942287396927",
+      "latencyMs" : 240.01104
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854942287396929",
+      "latencyMs" : 243.647773
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854946582364227",
+      "latencyMs" : 288.159611
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854946582364228",
+      "latencyMs" : 234.186405
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854946582364229",
+      "latencyMs" : 257.849702
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854946582364233",
+      "latencyMs" : 449.797397
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854946582364230",
+      "latencyMs" : 259.895778
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854946582364236",
+      "latencyMs" : 556.859888
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854946582364231",
+      "latencyMs" : 286.285252
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854946582364232",
+      "latencyMs" : 258.057737
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854946582364240",
+      "latencyMs" : 571.985933
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854946582364234",
+      "latencyMs" : 313.037559
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854946582364235",
+      "latencyMs" : 352.564798
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854946582364237",
+      "latencyMs" : 355.492153
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854946582364238",
+      "latencyMs" : 309.223399
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854946582364239",
+      "latencyMs" : 306.228309
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854946582364241",
+      "latencyMs" : 327.461885
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854946582364242",
+      "latencyMs" : 327.500713
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854946582364243",
+      "latencyMs" : 291.905436
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854946582364244",
+      "latencyMs" : 266.588061
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854946582364245",
+      "latencyMs" : 281.48845
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854950877331546",
+      "latencyMs" : 422.039955
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854946582364246",
+      "latencyMs" : 259.913538
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854946582364247",
+      "latencyMs" : 267.649766
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854946582364248",
+      "latencyMs" : 259.928955
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854946582364249",
+      "latencyMs" : 216.404332
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854950877331548",
+      "latencyMs" : 305.781109
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854950877331547",
+      "latencyMs" : 282.816842
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854950877331553",
+      "latencyMs" : 514.082344
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854950877331549",
+      "latencyMs" : 254.378161
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854950877331550",
+      "latencyMs" : 284.140943
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854950877331551",
+      "latencyMs" : 281.699679
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854950877331552",
+      "latencyMs" : 342.011096
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854950877331558",
+      "latencyMs" : 618.696293
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854950877331554",
+      "latencyMs" : 318.113107
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854950877331555",
+      "latencyMs" : 359.9141
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854950877331561",
+      "latencyMs" : 576.114174
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854950877331556",
+      "latencyMs" : 344.303951
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854950877331557",
+      "latencyMs" : 367.808616
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854950877331559",
+      "latencyMs" : 342.793146
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854950877331560",
+      "latencyMs" : 340.782737
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854955172298862",
+      "latencyMs" : 782.884314
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854950877331562",
+      "latencyMs" : 347.390544
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854955172298863",
+      "latencyMs" : 599.899436
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854950877331563",
+      "latencyMs" : 243.072123
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854950877331564",
+      "latencyMs" : 453.949942
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854955172298866",
+      "latencyMs" : 546.994591
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854955172298864",
+      "latencyMs" : 443.579478
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854955172298861",
+      "latencyMs" : 401.985919
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854955172298865",
+      "latencyMs" : 434.00889
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854955172298867",
+      "latencyMs" : 406.168852
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854955172298868",
+      "latencyMs" : 192.992689
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854955172298872",
+      "latencyMs" : 399.98136
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854955172298869",
+      "latencyMs" : 197.751476
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 476.834132
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854955172298870",
+      "latencyMs" : 219.207602
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854955172298871",
+      "latencyMs" : 253.92358
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 308.667351
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 313.785134
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 302.032449
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 327.499996
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 297.939048
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 542.034138
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 274.10241
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 539.715641
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 317.456795
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 326.397335
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 334.888507
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 370.117762
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 357.667341
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 330.026981
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 274.594128
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 300.432382
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 294.822188
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 489.011017
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 482.689749
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 291.784835
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 284.523671
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 264.987636
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 258.691289
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 245.187363
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 299.010264
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 384.855022
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 242.208413
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 253.937443
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 391.868165
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 231.854468
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 225.602473
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 399.814653
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 215.773483
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 223.876654
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 247.283164
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 251.260897
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 233.592713
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 377.528958
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 234.253512
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 231.201685
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 397.216289
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 179.535318
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 213.492695
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 242.419977
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 252.837623
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 435.894713
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 271.125862
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 268.265219
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 463.008467
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 230.765384
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 203.380063
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 200.504188
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 264.177211
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 478.691452
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 302.982349
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 300.121567
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 291.678496
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 307.340263
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 300.189576
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 269.387328
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 261.829783
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 540.184411
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 537.052504
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 255.223889
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 308.76308
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 304.705032
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 333.983138
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 324.952931
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 406.219822
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 375.163156
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 323.263526
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 316.198476
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 314.097776
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 436.102728
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 266.589197
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 269.106809
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 386.815847
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 185.376543
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 194.945697
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 195.815765
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 185.158305
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 197.87387
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 188.933768
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 202.950663
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 426.640491
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 183.906086
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 220.153509
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 506.429512
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 235.641074
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 252.422063
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 280.083972
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 313.493465
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 317.758488
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 303.861724
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 276.083876
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 289.746453
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 334.446303
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 262.020498
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 241.437115
+    } ],
+    "completionObservationSeconds" : 14.27097637,
+    "observedEndToEndOrdersPerSecond" : 7.007229036565212,
+    "completionPollingIntervalMs" : 250,
+    "orders" : 100,
+    "successfulReservations" : 100,
+    "fulfillmentInbox" : 100,
+    "databaseRemaining" : 0,
+    "redisRemaining" : "0",
+    "duplicateOwners" : 0,
+    "acceptedIdsEqualPersistedIds" : true,
+    "backlogObservations" : [ {
+      "secondsSinceStart" : 9.977566426,
+      "orders" : 69,
+      "unfinishedFulfillmentEvents" : 31,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 10.228784123,
+      "orders" : 69,
+      "unfinishedFulfillmentEvents" : 31,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 10.480201653,
+      "orders" : 72,
+      "unfinishedFulfillmentEvents" : 28,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 10.738352777,
+      "orders" : 77,
+      "unfinishedFulfillmentEvents" : 22,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 10.989839382,
+      "orders" : 82,
+      "unfinishedFulfillmentEvents" : 18,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 11.245522559,
+      "orders" : 84,
+      "unfinishedFulfillmentEvents" : 16,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 11.496966367,
+      "orders" : 84,
+      "unfinishedFulfillmentEvents" : 16,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 11.748287555,
+      "orders" : 84,
+      "unfinishedFulfillmentEvents" : 16,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 12.000119232,
+      "orders" : 84,
+      "unfinishedFulfillmentEvents" : 16,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 12.251326504,
+      "orders" : 85,
+      "unfinishedFulfillmentEvents" : 15,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 12.502421315,
+      "orders" : 89,
+      "unfinishedFulfillmentEvents" : 11,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 12.753705663,
+      "orders" : 92,
+      "unfinishedFulfillmentEvents" : 7,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 13.013317918,
+      "orders" : 95,
+      "unfinishedFulfillmentEvents" : 5,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 13.264936437,
+      "orders" : 95,
+      "unfinishedFulfillmentEvents" : 5,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 13.51634298,
+      "orders" : 95,
+      "unfinishedFulfillmentEvents" : 5,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 13.767948557,
+      "orders" : 95,
+      "unfinishedFulfillmentEvents" : 5,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 14.019318838,
+      "orders" : 96,
+      "unfinishedFulfillmentEvents" : 4,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 14.270654592,
+      "orders" : 100,
+      "unfinishedFulfillmentEvents" : 0,
+      "streamPendingGlobal" : 0
+    } ],
+    "correct" : true
+  }, {
+    "voucherId" : 960602,
+    "concurrency" : 16,
+    "requests" : 200,
+    "initialStock" : 100,
+    "startedAt" : "2026-11-06T02:12:55.340Z",
+    "admissionBatchSeconds" : 6.854158034,
+    "httpResponsesPerSecond" : 29.179368057739765,
+    "acceptedResponses" : 100,
+    "uniqueAcceptedRequests" : 100,
+    "acceptedRequestsPerAdmissionSecond" : 14.589684028869883,
+    "soldOutResponses" : 100,
+    "rateLimitedResponses" : 0,
+    "systemErrors" : 0,
+    "httpSystemErrorRate" : 0.0,
+    "allResponseP50Ms" : 491.100893,
+    "allResponseP95Ms" : 835.302662,
+    "allResponseP99Ms" : 997.823487,
+    "samples" : [ {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855011006873822",
+      "latencyMs" : 310.992445
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855015301841132",
+      "latencyMs" : 862.040421
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855011006873835",
+      "latencyMs" : 649.275643
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855011006873821",
+      "latencyMs" : 288.212154
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855011006873823",
+      "latencyMs" : 341.632912
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855011006873833",
+      "latencyMs" : 584.822353
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855011006873826",
+      "latencyMs" : 402.453528
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855011006873824",
+      "latencyMs" : 375.625896
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855011006873830",
+      "latencyMs" : 568.747222
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855011006873827",
+      "latencyMs" : 468.465363
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855011006873831",
+      "latencyMs" : 542.93796
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855011006873828",
+      "latencyMs" : 518.647077
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855011006873829",
+      "latencyMs" : 492.709913
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855011006873825",
+      "latencyMs" : 436.609189
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855011006873832",
+      "latencyMs" : 602.756963
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855011006873834",
+      "latencyMs" : 632.080706
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855015301841133",
+      "latencyMs" : 603.668355
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855015301841134",
+      "latencyMs" : 606.235853
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855015301841135",
+      "latencyMs" : 618.101038
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855015301841136",
+      "latencyMs" : 605.972992
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855015301841137",
+      "latencyMs" : 605.151381
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855015301841138",
+      "latencyMs" : 627.111521
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855015301841139",
+      "latencyMs" : 653.916321
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855015301841140",
+      "latencyMs" : 692.084826
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855015301841141",
+      "latencyMs" : 727.25067
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808451",
+      "latencyMs" : 1244.069592
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855015301841142",
+      "latencyMs" : 734.52441
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855015301841143",
+      "latencyMs" : 794.966889
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855015301841144",
+      "latencyMs" : 809.026513
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855015301841145",
+      "latencyMs" : 834.568418
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855015301841146",
+      "latencyMs" : 878.489841
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808456",
+      "latencyMs" : 1151.098755
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855015301841147",
+      "latencyMs" : 669.087729
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855015301841148",
+      "latencyMs" : 668.870929
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855015301841149",
+      "latencyMs" : 635.201608
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855015301841150",
+      "latencyMs" : 658.231624
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855015301841151",
+      "latencyMs" : 640.332758
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855015301841152",
+      "latencyMs" : 607.828814
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808449",
+      "latencyMs" : 579.914405
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808450",
+      "latencyMs" : 564.912623
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808452",
+      "latencyMs" : 576.912135
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808453",
+      "latencyMs" : 569.925157
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808454",
+      "latencyMs" : 541.998813
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808455",
+      "latencyMs" : 554.312731
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808457",
+      "latencyMs" : 562.062233
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808458",
+      "latencyMs" : 516.012647
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808459",
+      "latencyMs" : 501.910376
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808460",
+      "latencyMs" : 509.956445
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808461",
+      "latencyMs" : 518.034378
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808462",
+      "latencyMs" : 513.603799
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808463",
+      "latencyMs" : 528.716964
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808464",
+      "latencyMs" : 542.248453
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808465",
+      "latencyMs" : 540.666499
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808466",
+      "latencyMs" : 535.205875
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808467",
+      "latencyMs" : 536.170558
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808468",
+      "latencyMs" : 533.42204
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808469",
+      "latencyMs" : 540.059775
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808470",
+      "latencyMs" : 509.834566
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775779",
+      "latencyMs" : 997.823487
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808471",
+      "latencyMs" : 477.853454
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808472",
+      "latencyMs" : 478.972098
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808473",
+      "latencyMs" : 481.300661
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808474",
+      "latencyMs" : 508.788714
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808475",
+      "latencyMs" : 517.962625
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808476",
+      "latencyMs" : 529.596567
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855019596808477",
+      "latencyMs" : 514.955969
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775785",
+      "latencyMs" : 984.520473
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775774",
+      "latencyMs" : 522.942807
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775775",
+      "latencyMs" : 521.981044
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775776",
+      "latencyMs" : 542.060685
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775777",
+      "latencyMs" : 552.857404
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775778",
+      "latencyMs" : 583.751576
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775780",
+      "latencyMs" : 578.363003
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775781",
+      "latencyMs" : 589.033441
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775782",
+      "latencyMs" : 572.413625
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775783",
+      "latencyMs" : 567.783719
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775784",
+      "latencyMs" : 616.894888
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775786",
+      "latencyMs" : 610.470561
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775797",
+      "latencyMs" : 863.207916
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775787",
+      "latencyMs" : 545.142955
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775788",
+      "latencyMs" : 543.026321
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775789",
+      "latencyMs" : 507.142105
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775790",
+      "latencyMs" : 503.558822
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775791",
+      "latencyMs" : 487.747438
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775792",
+      "latencyMs" : 451.509704
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775793",
+      "latencyMs" : 398.596864
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775794",
+      "latencyMs" : 411.925874
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775795",
+      "latencyMs" : 443.101652
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775796",
+      "latencyMs" : 431.410451
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855028186743104",
+      "latencyMs" : 700.407516
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 701.641236
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775798",
+      "latencyMs" : 359.407176
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775799",
+      "latencyMs" : 385.809059
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775800",
+      "latencyMs" : 381.733917
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775801",
+      "latencyMs" : 387.772749
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775802",
+      "latencyMs" : 383.232935
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775803",
+      "latencyMs" : 369.147549
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775804",
+      "latencyMs" : 364.822795
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855023891775805",
+      "latencyMs" : 354.295235
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855028186743102",
+      "latencyMs" : 383.689203
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855028186743103",
+      "latencyMs" : 409.388549
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 417.762535
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 378.076539
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 382.539259
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 397.306322
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 396.925783
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 792.820414
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 391.785978
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 398.552455
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 400.010808
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 425.201566
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 441.95917
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 467.082198
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 837.123621
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 413.341087
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 413.498248
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 430.23966
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 430.35809
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 439.441504
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 462.412509
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 449.785235
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 835.302662
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 418.62144
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 427.638664
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 447.699328
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 469.177582
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 446.270428
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 431.078995
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 425.644169
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 428.219163
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 413.795103
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 428.771665
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 443.614614
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 822.985246
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 441.694852
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 432.088403
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 465.87765
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 440.665962
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 482.387141
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 446.648451
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 453.398924
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 452.825703
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 447.73917
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 448.805565
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 448.35806
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 467.280203
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 479.565485
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 511.452614
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 506.00648
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 489.015276
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 521.267036
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 490.32198
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 828.708171
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 433.005009
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 420.263077
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 434.029587
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 442.001567
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 454.815257
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 456.560199
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 792.748362
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 446.569682
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 438.878591
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 473.001533
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 423.509708
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 797.051777
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 449.374971
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 438.732754
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 429.658949
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 419.182627
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 421.899116
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 416.483566
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 785.910896
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 406.508474
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 434.771548
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 424.442671
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 436.10483
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 417.796675
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 438.980251
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 420.16039
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 408.463555
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 397.233034
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 402.982059
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 430.790167
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 977.212015
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 449.587311
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 464.318098
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 491.100893
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 500.167945
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 543.32889
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 856.989538
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 556.230145
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 568.180134
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 552.149181
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 566.959186
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 555.024136
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 571.499397
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 562.395218
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 540.132594
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 566.550829
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 541.854162
+    } ],
+    "completionObservationSeconds" : 14.178935341,
+    "observedEndToEndOrdersPerSecond" : 7.0527157078457545,
+    "completionPollingIntervalMs" : 250,
+    "orders" : 100,
+    "successfulReservations" : 100,
+    "fulfillmentInbox" : 100,
+    "databaseRemaining" : 0,
+    "redisRemaining" : "0",
+    "duplicateOwners" : 0,
+    "acceptedIdsEqualPersistedIds" : true,
+    "backlogObservations" : [ {
+      "secondsSinceStart" : 8.114667371,
+      "orders" : 49,
+      "unfinishedFulfillmentEvents" : 51,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 8.365908647,
+      "orders" : 50,
+      "unfinishedFulfillmentEvents" : 50,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 8.620639476,
+      "orders" : 54,
+      "unfinishedFulfillmentEvents" : 46,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 8.872877105,
+      "orders" : 58,
+      "unfinishedFulfillmentEvents" : 42,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 9.130304604,
+      "orders" : 61,
+      "unfinishedFulfillmentEvents" : 39,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 9.383020045,
+      "orders" : 61,
+      "unfinishedFulfillmentEvents" : 39,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 9.635275128,
+      "orders" : 61,
+      "unfinishedFulfillmentEvents" : 39,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 9.887406152,
+      "orders" : 61,
+      "unfinishedFulfillmentEvents" : 39,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 10.140885764,
+      "orders" : 62,
+      "unfinishedFulfillmentEvents" : 38,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 10.393680632,
+      "orders" : 67,
+      "unfinishedFulfillmentEvents" : 33,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 10.647238509,
+      "orders" : 73,
+      "unfinishedFulfillmentEvents" : 27,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 10.899332573,
+      "orders" : 78,
+      "unfinishedFulfillmentEvents" : 22,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 11.151328587,
+      "orders" : 80,
+      "unfinishedFulfillmentEvents" : 20,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 11.40341746,
+      "orders" : 80,
+      "unfinishedFulfillmentEvents" : 20,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 11.655231122,
+      "orders" : 80,
+      "unfinishedFulfillmentEvents" : 20,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 11.907101196,
+      "orders" : 83,
+      "unfinishedFulfillmentEvents" : 17,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 12.15884753,
+      "orders" : 86,
+      "unfinishedFulfillmentEvents" : 14,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 12.410514857,
+      "orders" : 90,
+      "unfinishedFulfillmentEvents" : 10,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 12.662405946,
+      "orders" : 92,
+      "unfinishedFulfillmentEvents" : 8,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 12.91453924,
+      "orders" : 92,
+      "unfinishedFulfillmentEvents" : 8,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 13.166839911,
+      "orders" : 92,
+      "unfinishedFulfillmentEvents" : 8,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 13.419425043,
+      "orders" : 92,
+      "unfinishedFulfillmentEvents" : 8,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 13.672237072,
+      "orders" : 93,
+      "unfinishedFulfillmentEvents" : 7,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 13.925376961,
+      "orders" : 97,
+      "unfinishedFulfillmentEvents" : 3,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 14.178225947,
+      "orders" : 100,
+      "unfinishedFulfillmentEvents" : 0,
+      "streamPendingGlobal" : 0
+    } ],
+    "correct" : true
+  }, {
+    "voucherId" : 960603,
+    "concurrency" : 32,
+    "requests" : 200,
+    "initialStock" : 100,
+    "startedAt" : "2026-11-06T02:13:11.994Z",
+    "admissionBatchSeconds" : 7.309944756,
+    "httpResponsesPerSecond" : 27.35998788990027,
+    "acceptedResponses" : 100,
+    "uniqueAcceptedRequests" : 100,
+    "acceptedRequestsPerAdmissionSecond" : 13.679993944950136,
+    "soldOutResponses" : 100,
+    "rateLimitedResponses" : 0,
+    "systemErrors" : 0,
+    "httpSystemErrorRate" : 0.0,
+    "allResponseP50Ms" : 1112.378523,
+    "allResponseP95Ms" : 1278.576323,
+    "allResponseP99Ms" : 2102.329241,
+    "samples" : [ {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855084021318063",
+      "latencyMs" : 858.199877
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855084021318064",
+      "latencyMs" : 871.435481
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855084021318066",
+      "latencyMs" : 912.546142
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855084021318062",
+      "latencyMs" : 441.398413
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855084021318053",
+      "latencyMs" : 275.201053
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855088316285379",
+      "latencyMs" : 1476.066137
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855084021318055",
+      "latencyMs" : 322.463126
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855088316285376",
+      "latencyMs" : 1299.918595
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855084021318054",
+      "latencyMs" : 286.770905
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855088316285378",
+      "latencyMs" : 1367.179193
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855084021318068",
+      "latencyMs" : 975.102026
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855088316285370",
+      "latencyMs" : 1113.562182
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855084021318056",
+      "latencyMs" : 347.37461
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855084021318060",
+      "latencyMs" : 401.852699
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855084021318067",
+      "latencyMs" : 930.097404
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855084021318069",
+      "latencyMs" : 989.47668
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855084021318058",
+      "latencyMs" : 364.503659
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855084021318059",
+      "latencyMs" : 412.389564
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855088316285368",
+      "latencyMs" : 1057.118575
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855088316285372",
+      "latencyMs" : 1139.389737
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855088316285374",
+      "latencyMs" : 1196.236137
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855088316285390",
+      "latencyMs" : 2009.676568
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855088316285369",
+      "latencyMs" : 1080.672202
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855084021318061",
+      "latencyMs" : 443.020664
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855084021318065",
+      "latencyMs" : 876.650151
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855084021318070",
+      "latencyMs" : 1007.724819
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855088316285377",
+      "latencyMs" : 1310.383306
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855084021318071",
+      "latencyMs" : 1034.47319
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855088316285373",
+      "latencyMs" : 1172.191298
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855088316285375",
+      "latencyMs" : 1244.464698
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855088316285371",
+      "latencyMs" : 1131.205872
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855084021318057",
+      "latencyMs" : 384.040866
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855088316285380",
+      "latencyMs" : 1213.258786
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855088316285381",
+      "latencyMs" : 1223.311249
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855088316285382",
+      "latencyMs" : 1223.679628
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855088316285383",
+      "latencyMs" : 1222.793145
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855088316285384",
+      "latencyMs" : 1236.238361
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855088316285385",
+      "latencyMs" : 1264.026664
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855088316285386",
+      "latencyMs" : 1254.377874
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855088316285387",
+      "latencyMs" : 1265.188809
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855088316285388",
+      "latencyMs" : 1278.576323
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855088316285389",
+      "latencyMs" : 1344.090712
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252687",
+      "latencyMs" : 1181.533281
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252688",
+      "latencyMs" : 1208.097401
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252689",
+      "latencyMs" : 1211.127311
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252690",
+      "latencyMs" : 1207.082303
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252691",
+      "latencyMs" : 1205.523219
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252692",
+      "latencyMs" : 1182.757856
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252693",
+      "latencyMs" : 1183.386823
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252694",
+      "latencyMs" : 1187.156615
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252695",
+      "latencyMs" : 1181.938762
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252696",
+      "latencyMs" : 1188.636256
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252697",
+      "latencyMs" : 1195.897438
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252698",
+      "latencyMs" : 1186.142998
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252699",
+      "latencyMs" : 1173.894354
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252700",
+      "latencyMs" : 1193.573194
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252701",
+      "latencyMs" : 1211.674196
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252702",
+      "latencyMs" : 1227.807936
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252703",
+      "latencyMs" : 1198.47539
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252704",
+      "latencyMs" : 1191.727872
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252705",
+      "latencyMs" : 1205.173399
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252706",
+      "latencyMs" : 1231.321829
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252707",
+      "latencyMs" : 1147.495778
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252708",
+      "latencyMs" : 1158.7027
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252709",
+      "latencyMs" : 1179.943261
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252710",
+      "latencyMs" : 1184.672811
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252711",
+      "latencyMs" : 1183.900783
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252712",
+      "latencyMs" : 1188.229654
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252713",
+      "latencyMs" : 1167.284863
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252714",
+      "latencyMs" : 1210.26419
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252715",
+      "latencyMs" : 1222.618309
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855092611252716",
+      "latencyMs" : 1236.421952
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220013",
+      "latencyMs" : 1244.609404
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 2102.329241
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220014",
+      "latencyMs" : 1122.244362
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220015",
+      "latencyMs" : 1118.94129
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220016",
+      "latencyMs" : 1112.378523
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220017",
+      "latencyMs" : 1121.400015
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220018",
+      "latencyMs" : 1115.434818
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220019",
+      "latencyMs" : 1118.354434
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220020",
+      "latencyMs" : 1131.931603
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220021",
+      "latencyMs" : 1127.04138
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220022",
+      "latencyMs" : 1131.277684
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220023",
+      "latencyMs" : 1121.269018
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220024",
+      "latencyMs" : 1102.589602
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220025",
+      "latencyMs" : 1124.735091
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220026",
+      "latencyMs" : 1156.184075
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220027",
+      "latencyMs" : 1138.138424
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220028",
+      "latencyMs" : 1129.796417
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220029",
+      "latencyMs" : 1128.97403
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220030",
+      "latencyMs" : 1149.309035
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220031",
+      "latencyMs" : 1129.920279
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 2119.016534
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220032",
+      "latencyMs" : 1084.859709
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220033",
+      "latencyMs" : 1096.266662
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220034",
+      "latencyMs" : 1095.658193
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220035",
+      "latencyMs" : 1105.043267
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220036",
+      "latencyMs" : 1078.786178
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220037",
+      "latencyMs" : 1072.365864
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220038",
+      "latencyMs" : 1058.727118
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220039",
+      "latencyMs" : 1092.801001
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656855096906220040",
+      "latencyMs" : 1114.450597
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1124.825989
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1099.48588
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1053.535543
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1018.286282
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1019.903004
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1048.364407
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1039.214042
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1040.242864
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1038.368974
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1019.404862
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1024.81306
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1018.322463
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1037.91645
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1086.67262
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1069.395521
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1074.344126
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1100.986354
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1059.626078
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1064.331412
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1063.009645
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1064.876122
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1035.40833
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1044.092166
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1062.096377
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1056.062574
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1062.366263
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1080.9971
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1083.373994
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1093.784572
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1074.447665
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1057.157808
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1065.863207
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 2088.271081
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1037.625759
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1015.862733
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1015.089206
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 999.289726
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1003.219612
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1053.080155
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1053.131929
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1055.36632
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1052.038376
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1050.343676
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1033.271129
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1034.125931
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1053.032454
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1034.335622
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1032.479214
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 2198.951846
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1013.264054
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1019.425471
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1007.852525
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1030.941333
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1020.548888
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 999.012476
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1020.788359
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1038.023743
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1059.467518
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1042.343483
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1062.127516
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1116.297217
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1103.864546
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1146.169845
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1137.674522
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1134.288634
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1149.909469
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1173.418
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1179.703779
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1185.839938
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1147.56045
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1161.74014
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1184.077566
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1187.3542
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1222.616673
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1226.049478
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1221.832761
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1248.428433
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1249.126191
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1222.951717
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1223.285338
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1223.173404
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1227.704141
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1207.093177
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1194.657718
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1190.540369
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1150.285024
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1103.448919
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1082.324858
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1099.705232
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1093.363194
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1034.573681
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 1135.392617
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 999.641065
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 968.283795
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 969.913601
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 955.069949
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 919.869726
+    }, {
+      "httpStatus" : 200,
+      "kind" : "sold_out",
+      "latencyMs" : 876.569023
+    } ],
+    "completionObservationSeconds" : 14.254869804,
+    "observedEndToEndOrdersPerSecond" : 7.015146499053917,
+    "completionPollingIntervalMs" : 250,
+    "orders" : 100,
+    "successfulReservations" : 100,
+    "fulfillmentInbox" : 100,
+    "databaseRemaining" : 0,
+    "redisRemaining" : "0",
+    "duplicateOwners" : 0,
+    "acceptedIdsEqualPersistedIds" : true,
+    "backlogObservations" : [ {
+      "secondsSinceStart" : 8.942074796,
+      "orders" : 46,
+      "unfinishedFulfillmentEvents" : 54,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 9.196218072,
+      "orders" : 52,
+      "unfinishedFulfillmentEvents" : 48,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 9.455108872,
+      "orders" : 53,
+      "unfinishedFulfillmentEvents" : 47,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 9.706886993,
+      "orders" : 53,
+      "unfinishedFulfillmentEvents" : 47,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 9.958512886,
+      "orders" : 53,
+      "unfinishedFulfillmentEvents" : 47,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 10.210090276,
+      "orders" : 60,
+      "unfinishedFulfillmentEvents" : 40,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 10.465154967,
+      "orders" : 65,
+      "unfinishedFulfillmentEvents" : 35,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 10.716574688,
+      "orders" : 72,
+      "unfinishedFulfillmentEvents" : 28,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 10.968462339,
+      "orders" : 73,
+      "unfinishedFulfillmentEvents" : 27,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 11.220058883,
+      "orders" : 73,
+      "unfinishedFulfillmentEvents" : 27,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 11.471877119,
+      "orders" : 73,
+      "unfinishedFulfillmentEvents" : 27,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 11.72335818,
+      "orders" : 75,
+      "unfinishedFulfillmentEvents" : 25,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 11.979535814,
+      "orders" : 79,
+      "unfinishedFulfillmentEvents" : 21,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 12.231412093,
+      "orders" : 85,
+      "unfinishedFulfillmentEvents" : 15,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 12.487009114,
+      "orders" : 88,
+      "unfinishedFulfillmentEvents" : 12,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 12.738627964,
+      "orders" : 88,
+      "unfinishedFulfillmentEvents" : 12,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 12.990577644,
+      "orders" : 88,
+      "unfinishedFulfillmentEvents" : 12,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 13.241962637,
+      "orders" : 88,
+      "unfinishedFulfillmentEvents" : 12,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 13.493085063,
+      "orders" : 89,
+      "unfinishedFulfillmentEvents" : 11,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 13.751733385,
+      "orders" : 93,
+      "unfinishedFulfillmentEvents" : 7,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 14.003013714,
+      "orders" : 96,
+      "unfinishedFulfillmentEvents" : 4,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 14.254362939,
+      "orders" : 100,
+      "unfinishedFulfillmentEvents" : 0,
+      "streamPendingGlobal" : 0
+    } ],
+    "correct" : true
+  } ],
+  "warmup" : {
+    "voucherId" : 960600,
+    "concurrency" : 4,
+    "requests" : 20,
+    "initialStock" : 20,
+    "startedAt" : "2026-11-06T02:12:30.446Z",
+    "admissionBatchSeconds" : 3.435053755,
+    "httpResponsesPerSecond" : 5.822325188037705,
+    "acceptedResponses" : 20,
+    "uniqueAcceptedRequests" : 20,
+    "acceptedRequestsPerAdmissionSecond" : 5.822325188037705,
+    "soldOutResponses" : 0,
+    "rateLimitedResponses" : 0,
+    "systemErrors" : 0,
+    "httpSystemErrorRate" : 0.0,
+    "allResponseP50Ms" : 187.302292,
+    "allResponseP95Ms" : 2613.650262,
+    "allResponseP99Ms" : 2613.66639,
+    "samples" : [ {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854907927658497",
+      "latencyMs" : 2613.632051
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854907927658499",
+      "latencyMs" : 2613.576606
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854907927658498",
+      "latencyMs" : 2613.66639
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854907927658500",
+      "latencyMs" : 2613.650262
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854916517593095",
+      "latencyMs" : 239.613768
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854916517593096",
+      "latencyMs" : 259.260589
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854916517593093",
+      "latencyMs" : 186.591526
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854916517593094",
+      "latencyMs" : 208.597365
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854916517593097",
+      "latencyMs" : 138.214414
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854916517593098",
+      "latencyMs" : 145.401807
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854916517593099",
+      "latencyMs" : 182.842298
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854916517593100",
+      "latencyMs" : 201.832396
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854916517593103",
+      "latencyMs" : 292.226033
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854916517593101",
+      "latencyMs" : 184.078278
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854916517593102",
+      "latencyMs" : 142.571421
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854916517593104",
+      "latencyMs" : 222.341136
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854916517593105",
+      "latencyMs" : 163.312292
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854916517593106",
+      "latencyMs" : 187.302292
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854916517593107",
+      "latencyMs" : 152.070141
+    }, {
+      "httpStatus" : 200,
+      "kind" : "accepted",
+      "orderId" : "656854916517593108",
+      "latencyMs" : 135.490704
+    } ],
+    "completionObservationSeconds" : 4.914509326,
+    "observedEndToEndOrdersPerSecond" : 4.069582266166606,
+    "completionPollingIntervalMs" : 250,
+    "orders" : 20,
+    "successfulReservations" : 20,
+    "fulfillmentInbox" : 20,
+    "databaseRemaining" : 0,
+    "redisRemaining" : "0",
+    "duplicateOwners" : 0,
+    "acceptedIdsEqualPersistedIds" : true,
+    "backlogObservations" : [ {
+      "secondsSinceStart" : 3.646426483,
+      "orders" : 0,
+      "unfinishedFulfillmentEvents" : 19,
+      "streamPendingGlobal" : 1
+    }, {
+      "secondsSinceStart" : 3.902459398,
+      "orders" : 2,
+      "unfinishedFulfillmentEvents" : 18,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 4.154049775,
+      "orders" : 6,
+      "unfinishedFulfillmentEvents" : 14,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 4.40545652,
+      "orders" : 11,
+      "unfinishedFulfillmentEvents" : 9,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 4.662355723,
+      "orders" : 16,
+      "unfinishedFulfillmentEvents" : 4,
+      "streamPendingGlobal" : 0
+    }, {
+      "secondsSinceStart" : 4.913977578,
+      "orders" : 20,
+      "unfinishedFulfillmentEvents" : 0,
+      "streamPendingGlobal" : 0
+    } ],
+    "correct" : true
+  },
+  "passed" : true
+}

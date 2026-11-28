@@ -151,7 +151,8 @@ public class QueryToolServiceImpl implements IQueryToolService {
         return () -> {
           Result<?> result = claims.queryReservationStatus(orderId, userId);
           if (!Boolean.TRUE.equals(result.getSuccess())) {
-            return rejected(tool);
+            return QueryToolResult.failure(
+                tool, Status.BUSINESS_REJECTED, "未获得秒杀请求进度。普通券订单应查listMyOrders；本次失败不代表未领取或没有权限。");
           }
           return QueryToolResult.ok(
               tool, Collections.unmodifiableMap(QueryToolViews.claim(result.getData())), null);

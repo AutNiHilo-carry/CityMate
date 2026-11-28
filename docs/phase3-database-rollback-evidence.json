@@ -1,0 +1,34 @@
+{
+    "generatedAt": "2026-11-05T13:40:49.379Z",
+    "scenario": "database-rollback",
+    "passed": true,
+    "brokerEnabled": false,
+    "trace": [
+        {
+            "stage": "insert_failed_database_stock_rolled_back_message_pending",
+            "observedAt": "2026-11-05T13:40:49.292Z",
+            "voucherId": 900001,
+            "database": "hmdp_optimization_test",
+            "databaseStock": 1,
+            "redisStock": "0",
+            "orders": 0,
+            "streamLength": 1,
+            "pending": 1,
+            "orderId": "656661196312674341",
+            "reservationState": "PROCESSING"
+        },
+        {
+            "stage": "same_message_retried_once_then_duplicate_is_noop",
+            "observedAt": "2026-11-05T13:40:49.377Z",
+            "voucherId": 900001,
+            "database": "hmdp_optimization_test",
+            "databaseStock": 0,
+            "redisStock": "0",
+            "orders": 1,
+            "streamLength": 1,
+            "pending": 0,
+            "orderId": "656661196312674341",
+            "reservationState": "SUCCESS"
+        }
+    ]
+}

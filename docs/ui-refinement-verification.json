@@ -1,0 +1,87 @@
+{
+  "date": "2026-11-10",
+  "scope": "all-site frontend theme, note list/detail and assistant mode buttons",
+  "frontendTests": 31,
+  "failures": 0,
+  "syntaxCheck": "passed",
+  "vue2TemplateCompile": "passed, shared components and all-page root",
+  "httpPageShells": 12,
+  "httpAdditionalAssets": 3,
+  "backendChanged": false,
+  "backendTestsRerun": false,
+  "modelCalled": false,
+  "businessWrites": false,
+  "browserVisualCheck": false,
+  "reason": "Browser-specific host unavailable; native browser checking stopped by user Escape.",
+  "sourceHashes": {
+    "frontend/index.html": "68f20069e224d2c77fd1cce8ea95efda7c72f99ffebf0e93f2182adfded63f19",
+    "frontend/assets/business-ui.css": "3196f3b0612cf5b1e39d71323aeb1ee85ecb5f588b56f0e292c26b18b245f20d",
+    "frontend/scripts/app.js": "5a55849b15c0bbf3e263832a62112bf968f88f0219e8723dddbd9e386eff7e8e",
+    "frontend/scripts/assistant.js": "235997a9344d7ac14532f76baf913babe972232fb9c871c864b2d2a14dc203b8",
+    "frontend/scripts/assistant-helpers.js": "c4d906003a3fc6ee5977a8658a3967b1d0eb4fa59ecf488b022815f5c76fb731",
+    "frontend/tests/assistant.test.js": "3a201859da4098fc667177eb195ec06182e67455bff7d83e1715edb1e7c79730",
+    "frontend/scripts/components.js": "4dda563d2ebddf62513f583c210e9c80d35e4a1da30ce75891ba738c0489c3e4"
+  },
+  "httpChecks": [
+    {
+      "path": "/",
+      "status": 200
+    },
+    {
+      "path": "/shop-list.html",
+      "status": 200
+    },
+    {
+      "path": "/shop-detail.html?id=4",
+      "status": 200
+    },
+    {
+      "path": "/vouchers.html",
+      "status": 200
+    },
+    {
+      "path": "/blog-detail.html?id=1",
+      "status": 200
+    },
+    {
+      "path": "/login.html",
+      "status": 200
+    },
+    {
+      "path": "/info.html",
+      "status": 200
+    },
+    {
+      "path": "/other-info.html?id=1",
+      "status": 200
+    },
+    {
+      "path": "/orders.html",
+      "status": 200
+    },
+    {
+      "path": "/blog-edit.html",
+      "status": 200
+    },
+    {
+      "path": "/assistant.html",
+      "status": 200
+    },
+    {
+      "path": "/experience.html",
+      "status": 200
+    },
+    {
+      "path": "/assets/business-ui.css",
+      "status": 200
+    },
+    {
+      "path": "/scripts/assistant.js",
+      "status": 200
+    },
+    {
+      "path": "/scripts/components.js",
+      "status": 200
+    }
+  ]
+}

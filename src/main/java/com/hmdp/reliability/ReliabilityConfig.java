@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Configuration
 @EnableScheduling
 @ConditionalOnProperty(
-    name = "citylens.reliability.scheduling-enabled",
+    name = "citymate.reliability.scheduling-enabled",
     havingValue = "true",
     matchIfMissing = true)
 public class ReliabilityConfig {}

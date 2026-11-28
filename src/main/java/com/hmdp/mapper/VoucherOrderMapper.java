@@ -19,7 +19,9 @@ public interface VoucherOrderMapper extends BaseMapper<VoucherOrder> {
 
   Long countByVoucherId(@Param("voucherId") Long voucherId);
 
-  List<Long> selectExpiredOrdinaryOrders();
+  Long countActiveInventoryOrders(@Param("voucherId") Long voucherId);
+
+  List<Long> selectExpiredUnpaidOrders(@Param("afterId") long afterId);
 
   int initializeDeadline(
       @Param("timeoutMinutes") Integer timeoutMinutes, @Param("orderId") Long orderId);

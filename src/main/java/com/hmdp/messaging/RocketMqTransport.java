@@ -80,7 +80,10 @@ public class RocketMqTransport implements EventPublisher {
         subscribe("relations", "LIKE || FOLLOW", businessTopic);
         subscribe("media", "MEDIA_DELETE", businessTopic);
         subscribe("cache", "SHOP_INVALIDATE", businessTopic);
-        subscribe("activities", "SECKILL_PUBLISH || SECKILL_RETRY", businessTopic);
+        subscribe(
+            "activities",
+            "SECKILL_PUBLISH || SECKILL_RETRY || SECKILL_COMPENSATE || SECKILL_RELEASE",
+            businessTopic);
         subscribe("fulfillment", "SECKILL_FULFILL", businessTopic);
         subscribe("orders", "ORDER_CREATED || ORDER_PAID || ORDER_CLOSED", businessTopic);
         subscribe("deadlines", "ORDER_EXPIRE", deadlineTopic);

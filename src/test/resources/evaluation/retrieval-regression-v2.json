@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "scope": "Additional synthetic regression questions over v1 fixtures; not an independent blind holdout",
+  "queries": [
+    {"id": "r01", "category": "paraphrase", "query": "晚上几点关门呀", "relevant": [4]},
+    {"id": "r02", "category": "paraphrase", "query": "开车过去停在哪里", "relevant": [4]},
+    {"id": "r03", "category": "paraphrase", "query": "到店之前要订位么", "relevant": [3]},
+    {"id": "r04", "category": "paraphrase", "query": "订单没付款还会保留吗", "relevant": [2]},
+    {"id": "r05", "category": "paraphrase", "query": "领券以后怎么交钱", "relevant": [2]},
+    {"id": "r06", "category": "paraphrase", "query": "请问抢券的编号去哪里查", "relevant": [1]},
+    {"id": "r07", "category": "negation", "query": "没有预约能保证有位置吗", "relevant": [3]},
+    {"id": "r08", "category": "paraphrase", "query": "车库在哪层", "relevant": [4]},
+    {"id": "r09", "category": "unanswerable", "query": "护照丢了需要什么手续", "relevant": []},
+    {"id": "r10", "category": "unanswerable", "query": "电影票交钱以后怎么退", "relevant": []},
+    {"id": "r11", "category": "unanswerable", "query": "现在还有几个停车位", "relevant": []},
+    {"id": "r12", "category": "unanswerable", "query": "设备编号查维修记录", "relevant": []}
+  ]
+}

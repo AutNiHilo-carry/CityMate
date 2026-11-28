@@ -1,0 +1,100 @@
+{
+    "generatedAt":  "2026-11-05T07:48:48.0732514+00:00",
+    "status":  "SELECTED_CACHE_RECOVERY_TESTS_PASSED",
+    "checkstyle":  "passed",
+    "testCompilation":  "passed",
+    "compilerRelease":  8,
+    "unitTestsPassed":  9,
+    "unitSuites":  [
+                       {
+                           "name":  "com.hmdp.reliability.CacheConcurrencyTest",
+                           "tests":  1,
+                           "failures":  0,
+                           "errors":  0,
+                           "skipped":  0
+                       },
+                       {
+                           "name":  "com.hmdp.cache.CanalBatchTest",
+                           "tests":  3,
+                           "failures":  0,
+                           "errors":  0,
+                           "skipped":  0
+                       },
+                       {
+                           "name":  "com.hmdp.cache.CacheChangeProjectorTest",
+                           "tests":  3,
+                           "failures":  0,
+                           "errors":  0,
+                           "skipped":  0
+                       },
+                       {
+                           "name":  "com.hmdp.cache.RequestCacheScopeTest",
+                           "tests":  2,
+                           "failures":  0,
+                           "errors":  0,
+                           "skipped":  0
+                       }
+                   ],
+    "newIntegrationScenarios":  3,
+    "newIntegrationScenariosExecuted":  3,
+    "integrationPassed":  true,
+    "blocker":  null,
+    "productionCodeChanged":  false,
+    "businessDatabaseModified":  false,
+    "testProject":  "citymate-cache-p2",
+    "testDatabase":  "hmdp_optimization_test",
+    "faultInjection":  "Test-only CacheClient subclass throws on the target shop invalidation; not a real Redis outage",
+    "newPerformanceMetrics":  false,
+    "selectedTestsPassed":  19,
+    "selectedSuites":  [
+                           {
+                               "name":  "com.hmdp.cache.CacheInvalidationRecoveryIntegrationTest",
+                               "tests":  3,
+                               "failures":  0,
+                               "errors":  0,
+                               "skipped":  0
+                           },
+                           {
+                               "name":  "com.hmdp.cache.CacheLayersIntegrationTest",
+                               "tests":  7,
+                               "failures":  0,
+                               "errors":  0,
+                               "skipped":  0
+                           },
+                           {
+                               "name":  "com.hmdp.cache.CanalBatchTest",
+                               "tests":  3,
+                               "failures":  0,
+                               "errors":  0,
+                               "skipped":  0
+                           },
+                           {
+                               "name":  "com.hmdp.reliability.CacheConcurrencyTest",
+                               "tests":  1,
+                               "failures":  0,
+                               "errors":  0,
+                               "skipped":  0
+                           },
+                           {
+                               "name":  "com.hmdp.cache.RequestCacheScopeTest",
+                               "tests":  2,
+                               "failures":  0,
+                               "errors":  0,
+                               "skipped":  0
+                           },
+                           {
+                               "name":  "com.hmdp.cache.CacheChangeProjectorTest",
+                               "tests":  3,
+                               "failures":  0,
+                               "errors":  0,
+                               "skipped":  0
+                           }
+                       ],
+    "evidenceFile":  "phase2-cache-recovery-evidence.json",
+    "testEnvironmentCleaned":  true,
+    "limitations":  [
+                        "MQ and CDC disabled; real MySQL and Redis with manual Relay",
+                        "Retry eligibility advanced by isolated SQL; no recovery SLA measured",
+                        "No full Redis outage, process-kill, multi-instance or load-test claim"
+                    ]
+}

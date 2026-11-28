@@ -1,9 +1,9 @@
 {
-  "name": "hmdp-desktop",
+  "name": "citymate-desktop",
   "private": true,
   "type": "module",
   "scripts": {
-    "check": "node --check scripts/api.js && node --check scripts/components.js && node --check scripts/app.js && node --check scripts/experience.js && node --check scripts/experience-helpers.js && node --check scripts/assistant.js && node --check scripts/assistant-helpers.js",
+    "check": "node --check scripts/api.js && node --check scripts/note-draft.js && node --check scripts/components.js && node --check scripts/app.js && node --check scripts/experience.js && node --check scripts/experience-helpers.js && node --check scripts/assistant.js && node --check scripts/assistant-helpers.js && node --check scripts/voucher-rules.js && node --check scripts/favorites.js",
     "test": "node --test tests/*.test.js"
   }
 }

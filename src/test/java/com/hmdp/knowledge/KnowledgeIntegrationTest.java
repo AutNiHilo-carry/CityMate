@@ -25,7 +25,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 @SpringBootTest(
     properties = {
-      "citylens.reliability.scheduling-enabled=false", "hmdp.cdc.enabled=false",
+      "citymate.reliability.scheduling-enabled=false", "hmdp.cdc.enabled=false",
       "hmdp.mq.enabled=false", "hmdp.analytics.enabled=false"
     })
 class KnowledgeIntegrationTest {

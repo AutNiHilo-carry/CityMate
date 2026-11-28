@@ -1,0 +1,51 @@
+{
+  "date": "2026-11-09",
+  "testRun": "e752e254529e490aa26fcbe14dc2f5f9",
+  "releaseRun": "1707fe3ade29457f93fd702ab844ce1b",
+  "liveRun": "1cf6757700e6482ca44f9cfa9315d9c3",
+  "backend": {
+    "tests": 188,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "checkstyle": "passed",
+    "newTestsThisStage": 4,
+    "model": "mock and loopback HTTP in regression"
+  },
+  "frontend": {
+    "changed": false,
+    "lastVerifiedTests": 21,
+    "rerunThisStage": false
+  },
+  "liveModelCalled": true,
+  "selectedTasks": 4,
+  "agentHttpRequestsThisStage": 11,
+  "aggregateSuccessRateCalculated": false,
+  "positiveVoucherRun": "08e24ebcc0ba43dd88384da0e2a0d29c",
+  "automatedChecksPassed": true,
+  "semanticReview": "see accompanying markdown, not a benchmark",
+  "syntheticLoginsRemoved": true,
+  "businessWrites": false,
+  "browserVisualInspection": false,
+  "tokenCostsMeasured": false,
+  "newLoadMetrics": false,
+  "githubPushed": false,
+  "jarSha256": "74333581a9dd90de6382e54a6dd508d4b9539a5188bcfbeb9691bbbcc921c175",
+  "evidence": "docs/agent-live/1cf6757700e6482ca44f9cfa9315d9c3",
+  "firstLiveAttempt": "598bfc6712034f73a658c26ac6e32e34",
+  "priorLiveRuns": [
+    "598bfc6712034f73a658c26ac6e32e34",
+    "9383bea82e6146cab81d022371fbc76c",
+    "c54d5f6f6fcf450689e45051ef537fdf"
+  ],
+  "firstAttemptIncludedInSuccessRate": false,
+  "sourceHashes": {
+    "src/main/java/com/hmdp/agent/tool/ReadOnlyAgentTools.java": "13c60107218bd1c6bd499b6a4070bae1284f67034cba900c720bcde4af97f0cb",
+    "src/main/java/com/hmdp/knowledge/DeepSeekClient.java": "b4d22cb360315698be5b84db23a2a0c169feacbe08f1846d39d030e902dc1074",
+    "src/main/java/com/hmdp/service/impl/ReadOnlyAgentService.java": "232fb08548ed1743b85eeb2b9a349080682d11532d9a8fb2d9b70e84f9f524be",
+    "src/test/java/com/hmdp/agent/tool/ReadOnlyAgentToolsTest.java": "b534718974b424911ec0706c248b5029267499e35dd84fb3009db2d7edc1bb15",
+    "src/test/java/com/hmdp/knowledge/DeepSeekClientTest.java": "7ba1ce1ed165d83a81187ec7f7c5b69f9d3a021e867697b403d22d07a85f7455",
+    "src/test/java/com/hmdp/knowledge/AgentQueryIntegrationTest.java": "ebcb1e9895dc488b51a6ce6b06cf6084885870ffe399584727ed7901f7eb5dcd",
+    "src/test/java/com/hmdp/knowledge/ReadOnlyAgentServiceTest.java": "351228fc4d94558a118a7b423407c4469924b9a86d953458033697d6f663aabd"
+  }
+}

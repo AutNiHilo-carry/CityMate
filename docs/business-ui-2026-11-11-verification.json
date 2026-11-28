@@ -1,0 +1,70 @@
+{
+  "checkedAtUtc": "2026-11-11T15:11:36.003950+00:00",
+  "backend": {
+    "runId": "0d276c712e7d4fffb803d365840f36e6",
+    "tests": 201,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "frontendTests": 59,
+  "frontendFailures": 0,
+  "vueTemplateWarnings": 0,
+  "businessBrowser": {
+    "steps": [
+      "skip link is visible for keyboard focus only",
+      "preselected shop outside first search page retained",
+      "upload fixtures, cover reorder and automatic save",
+      "publish preview fits desktop and narrow screens",
+      "explicit draft restoration after reload",
+      "uncertain publish result blocks repeat submission",
+      "draft isolation between accounts",
+      "uncertain state survives draft restore",
+      "explicit clear removes current browser draft",
+      "coupon rules expand as readable plain text",
+      "shop note pagination appends another page",
+      "shop voucher errors retry independently of notes"
+    ],
+    "writes": [
+      {
+        "path": "/api/upload/blog",
+        "method": "POST",
+        "stubbed": true
+      },
+      {
+        "path": "/api/upload/blog",
+        "method": "POST",
+        "stubbed": true
+      },
+      {
+        "path": "/api/blog",
+        "method": "POST",
+        "stubbed": true
+      }
+    ],
+    "realBusinessWrites": 0,
+    "apiFixtures": true,
+    "pageErrors": [],
+    "failures": 0
+  },
+  "siteBrowserPageViewportChecks": 48,
+  "siteBrowserInteractionChecks": 6,
+  "postSiteBrowserChange": "skip-link visibility, separately validated by keyboard interaction in business browser checks",
+  "liveReadOnlyApiChecks": 19,
+  "liveShopNoteAuthorAndGuestLikeFields": true,
+  "health": "UP",
+  "jarSha256": "e608a5f88e07ce38e71a483f15d2eaad420f408fbacb4e1fc287116936128d75",
+  "sourceHashes": {
+    "frontend/index.html": "f70a11b45fadee2dfaf3fe13b192210468d958420bff0a11ec60f1d84bb25c53",
+    "frontend/package.json": "c02f63e980a5dc20e86edbf53090ab362dab6fc71d5a645795b1522e3e8cd0df",
+    "frontend/assets/business-ui.css": "549d9dc2813128808d8ce8d0c7c0140a1b977044fb876b42ad49653e1310d0ec",
+    "frontend/scripts/app.js": "15cd1a8b3add4e6370d3114844f89e96e53af1d15b0053ba94dc795672d147ff",
+    "frontend/scripts/components.js": "3e6483eb558120c945cdfa9954db3c2dcdbdecb6a9491f0ed969bae4f26a0f35",
+    "frontend/scripts/note-draft.js": "842305a8038a272be1223580e9a711240967a7e63cc6f6967fdd913ebab8dd80",
+    "src/main/java/com/hmdp/service/impl/BlogServiceImpl.java": "9b0d62d8a44328d7a2aa294e667acd565e0563d829490df1e4c2da5d4d0108ed",
+    "src/test/java/com/hmdp/BlogListingIntegrationTest.java": "9c555981b7c31da9e799526d85483d738ec3e70c3ab324270ef047c47479df21",
+    "scripts/audit-business-ui.cjs": "f0fc8cdfd2f9b2ac5b5a65c1cd4db21904d99cec05380d8b584a0d7b63462868"
+  },
+  "newPerformanceMetrics": false,
+  "realBusinessWrites": 0
+}

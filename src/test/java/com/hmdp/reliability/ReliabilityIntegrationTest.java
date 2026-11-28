@@ -82,7 +82,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 @SpringBootTest(
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-    properties = {"citylens.reliability.scheduling-enabled=false"})
+    properties = {"citymate.reliability.scheduling-enabled=false"})
 class ReliabilityIntegrationTest {
   @Autowired TestRestTemplate http;
   @Autowired JdbcTemplate jdbc;
@@ -180,6 +180,178 @@ class ReliabilityIntegrationTest {
 
   private void handle(MapRecord<String, Object, Object> message) {
     ReflectionTestUtils.invokeMethod(coordinator, "handleOrderStreamMessage", message);
+  }
+
+  private Map<String, Object> inventorySnapshot(String stage, Long orderId) {
+    Map<String, Object> row = new java.util.LinkedHashMap<>();
+    row.put("stage", stage);
+    row.put("observedAt", java.time.Instant.now().toString());
+    row.put("voucherId", SKU);
+    row.put("database", jdbc.queryForObject("SELECT DATABASE()", String.class));
+    row.put(
+        "databaseStock",
+        jdbc.queryForObject(
+            "SELECT stock FROM tb_seckill_voucher WHERE voucher_id=?", Long.class, SKU));
+    row.put("redisStock", redis.opsForValue().get("seckill:stock:" + SKU));
+    row.put(
+        "orders",
+        jdbc.queryForObject(
+            "SELECT COUNT(*) FROM tb_voucher_order WHERE voucher_id=?", Long.class, SKU));
+    row.put("streamLength", redis.opsForStream().size("stream.orders"));
+    row.put(
+        "pending", redis.opsForStream().pending("stream.orders", "g1").getTotalPendingMessages());
+    if (orderId != null) {
+      row.put("orderId", String.valueOf(orderId));
+      row.put("reservationState", coordinator.queryReservationState(orderId));
+    }
+    return row;
+  }
+
+  private void savePhase3Evidence(String name, List<Map<String, Object>> trace) throws Exception {
+    Map<String, Object> report = new java.util.LinkedHashMap<>();
+    report.put("generatedAt", java.time.Instant.now().toString());
+    report.put("scenario", name);
+    report.put("passed", true);
+    report.put("brokerEnabled", false);
+    report.put("trace", trace);
+    Path path = java.nio.file.Paths.get("docs/phase3-" + name + "-evidence.json");
+    Files.createDirectories(path.getParent());
+    Files.write(
+        path, JSONUtil.toJsonPrettyStr(report).getBytes(java.nio.charset.StandardCharsets.UTF_8));
+  }
+
+  @Test
+  void sameUserConcurrentRequestsShareOneReservation() throws Exception {
+    List<Map<String, Object>> trace = new ArrayList<>();
+    trace.add(inventorySnapshot("initial_one_unit", null));
+    ExecutorService workers = Executors.newFixedThreadPool(12);
+    CountDownLatch start = new CountDownLatch(1);
+    List<Future<Result>> responses = new ArrayList<>();
+    long orderId = 0;
+    try {
+      for (int i = 0; i < 32; i++) {
+        responses.add(
+            workers.submit(
+                () -> {
+                  user(29101);
+                  try {
+                    if (!start.await(10, TimeUnit.SECONDS)) {
+                      throw new IllegalStateException("concurrent admission start timed out");
+                    }
+                    return orders.seckillVoucher(SKU);
+                  } finally {
+                    UserHolder.removeUser();
+                  }
+                }));
+      }
+      start.countDown();
+      for (Future<Result> response : responses) {
+        Result result = response.get(20, TimeUnit.SECONDS);
+        assertTrue(result.getSuccess());
+        long returned = ((Number) result.getData()).longValue();
+        if (orderId == 0) {
+          orderId = returned;
+        }
+        assertEquals(orderId, returned, "Duplicates must return the original request identity");
+      }
+    } finally {
+      start.countDown();
+      workers.shutdownNow();
+      assertTrue(workers.awaitTermination(10, TimeUnit.SECONDS));
+    }
+    assertEquals(1L, redis.opsForStream().size("stream.orders"));
+    assertEquals("0", redis.opsForValue().get("seckill:stock:" + SKU));
+    assertEquals(
+        1L,
+        jdbc.queryForObject(
+            "SELECT stock FROM tb_seckill_voucher WHERE voucher_id=?", Long.class, SKU));
+    assertEquals(
+        0L,
+        jdbc.queryForObject(
+            "SELECT COUNT(*) FROM tb_voucher_order WHERE voucher_id=?", Long.class, SKU));
+    trace.add(inventorySnapshot("32_responses_one_admission_before_fulfillment", orderId));
+    List<MapRecord<String, Object, Object>> messages = read();
+    assertEquals(1, messages.size());
+    handle(messages.get(0));
+    handle(messages.get(0));
+    assertEquals(
+        1L,
+        jdbc.queryForObject(
+            "SELECT COUNT(*) FROM tb_voucher_order WHERE voucher_id=? AND user_id=29101",
+            Long.class,
+            SKU));
+    assertEquals(
+        1L,
+        jdbc.queryForObject(
+            "SELECT COUNT(*) FROM tb_seckill_reservation WHERE voucher_id=? AND state='SUCCESS'",
+            Long.class,
+            SKU));
+    assertEquals(
+        0L,
+        jdbc.queryForObject(
+            "SELECT stock FROM tb_seckill_voucher WHERE voucher_id=?", Long.class, SKU));
+    assertEquals("0", redis.opsForValue().get("seckill:stock:" + SKU));
+    assertEquals("SUCCESS", coordinator.queryReservationState(orderId));
+    assertEquals(0L, redis.opsForStream().pending("stream.orders", "g1").getTotalPendingMessages());
+    trace.add(inventorySnapshot("one_fulfillment_despite_duplicate_delivery", orderId));
+    savePhase3Evidence("same-user", trace);
+  }
+
+  @Test
+  void databaseInsertFailureRollsBackStockAndPendingMessageCanRetry() throws Exception {
+    List<Map<String, Object>> trace = new ArrayList<>();
+    user(29201);
+    Result accepted = orders.seckillVoucher(SKU);
+    assertTrue(accepted.getSuccess());
+    long orderId = ((Number) accepted.getData()).longValue();
+    MapRecord<String, Object, Object> message = read().get(0);
+    assertEquals("hmdp_optimization_test", jdbc.queryForObject("SELECT DATABASE()", String.class));
+    // Actual MySQL INSERT failure, after the conditional stock UPDATE in the same transaction.
+    jdbc.execute(
+        "CREATE TRIGGER phase3_reject_order_insert BEFORE INSERT ON tb_voucher_order "
+            + "FOR EACH ROW BEGIN IF NEW.voucher_id=900001 THEN "
+            + "SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='phase3 injected order insert failure'; "
+            + "END IF; END");
+    try {
+      handle(message);
+      assertEquals(
+          1L,
+          jdbc.queryForObject(
+              "SELECT stock FROM tb_seckill_voucher WHERE voucher_id=?", Long.class, SKU));
+      assertEquals(
+          0L,
+          jdbc.queryForObject(
+              "SELECT COUNT(*) FROM tb_voucher_order WHERE voucher_id=?", Long.class, SKU));
+      assertEquals("PROCESSING", coordinator.queryReservationState(orderId));
+      assertEquals(
+          1,
+          jdbc.queryForObject(
+              "SELECT attempts FROM tb_seckill_reservation WHERE order_id=?",
+              Integer.class,
+              orderId));
+      assertEquals("0", redis.opsForValue().get("seckill:stock:" + SKU));
+      assertEquals(
+          1L, redis.opsForStream().pending("stream.orders", "g1").getTotalPendingMessages());
+      trace.add(
+          inventorySnapshot("insert_failed_database_stock_rolled_back_message_pending", orderId));
+    } finally {
+      jdbc.execute("DROP TRIGGER IF EXISTS phase3_reject_order_insert");
+    }
+    handle(message);
+    handle(message);
+    assertEquals(
+        0L,
+        jdbc.queryForObject(
+            "SELECT stock FROM tb_seckill_voucher WHERE voucher_id=?", Long.class, SKU));
+    assertEquals(
+        1L,
+        jdbc.queryForObject(
+            "SELECT COUNT(*) FROM tb_voucher_order WHERE voucher_id=?", Long.class, SKU));
+    assertEquals("SUCCESS", coordinator.queryReservationState(orderId));
+    assertEquals("0", redis.opsForValue().get("seckill:stock:" + SKU));
+    assertEquals(0L, redis.opsForStream().pending("stream.orders", "g1").getTotalPendingMessages());
+    trace.add(inventorySnapshot("same_message_retried_once_then_duplicate_is_noop", orderId));
+    savePhase3Evidence("database-rollback", trace);
   }
 
   @Test
@@ -363,6 +535,17 @@ class ReliabilityIntegrationTest {
     ResponseEntity<String> forbidden =
         http.exchange("/shop", HttpMethod.PUT, new HttpEntity<>(new Shop(), headers), String.class);
     assertEquals(403, forbidden.getStatusCodeValue());
+    assertEquals(
+        403,
+        http.exchange(
+                "/shop;v=1", HttpMethod.PUT, new HttpEntity<>(new Shop(), headers), String.class)
+            .getStatusCodeValue());
+    assertEquals(
+        403,
+        http.exchange("/ops;v=1/outbox", HttpMethod.GET, new HttpEntity<>(headers), String.class)
+            .getStatusCodeValue());
+    assertEquals(
+        401, http.getForEntity("/actuator;v=1/prometheus", String.class).getStatusCodeValue());
   }
 
   @Test

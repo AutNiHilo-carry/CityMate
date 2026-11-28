@@ -37,7 +37,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 @SpringBootTest(
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-    properties = {"citylens.reliability.scheduling-enabled=false", "hmdp.cdc.enabled=false"})
+    properties = {"citymate.reliability.scheduling-enabled=false", "hmdp.cdc.enabled=false"})
 class CacheLayersIntegrationTest {
   @Autowired StringRedisTemplate redis;
   @Autowired JdbcTemplate jdbc;

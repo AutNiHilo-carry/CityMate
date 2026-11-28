@@ -29,6 +29,27 @@ export function safeReturn(value, origin) {
   }
 }
 
+// Context is carried in the URL, so opening details in a new tab still has a useful return link.
+export function returnTarget(value, fallback, origin) {
+  try {
+    if (!value || String(value).length > 1500) return fallback;
+    const url = new URL(value, origin);
+    const allowed = ['/', '/index.html', '/shop-list.html', '/vouchers.html', '/shop-detail.html',
+      '/blog-detail.html', '/info.html', '/other-info.html', '/orders.html', '/assistant.html'];
+    return url.origin === origin && allowed.includes(url.pathname)
+      ? url.pathname + url.search + url.hash : fallback;
+  } catch { return fallback; }
+}
+
+export function contextualHref(target, current, origin) {
+  try {
+    const url = new URL(target, origin);
+    if (url.origin !== origin || !['/shop-detail.html', '/blog-detail.html'].includes(url.pathname)) return '/';
+    url.searchParams.set('from', returnTarget(current, '/', origin));
+    return url.pathname + url.search + url.hash;
+  } catch { return '/'; }
+}
+
 export function imagePath(value) {
   const path = String(value || "").trim();
   if (/^https?:\/\//i.test(path)) {

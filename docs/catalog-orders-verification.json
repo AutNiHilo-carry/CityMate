@@ -1,0 +1,71 @@
+{
+  "checkedAtUtc": "2026-11-11T15:38:48.806340+00:00",
+  "backend": {
+    "runId": "95d950be6ca741f8932b94678e031dd6",
+    "tests": 205,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "frontendTests": 65,
+  "frontendFailures": 0,
+  "vueTemplateWarnings": 0,
+  "browser": {
+    "checks": [
+      "budget score area and coupon filters combine",
+      "submitted filters are reflected in shareable URL",
+      "filters restore after reload",
+      "reset restores complete catalog",
+      "held-order tab queries server filtered list",
+      "copy retains full order number without writing system clipboard",
+      "order rules show the saved snapshot",
+      "held-order tab restores from URL",
+      "cancel action appears only for an unpaid ordinary order"
+    ],
+    "pageErrors": [],
+    "writeAttempts": [],
+    "apiFixtures": true,
+    "systemClipboardChanged": false,
+    "realBusinessWrites": 0,
+    "failures": 0
+  },
+  "live": {
+    "checks": [
+      "bounded cross-category catalog",
+      "combined budget rating category area filters",
+      "percent keyword is literal",
+      "budget uses yuan rather than cents",
+      "rating uses database tenths",
+      "voucher filter returns a successful catalog",
+      "matching shop has an active voucher: 4",
+      "matching shop has an active voucher: 1",
+      "reject invalid maxPrice",
+      "reject invalid minScore",
+      "reject invalid area",
+      "reject invalid size",
+      "stable pagination without duplicate IDs",
+      "held vouchers require authentication"
+    ],
+    "failures": 0,
+    "readOnly": true,
+    "catalogTotalObserved": 14,
+    "matchingVoucherShopsObserved": 2
+  },
+  "siteBrowserPageChecks": 48,
+  "siteBrowserInteractionChecks": 6,
+  "health": "UP",
+  "jarSha256": "caf85619d7c6fb8cd604c83253b42468632d62b643e03ccadfb774197cd39efc",
+  "sourceHashes": {
+    "frontend/index.html": "4c9fd1bcf469c14d9b226423c5c5f08563ae2b1414219529a4e7eefaf819971c",
+    "frontend/scripts/app.js": "7935686167c9fa75f717881f208d62b4139896dfd3c9c11853c18992d40b17e4",
+    "frontend/assets/business-ui.css": "a596f029ac879c6a6b65174861a8ac30c7366db3c7b2e4b1682231e86fddc528",
+    "src/main/java/com/hmdp/controller/ShopController.java": "90eaf3c6c81cc73eeea9661d0a58570dd4ccc4bda5d57ecc0fcc60f87a7667e9",
+    "src/main/java/com/hmdp/service/IShopService.java": "ac4f8c10e5b49475822a34473ca7604fb7ea35bd4b3d2fd3328982bec2be6846",
+    "src/main/java/com/hmdp/service/impl/ShopServiceImpl.java": "0aa8d05687b427d259029f781d27134cf1887974633b11b01ceeeb0d62a6416b",
+    "src/test/java/com/hmdp/ShopCatalogFilterIntegrationTest.java": "eaafa44f21ec92ed7ce72e41a9ce8cb24fe5697b9bdcc1d0968c3ea6c216a419",
+    "scripts/audit-catalog-orders.cjs": "d71f670882a83dfd0d4af7b5c29ab86f10509197dece3e900a2718bbfdf091a3",
+    "scripts/smoke-shop-catalog.py": "dceea9a40a6aaeff4edd71935c58ab5cfc724358b056cfc2b422a139a461fd39"
+  },
+  "realBusinessWrites": 0,
+  "performanceBenchmark": false
+}

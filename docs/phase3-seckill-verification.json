@@ -1,0 +1,76 @@
+{
+    "generatedAt":  "2026-11-05T08:03:12.8416521+00:00",
+    "status":  "SELECTED_SECKILL_CORRECTNESS_TESTS_PASSED",
+    "checkstyle":  "passed",
+    "compilerRelease":  8,
+    "selectedTestsPassed":  15,
+    "integrationTestsPassed":  11,
+    "unitTestsPassed":  4,
+    "failures":  0,
+    "errors":  0,
+    "skipped":  0,
+    "newIntegrationScenarios":  2,
+    "suites":  [
+                   {
+                       "name":  "com.hmdp.reliability.ReliabilityIntegrationTest",
+                       "tests":  11,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "cases":  [
+                                     "sameUserConcurrentRequestsShareOneReservation",
+                                     "statusCacheFailureAfterCommitCannotDowngradeSuccess",
+                                     "twoLiveConsumersFulfilEachReservationOnce",
+                                     "conflictingMessageCannotPoisonTheRealReservation",
+                                     "databaseInsertFailureRollsBackStockAndPendingMessageCanRetry",
+                                     "publishedActivityNeverAutoReopensAfterUnconsumedRedisDataLoss",
+                                     "missingRedisStockFailsClosedAndRecoveryRestoresPurchaseQualifications",
+                                     "poisonMessageIsQuarantinedAndCompensationIsIdempotent",
+                                     "wrongStreamTypeDoesNotPreDeductAndCodeIsConsumedOnlyOnce",
+                                     "concurrentLastStockAndDuplicateDeliveryRemainConsistent",
+                                     "restartClaimsAnotherConsumersPendingMessage"
+                                 ]
+                   },
+                   {
+                       "name":  "com.hmdp.reliability.SeckillMessageTest",
+                       "tests":  1,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "cases":  [
+                                     "registrationOutageDoesNotAcknowledgeOrQuarantineAnUnregisteredRequest"
+                                 ]
+                   },
+                   {
+                       "name":  "com.hmdp.VoucherOrderReliabilityTest",
+                       "tests":  3,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "cases":  [
+                                     "persistenceFailureRollsBackAndDuplicateDeliveryDoesNotDeductAgain",
+                                     "personalReadsAlwaysUseAuthenticatedOwnerAndHeldStatus",
+                                     "lockContentionFailsConsumptionInsteadOfAcknowledgingSuccess"
+                                 ]
+                   }
+               ],
+    "testProject":  "citymate-seckill-p3",
+    "testDatabase":  "hmdp_optimization_test",
+    "brokerEnabled":  false,
+    "cdcEnabled":  false,
+    "testEnvironmentCleaned":  true,
+    "productionCodeChanged":  false,
+    "businessDatabaseModified":  false,
+    "newPerformanceMetrics":  false,
+    "evidenceFiles":  [
+                          "phase3-same-user-evidence.json",
+                          "phase3-database-rollback-evidence.json"
+                      ],
+    "faultInjection":  "Real MySQL BEFORE INSERT trigger raises SQLSTATE 45000 for isolated voucher 900001; trigger removed in finally; manual message retry",
+    "limitations":  [
+                        "Stream direct fulfillment, not RocketMQ path",
+                        "Bounded concurrent requests are correctness tests, not throughput measurements",
+                        "No actual process kill, power loss, Redis server outage, or database network outage",
+                        "Durable compensation retry lifecycle and seckill unpaid-order stock release remain outstanding"
+                    ]
+}

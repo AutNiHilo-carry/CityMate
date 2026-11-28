@@ -1,0 +1,17 @@
+{
+  "checkedAt": "2026-11-18T06:24:39.531464+00:00",
+  "checks": [
+    "anonymous list and writes rejected",
+    "eight concurrent saves produce one persistent row without changing save time",
+    "forged owner fields do not expose or modify another account collection",
+    "idempotent removal and note/shop separation verified",
+    "invalid scopes pagination and missing targets are rejected"
+  ],
+  "failures": 0,
+  "demoUsersOnly": true,
+  "temporarySessionsDeleted": true,
+  "initialSavedFlagsRestored": true,
+  "realFavoriteWrites": true,
+  "ordersCreated": 0,
+  "modelCalls": 0
+}

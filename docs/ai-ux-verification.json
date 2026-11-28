@@ -1,0 +1,285 @@
+{
+  "checkedAtUtc": "2026-11-16T10:25:38.758393+00:00",
+  "frontendTests": 91,
+  "frontendFailures": 0,
+  "templateWarnings": 0,
+  "backend": [
+    {
+      "class": "DeepSeekClientTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "KnowledgeAnswerTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "ReadOnlyAgentServiceTest",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "jarSha256": "015a664749092d27e728364bfee9753d6df9007974c17302b8bd175d1be5d191",
+  "aiBrowser": {
+    "checkedAt": "2026-11-16T10:23:00.561Z",
+    "checks": [
+      "free-form finding starts without compulsory shop selection",
+      "clarification submits a complete bounded question instead of assuming server conversation memory",
+      "shop and coupon groups support expansion and unknown prices are not free",
+      "source evidence stays available and untrusted markup renders as text",
+      "shop recommendation continues into a scoped coupon query without placing an order",
+      "paid coupon preview requires explicit order confirmation and cancellation performs no write",
+      "retry repeats the exact original read-only question",
+      "slow requests show honest waiting and keep duplicate submission disabled",
+      "populated AI conversation and actions fit desktop and narrow mobile layouts",
+      "clearing the question history restores an uncluttered starting view",
+      "long questions switch to explicit editing rather than silent truncation"
+    ],
+    "pageErrors": [],
+    "readOnlyModelRequests": 8,
+    "blockedBusinessWrites": [],
+    "realModelCalls": 0,
+    "realBusinessWrites": 0,
+    "apiFixtures": true,
+    "failures": 0
+  },
+  "siteBrowser": {
+    "checkedAt": "2026-11-16T10:23:38.898Z",
+    "pages": [
+      {
+        "name": "home",
+        "width": 1440
+      },
+      {
+        "name": "shops",
+        "width": 1440
+      },
+      {
+        "name": "shop",
+        "width": 1440
+      },
+      {
+        "name": "note",
+        "width": 1440
+      },
+      {
+        "name": "vouchers",
+        "width": 1440
+      },
+      {
+        "name": "orders",
+        "width": 1440
+      },
+      {
+        "name": "profile",
+        "width": 1440
+      },
+      {
+        "name": "assistant",
+        "width": 1440
+      },
+      {
+        "name": "login",
+        "width": 1440
+      },
+      {
+        "name": "publish",
+        "width": 1440
+      },
+      {
+        "name": "home",
+        "width": 1024
+      },
+      {
+        "name": "shops",
+        "width": 1024
+      },
+      {
+        "name": "shop",
+        "width": 1024
+      },
+      {
+        "name": "note",
+        "width": 1024
+      },
+      {
+        "name": "vouchers",
+        "width": 1024
+      },
+      {
+        "name": "orders",
+        "width": 1024
+      },
+      {
+        "name": "profile",
+        "width": 1024
+      },
+      {
+        "name": "assistant",
+        "width": 1024
+      },
+      {
+        "name": "login",
+        "width": 1024
+      },
+      {
+        "name": "publish",
+        "width": 1024
+      },
+      {
+        "name": "home",
+        "width": 800
+      },
+      {
+        "name": "shops",
+        "width": 800
+      },
+      {
+        "name": "shop",
+        "width": 800
+      },
+      {
+        "name": "note",
+        "width": 800
+      },
+      {
+        "name": "vouchers",
+        "width": 800
+      },
+      {
+        "name": "orders",
+        "width": 800
+      },
+      {
+        "name": "profile",
+        "width": 800
+      },
+      {
+        "name": "assistant",
+        "width": 800
+      },
+      {
+        "name": "login",
+        "width": 800
+      },
+      {
+        "name": "publish",
+        "width": 800
+      },
+      {
+        "name": "home",
+        "width": 390
+      },
+      {
+        "name": "shops",
+        "width": 390
+      },
+      {
+        "name": "shop",
+        "width": 390
+      },
+      {
+        "name": "note",
+        "width": 390
+      },
+      {
+        "name": "vouchers",
+        "width": 390
+      },
+      {
+        "name": "orders",
+        "width": 390
+      },
+      {
+        "name": "profile",
+        "width": 390
+      },
+      {
+        "name": "assistant",
+        "width": 390
+      },
+      {
+        "name": "login",
+        "width": 390
+      },
+      {
+        "name": "publish",
+        "width": 390
+      },
+      {
+        "name": "home",
+        "width": 320
+      },
+      {
+        "name": "shops",
+        "width": 320
+      },
+      {
+        "name": "shop",
+        "width": 320
+      },
+      {
+        "name": "note",
+        "width": 320
+      },
+      {
+        "name": "vouchers",
+        "width": 320
+      },
+      {
+        "name": "orders",
+        "width": 320
+      },
+      {
+        "name": "profile",
+        "width": 320
+      },
+      {
+        "name": "assistant",
+        "width": 320
+      },
+      {
+        "name": "login",
+        "width": 320
+      },
+      {
+        "name": "publish",
+        "width": 320
+      }
+    ],
+    "checks": [
+      "responsive navigation fits all ten consumer pages and stays hidden during login or editing",
+      "header voucher search keeps category and shop filters on the voucher page",
+      "voucher shows face value and a correctly calculated saving",
+      "mobile order entry opens orders directly with correct active state",
+      "shop shortcut scrolls to its real coupon section",
+      "confirmation covers and disables mobile navigation without submitting a claim",
+      "photo viewer stays above the bottom navigation",
+      "discovery search opens the shop catalog with its keyword"
+    ],
+    "pageErrors": [],
+    "writeAttempts": [],
+    "apiFixtures": true,
+    "realBusinessWrites": 0,
+    "failures": 0
+  },
+  "realModelEvaluated": false,
+  "fullBackendRegression": false,
+  "sourceSha256": {
+    "frontend/scripts/assistant.js": "a735360a59933467c535374abadb2872e07b68e446fbd4cc7963d03d53d77867",
+    "frontend/scripts/assistant-helpers.js": "00d3ccdddcf8bf326ce21ca3244b541436e7fb49d38e53d212c363b3ade19687",
+    "frontend/assets/assistant.css": "d5441b14cd98d15a37725f79b04483843ebefc36b520633bc0b670e7fc45e164",
+    "frontend/assets/business-ui.css": "6f0e9bfa6d4c1090992ddbffc3b01cfae7064b18917037cde2183e3d8620bab9",
+    "src/main/java/com/hmdp/service/impl/ReadOnlyAgentService.java": "9148bdc10a0f3aed64d4d1119807b96de2b5fd2591381ecb4b94843d56f19ffb",
+    "src/main/java/com/hmdp/service/impl/KnowledgeAnswerServiceImpl.java": "f42ddfc5b29ccd1a2f95bc17b4fca481f3f9747f08d5fc3b2be1316e7e66bac0",
+    "frontend/tests/assistant-journey.test.js": "470365f97d6c4de87d8052018d8e88033a4296eb27687b9b82c28bb0a316ee22",
+    "scripts/audit-ai-journey.cjs": "c11b38bc09b2de2cda27c7d28404214852e13ab9634e26c288a0b60e0d91aaeb"
+  }
+}

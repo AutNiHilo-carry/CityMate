@@ -1,0 +1,34 @@
+{
+  "checkedAtUtc": "2026-11-16T07:37:50.523235+00:00",
+  "frontendTests": 78,
+  "failures": 0,
+  "syntaxCheckPassed": true,
+  "templateWarnings": 0,
+  "browser": {
+    "checkedAt": "2026-11-16T07:36:42.479Z",
+    "checks": [
+      "shared URL restores keyword category and selected shop",
+      "failed shop options retain an explicit selection and voucher results",
+      "retrying shop options does not query or clear vouchers",
+      "submitted Unicode filters update URL while keeping unrelated parameters",
+      "refresh restores the submitted combination",
+      "category switch clears the old shop from the URL",
+      "clear filters resets the URL and results",
+      "first-page retry retains the failed submitted query rather than unsent edits",
+      "filter and retry controls fit desktop and narrow mobile viewports"
+    ],
+    "pageErrors": [],
+    "writeAttempts": [],
+    "apiFixtures": true,
+    "realBusinessWrites": 0,
+    "failures": 0
+  },
+  "backendChanged": false,
+  "realBackendChecked": false,
+  "sourceSha256": {
+    "frontend/scripts/app.js": "997a82138c5b5bcf92da61cd005885d7aa50945a40b8519d70fcf11dbd87f2e9",
+    "frontend/index.html": "9066256cd8957714f429a0fc7e6576c2b626250685824c56e4e425d1524edcc1",
+    "frontend/tests/voucher-state.test.js": "0fcbf5406100fe9e7e58d4a77b116c559f9a3584e52c0dbe67cd4c6891663d59",
+    "scripts/audit-voucher-state.cjs": "8872a7f2ebf6a2d257870da8ae561bdbf6ba236c9721197f6509370d6234a221"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "scope": "Manually labelled synthetic fixtures, not production traffic or answer-quality evaluation",
+  "documents": [
+    {"id": 1, "sourceKey": "fixture-claim-progress", "version": 1, "title": "领取进度与订单状态", "content": "秒杀返回订单号仅表示请求已受理。订单生成后，付费优惠券仍需查看付款状态。结果核对中时请稍后查询本人订单。"},
+    {"id": 2, "sourceKey": "fixture-payment-timeout", "version": 1, "title": "付款与超时关单", "content": "付费优惠券需要付款。未支付订单超时后自动取消，优惠券不能继续使用。请在订单页确认付款状态和剩余时间。"},
+    {"id": 3, "sourceKey": "fixture-reservation", "version": 1, "title": "到店预约说明", "content": "到店前请提前电话预约。周末及节假日需向商户确认是否有位置，本平台不能保证空位，也不能代替商户确认预约。"},
+    {"id": 4, "sourceKey": "fixture-opening", "version": 1, "title": "营业时间与停车服务", "content": "营业时间为每天上午十点至晚上九点。停车场位于商场地下，停车费用以现场公示为准。"}
+  ],
+  "queries": [
+    {"id": "q01", "category": "literal", "query": "领取进度与订单状态", "relevant": [1], "gateTop1": true},
+    {"id": "q02", "category": "literal", "query": "付款与超时关单", "relevant": [2], "gateTop1": true},
+    {"id": "q03", "category": "literal", "query": "到店预约说明", "relevant": [3], "gateTop1": true},
+    {"id": "q04", "category": "literal", "query": "营业时间与停车服务", "relevant": [4], "gateTop1": true},
+    {"id": "q05", "category": "paraphrase", "query": "抢到了一个编号就算买好了？", "relevant": [1]},
+    {"id": "q06", "category": "paraphrase", "query": "我拿到订单号还需要付款吗", "relevant": [1, 2]},
+    {"id": "q07", "category": "paraphrase", "query": "结果一直在核对咋办", "relevant": [1]},
+    {"id": "q08", "category": "paraphrase", "query": "忘了付钱会不会帮我留着", "relevant": [2]},
+    {"id": "q09", "category": "paraphrase", "query": "没支付多久会自动取消", "relevant": [2]},
+    {"id": "q10", "category": "paraphrase", "query": "能直接去吃还是得先打电话", "relevant": [3]},
+    {"id": "q11", "category": "paraphrase", "query": "周末能保证有位置吗", "relevant": [3]},
+    {"id": "q12", "category": "paraphrase", "query": "这家几点打烊", "relevant": [4]},
+    {"id": "q13", "category": "paraphrase", "query": "车能停哪儿收费不", "relevant": [4]},
+    {"id": "q14", "category": "unanswerable", "query": "帮我推荐一只股票", "relevant": []},
+    {"id": "q15", "category": "unanswerable", "query": "法国签证需要什么材料", "relevant": []},
+    {"id": "q16", "category": "unanswerable", "query": "现在店里剩几个空位", "relevant": []}
+  ]
+}

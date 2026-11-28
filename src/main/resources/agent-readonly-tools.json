@@ -1,0 +1,190 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "listShopTypes",
+      "description": "读取真实商户分类；搜索前先取得分类 ID，不猜 ID",
+      "parameters": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "listAreas",
+      "description": "读取已有商圈名称，不虚构商圈",
+      "parameters": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "searchShops",
+      "description": "按真实分类与条件查店；人均价格单位元，评分使用十分制；附近查询仅可用用户明确提供的坐标",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "typeId": {
+            "type": "string",
+            "description": "分类ID，使用真实十进制 ID 字符串"
+          },
+          "keyword": {
+            "type": "string",
+            "description": "店名或品类关键词，例如火锅，最多50字"
+          },
+          "area": {
+            "type": "string",
+            "description": "真实商圈名，最多80字"
+          },
+          "maxPrice": {
+            "type": "integer",
+            "description": "人均最高价格，单位元"
+          },
+          "minScore": {
+            "type": "integer",
+            "description": "评分0到50，45表示4.5分"
+          },
+          "hasVoucher": {
+            "type": "boolean",
+            "description": "是否要求有可用券"
+          },
+          "x": {
+            "type": "number",
+            "description": "用户提供的经度"
+          },
+          "y": {
+            "type": "number",
+            "description": "用户提供的纬度"
+          },
+          "page": {
+            "type": "integer",
+            "description": "1到10000"
+          },
+          "size": {
+            "type": "integer",
+            "description": "1到20，建议5"
+          },
+          "sort": {
+            "type": "string",
+            "enum": [
+              "score",
+              "price",
+              "distance"
+            ]
+          }
+        },
+        "required": [
+          "typeId"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "listShopVouchers",
+      "description": "查某店当前优惠券、价格分、库存和时段；仅查询，不领取",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "shopId": {
+            "type": "string",
+            "description": "店铺ID，使用真实十进制 ID 字符串"
+          },
+          "limit": {
+            "type": "integer",
+            "description": "1到20，建议5"
+          }
+        },
+        "required": [
+          "shopId"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "listMyOrders",
+      "description": "Read the authenticated user orders only; never accept userId. For ordinary vouchers use statusMeaning to explain received/unpaid/cancelled. payCents is the voucher price, not a receipt or amount already paid.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "description": "1到10000"
+          },
+          "heldOnly": {
+            "type": "boolean",
+            "description": "仅看已领取状态，不代表真实支付"
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "getClaimStatus",
+      "description": "Only query seckill admission request progress. Do not use for ordinary voucher orders; use listMyOrders. A failed request here cannot override a successfully read ordinary order state.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "orderId": {
+            "type": "string",
+            "description": "订单ID，使用真实十进制 ID 字符串"
+          }
+        },
+        "required": [
+          "orderId"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "searchKnowledge",
+      "description": "检索平台FAQ、商户说明、券规则；附来源与版本，不能据此推断实时库存、价格、资格",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "2到200字检索问题"
+          },
+          "shopId": {
+            "type": "string",
+            "description": "店铺ID，使用真实十进制 ID 字符串"
+          },
+          "voucherId": {
+            "type": "string",
+            "description": "券ID，使用真实十进制 ID 字符串"
+          },
+          "limit": {
+            "type": "integer",
+            "description": "1到3"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false
+      }
+    }
+  }
+]

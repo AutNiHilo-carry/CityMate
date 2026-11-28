@@ -50,8 +50,22 @@ public class ShopController {
       @RequestParam(value = "typeId", required = false) Long typeId,
       @RequestParam(value = "page", defaultValue = "1") Integer page,
       @RequestParam(value = "size", defaultValue = "12") Integer size,
-      @RequestParam(value = "sort", defaultValue = "score") String sort) {
-    return shopService.catalog(keyword, typeId, page, size, sort);
+      @RequestParam(value = "sort", defaultValue = "score") String sort,
+      @RequestParam(required = false) String area,
+      @RequestParam(required = false) Long maxPrice,
+      @RequestParam(required = false) Integer minScore,
+      @RequestParam(required = false) Boolean hasVoucher) {
+    ShopSearchDTO criteria = new ShopSearchDTO();
+    criteria.setKeyword(keyword);
+    criteria.setTypeId(typeId);
+    criteria.setPage(page);
+    criteria.setSize(size);
+    criteria.setSort(sort);
+    criteria.setArea(area);
+    criteria.setMaxPrice(maxPrice);
+    criteria.setMinScore(minScore);
+    criteria.setHasVoucher(hasVoucher);
+    return shopService.catalog(criteria);
   }
 
   /** CityLens 在组合两站前批量复核候选，直接读取当前店铺数据。 */

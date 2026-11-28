@@ -16,6 +16,10 @@
         LEFT JOIN tb_seckill_activity a ON a.voucher_id=sv.voucher_id
     </select>
 
+    <update id="returnCancelledStock">
+        UPDATE tb_seckill_voucher SET stock=stock+1 WHERE voucher_id=#{voucherId}
+    </update>
+
     <update id="markPublished">
         UPDATE tb_seckill_activity
         SET has_published=1

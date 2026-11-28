@@ -1,0 +1,43 @@
+{
+  "generatedAt": "2026-11-08T17:26:30.270994+08:00",
+  "status": "PACKAGED_JAR_PROFILE_PASSED",
+  "runId": "b383f4f8993b457e8723615136d34ac9",
+  "measuredHttpRequests": 600,
+  "measuredOrders": 300,
+  "warmupRequestsExcluded": 20,
+  "pythonDecoderRegressionTests": 2,
+  "javaRegressionTestsRepeated": false,
+  "java8PackageAndCheckstylePassed": true,
+  "jarSha256": "0373c567a0261b53979e00746087b6f8a453c7d5a95048f24b30b95baacd2040",
+  "imageId": "sha256:4b0cdd0f1746f4896a0fd5a14c8fa3b8404d7bdf84c5ce2f10ffedd5304a8c4f",
+  "noRuntimeBindMounts": true,
+  "noTestRequestProbe": true,
+  "applicationRunsAsStandaloneJar": true,
+  "fixtureUsesSpring": false,
+  "brokerEnabled": true,
+  "automaticScheduling": true,
+  "redisFsync": "always",
+  "observerSamples": 17,
+  "observerErrors": 0,
+  "priorProfilePreserved": true,
+  "applicationLogicChanged": false,
+  "businessDatabaseModified": false,
+  "businessContainersUpdated": false,
+  "dedicatedEnvironmentCleaned": true,
+  "dedicatedImageRemoved": true,
+  "firstAttemptExcluded": "755555a312884cd8ad2cedd703538890: INFO text decoding failed before load began",
+  "sourceHashes": {
+    "scripts/measure-packaged-transaction.ps1": "12eb2638431674427277483e32f27e57fd7f4cc3e3813519d27b126363d2d0c9",
+    "scripts/prepare-packaged-profile.py": "421beb96a6d622d3e999af3ea043562a36050a5114ebebfcaffebbc17ee1854b",
+    "scripts/profile-packaged-transaction.py": "177239f7b590e08fd457f35d395c7096ee808afd818e93c5559b735c977c5935",
+    "scripts/profile-transaction-load.py": "b2742a8a239e95c1385dbe08e47ed3a216c5681ddff0ca6826db410960a017d8",
+    "scripts/test-packaged-profile.py": "a975df8cfc43d0c4d01bfe5855136a5b916136ef78ef4438cf8bbf3bc04074b7"
+  },
+  "limitations": [
+    "Current optimized JAR only; no unoptimized JAR control",
+    "Finite single batch at each concurrency, no maximum capacity or steady-state TPS claim",
+    "Shared Windows Docker host, direct loopback HTTP, no Nginx or multi-node test",
+    "Synthetic users and free coupons, no real payment",
+    "Docker-exec reconciliation and metrics add load and completion observation overhead"
+  ]
+}

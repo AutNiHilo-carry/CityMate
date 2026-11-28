@@ -1,6 +1,6 @@
 # CityMate 查询工具（第一阶段）
 
-本阶段新增内部 Java 查询入口 `IQueryToolService`。尚未接模型、RAG、SSE 或领券写操作，也未新增对外 HTTP 路由；网页暂时不会出现 AI 对话框。
+本页保留第一阶段的内部 Java 查询入口 `IQueryToolService` 设计。后续已通过 [Phase 7 单 Agent](PHASE7_READ_ONLY_AGENT.md) 接入模型、RAG 和助手页面；SSE 与 AI 领券写操作仍未实现。
 
 ## 四个工具
 

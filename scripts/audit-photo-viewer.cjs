@@ -1,0 +1,88 @@
+const {chromium}=require('../target/ui-audit-tools/node_modules/playwright-core');
+const fs=require('fs'),path=require('path'),assert=require('assert/strict');
+(async()=>{
+ const out=path.resolve('target/photo-viewer-checks');fs.mkdirSync(out,{recursive:true});
+ const browser=await chromium.launch({headless:true,executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe'});
+ const checks=[],errors=[],writes=[];
+ try{
+  const context=await browser.newContext();
+  await context.addInitScript(()=>sessionStorage.setItem('token','photo-viewer-fixture'));
+  const pictures=[1,2,3,4].map(n=>'/imgs/audit-photo-'+n+'.svg').join(',');
+  let empty=false,single=false,broken=false;
+  await context.route('**/imgs/audit-photo-*.svg',r=>r.fulfill({contentType:'image/svg+xml',body:'<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><rect width="800" height="600" fill="#425e50"/><text x="370" y="320" fill="white" font-size="64">'+r.request().url().match(/photo-(\d)/)[1]+'</text></svg>'}));
+  await context.route('**/api/**',r=>{
+   const p=new URL(r.request().url()).pathname;
+   if(r.request().method()!=='GET'){writes.push(p);return r.abort();}
+   let data=[];
+   if(p==='/api/user/me')data={id:'991',nickName:'页面测试'};
+   else if(p==='/api/shop/10')data={id:10,name:'运河餐厅',images:empty?'':pictures,score:48,address:'运河路',avgPrice:50};
+   else if(p==='/api/blog/1')data={id:1,shopId:10,userId:'991',name:'页面测试',title:'周末探店记录',content:'这是一篇页面测试笔记。',images:empty?'':broken?'/imgs/photo-does-not-exist.svg':single?pictures.split(',')[0]:pictures,liked:0};
+   return r.fulfill({json:{success:true,data,total:0}});
+  });
+  const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
+  await page.goto('http://127.0.0.1:8080/shop-detail.html?id=10',{waitUntil:'networkidle'});
+  const opener=page.getByRole('button',{name:'放大店铺照片，第 1 张',exact:true});
+  await opener.click();await page.getByRole('dialog',{name:'照片查看器'}).waitFor();
+  assert.equal(await page.evaluate(()=>document.body.style.overflow),'hidden');
+  assert.equal(await page.getByRole('button',{name:'关闭大图'}).evaluate(e=>document.activeElement===e),true);
+  checks.push('shop photos open with focus and background scroll lock');
+  await page.keyboard.press('ArrowLeft');assert.equal(await page.getByRole('button',{name:'大图上一张'}).isDisabled(),true);
+  for(let n=0;n<6;n++)await page.keyboard.press('ArrowRight');
+  await page.getByText('第 4 张 / 共 4 张',{exact:true}).waitFor();
+  assert.equal(await page.getByRole('button',{name:'大图下一张'}).isDisabled(),true);
+  checks.push('all shop photos accessible with bounded keyboard navigation');
+  await page.getByRole('button',{name:'关闭大图'}).focus();await page.keyboard.press('Shift+Tab');
+  assert.equal(await page.getByRole('button',{name:'大图上一张'}).evaluate(e=>document.activeElement===e),true);
+  await page.keyboard.press('Tab');assert.equal(await page.getByRole('button',{name:'关闭大图'}).evaluate(e=>document.activeElement===e),true);
+  checks.push('keyboard focus stays inside viewer');
+  for(const width of [1440,390,320]){
+   await page.setViewportSize({width,height:900});
+   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+2));
+   const img=await page.locator('.photo-viewer-stage > img').boundingBox();assert.ok(img.width<=width&&img.height>100);
+   await page.screenshot({path:path.join(out,`viewer-${width}.png`)});
+  }
+  checks.push('desktop and mobile viewer stays within viewport');
+  await page.keyboard.press('Escape');assert.equal(await page.locator('.photo-viewer').count(),0);
+  assert.equal(await page.evaluate(()=>document.body.style.overflow),'');
+  assert.equal(await opener.evaluate(e=>document.activeElement===e),true);
+  assert.equal(await page.locator('main').evaluate(e=>e.inert),false);
+  checks.push('escape restores scrolling background and opening focus');
+  await page.getByRole('button',{name:'放大店铺照片，第 3 张',exact:true}).click();
+  await page.getByText('第 3 张 / 共 4 张',{exact:true}).waitFor();
+  await page.getByRole('button',{name:'关闭大图'}).click();checks.push('secondary shop picture opens matching position');
+  await page.goto('http://127.0.0.1:8080/blog-detail.html?id=1',{waitUntil:'networkidle'});
+  await page.getByRole('button',{name:'查看第 2 张照片',exact:true}).click();
+  await page.getByRole('button',{name:'放大当前笔记照片'}).click();
+  await page.getByText('第 2 张 / 共 4 张',{exact:true}).waitFor();
+  const stage=page.locator('.photo-viewer-stage');
+  await stage.dispatchEvent('touchstart',{touches:[{identifier:1,clientX:240,clientY:300}]});
+  await stage.dispatchEvent('touchend',{touches:[],changedTouches:[{identifier:1,clientX:80,clientY:310}]});
+  await page.getByText('第 3 张 / 共 4 张',{exact:true}).waitFor();
+  await stage.dispatchEvent('touchstart',{touches:[{identifier:1,clientX:80,clientY:300}]});
+  await stage.dispatchEvent('touchend',{touches:[],changedTouches:[{identifier:1,clientX:90,clientY:600}]});
+  await page.getByText('第 3 张 / 共 4 张',{exact:true}).waitFor();
+  checks.push('horizontal touch changes photo while vertical touch does not');
+  await page.getByRole('button',{name:'关闭大图'}).click();
+  assert.equal(await page.locator('.note-photo-count').innerText(),'3 / 4');
+  checks.push('note thumbnail selection and viewer index stay in sync');
+  single=true;await page.reload({waitUntil:'networkidle'});
+  await page.getByRole('button',{name:'放大当前笔记照片'}).click();
+  assert.equal(await page.getByRole('button',{name:'大图下一张'}).count(),0);
+  await page.keyboard.press('ArrowRight');await page.getByText('第 1 张 / 共 1 张',{exact:true}).waitFor();
+  await page.locator('.photo-viewer').click({position:{x:1,y:200}});
+  await page.locator('.photo-viewer').waitFor({state:'hidden'});
+  assert.equal(await page.locator('.photo-viewer').count(),0);
+  checks.push('single photo hides navigation and backdrop closes viewer');
+  broken=true;await page.reload({waitUntil:'networkidle'});
+  await page.getByRole('button',{name:'放大当前笔记照片'}).click();
+  await page.waitForFunction(()=>document.querySelector('.photo-viewer-stage > img')?.getAttribute('src')==='/assets/image-placeholder.svg');
+  await page.getByRole('button',{name:'关闭大图'}).click();
+  checks.push('missing image falls back without trapping the user');
+  empty=true;await page.reload({waitUntil:'networkidle'});
+  assert.equal(await page.getByRole('button',{name:'放大当前笔记照片'}).count(),0);
+  checks.push('notes without photos do not open an empty viewer');
+  assert.deepEqual(errors,[]);assert.deepEqual(writes,[]);
+  fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checkedAt:new Date().toISOString(),checks,pageErrors:errors,realBusinessWrites:writes,failures:0},null,2));
+  console.log(JSON.stringify({checks:checks.length,failures:0,realBusinessWrites:0}));
+ }finally{await browser.close();}
+})().catch(e=>{console.error(e);process.exit(1);});

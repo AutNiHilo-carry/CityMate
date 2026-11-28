@@ -1,0 +1,43 @@
+{
+  "date": "2026-11-10",
+  "stage": "USER_CONFIRMED_CLAIM",
+  "testRun": "cab5660305c2481dbc7725ff7fde5ce7",
+  "releaseRun": "ff0924b255e945a580803dc6961b14ff",
+  "backend": {
+    "tests": 193,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "newTests": 5,
+    "checkstyle": "passed"
+  },
+  "frontend": {
+    "tests": 31,
+    "newTests": 10,
+    "failures": 0,
+    "syntax": "passed",
+    "vue2Compile": "passed"
+  },
+  "businessOrderCreatedOnlyInIsolatedTest": true,
+  "localBusinessClaimOrPayment": false,
+  "liveModelCalledThisStage": false,
+  "browserVisualInspection": false,
+  "githubPushed": false,
+  "evidence": "docs/claim-confirmation/cab5660305c2481dbc7725ff7fde5ce7",
+  "jarSha256": "cbe421df0ad1100c5cbfdb7643cbacc61c8f309d1bd6e280636727348184b229",
+  "limitations": [
+    "preview is not an atomic price reservation",
+    "first 20 shop vouchers only",
+    "unknown submission has no automatic retry",
+    "no real payment or refund"
+  ],
+  "sourceHashes": {
+    "src/main/java/com/hmdp/controller/AssistantClaimController.java": "105bbd56f2761c4fd2ede5c0ee4c617ed55fa27a137c1181811443fec76f6675",
+    "src/test/java/com/hmdp/knowledge/AssistantClaimControllerTest.java": "13364955e1290eba9df2f40c2a252c129d1ddd5ea39e1acc58768064762f286a",
+    "src/test/java/com/hmdp/knowledge/AgentQueryIntegrationTest.java": "f695fbd8faef1c9521079ca94e22db86feac1c8c796fb2cb2ad0bb7b4e5bc16a",
+    "frontend/scripts/assistant.js": "d704c82d4da6efe9111d8c10a4e7e0de3196cbfe29162136e79d9fff71583119",
+    "frontend/scripts/assistant-helpers.js": "8fdef16933102543fe47b47677afe6856f2ec4979b0ae939c8c845458d4ad1ae",
+    "frontend/tests/assistant.test.js": "7fd272ae58c678e416d2ac332199770b66130ebf4df9ade1c244976f36bf029d",
+    "frontend/assets/assistant.css": "e48593c26706b9ee9678d7e2983d864d7ea8d42185eef41f5e263c4ecc9ee30b"
+  }
+}

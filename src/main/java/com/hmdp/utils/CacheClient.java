@@ -258,6 +258,7 @@ public class CacheClient {
       }
       pauseBeforeRetry();
     } while (System.nanoTime() < deadline);
+    recordCacheReadOutcome("rebuild", "wait_timeout");
     throw new IllegalStateException("热点数据正在重建，请稍后重试");
   }
 
@@ -456,6 +457,8 @@ public class CacheClient {
             });
       } catch (RejectedExecutionException full) {
         redis.execute(UNLOCK, Collections.singletonList(lockKey), owner);
+        recordCacheReadOutcome("rebuild", "rejected");
+        log.warn("缓存重建队列已满，本次返回旧值，后续读取可重试: {}", key);
       }
     }
     return value;

@@ -13,7 +13,7 @@ foreach ($name in $names) {
   [Environment]::SetEnvironmentVariable($name, $null, 'Process')
 }
 try {
-  & docker compose --env-file $envPath -p hm-dianping `
+  & docker compose --env-file $envPath -p citymate `
     -f (Join-Path $projectDir 'dev/docker-compose.yml') `
     -f (Join-Path $projectDir 'dev/docker-compose.prebuilt.yml') `
     up -d --no-deps --force-recreate java

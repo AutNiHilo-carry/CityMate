@@ -35,8 +35,7 @@
 
 完整日志、JUnit XML、源码指纹与两套基线/扩展逐题结果：
 
-- [运行归档](audit-remediation/20261127T140306Z-c7d2a0c5fecf.zip)
-- [归档 SHA256](audit-remediation/20261127T140306Z-c7d2a0c5fecf.sha256)
+该轮原始归档保存在本机。运行 `python scripts/run-ci.py` 可在 `target/verification/` 下生成新一轮评测，逐题结果位于新运行目录的 `junit/retrieval-evaluation.json`。
 
 包内 `junit/retrieval-evaluation.json` 保留每题标签和检索结果。失败、零召回和无答案误检均没有从统计中移除。
 

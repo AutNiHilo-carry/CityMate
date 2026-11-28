@@ -61,6 +61,8 @@ docker compose --env-file .env -f compose.yml config --quiet
 
 `init-env.sh` 生成独立随机的数据库 root、业务数据库、Redis 和监控凭证，文件权限为 600；已有 `.env` 时不覆盖。后端以 `hmdp_app` 连接数据库，不使用 root。首次创建数据库卷时导入课程初始 SQL，随后 Java 自动执行已有 Flyway 增量迁移。
 
+四项凭据都生成并校验成功后才发布 `.env`。生成失败时检查 `openssl`，再重新运行初始化脚本。
+
 已有部署继续使用原 Compose 项目名 `hmdp-cloud`，以复用现有数据卷。Compose 会把 `.env` 中的 `HMDP_ADMIN_IDS` 和 `HMDP_PAYMENT_MOCK_ENABLED` 传给新版 Java 配置。直接启动 JAR 时，请把自行设置的旧应用配置前缀改为 `citymate.`，环境变量前缀改为 `CITYMATE_`。
 
 不要删除 `.env` 再生成密码后继续连接旧数据库卷：旧库密码不会因此自动更新。升级保留 `.env` 和三个数据卷。配置检查使用 `--quiet`，避免把展开的凭证输出后复制到聊天或分享材料中。

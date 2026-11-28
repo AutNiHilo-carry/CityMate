@@ -1,54 +1,12 @@
 # CityMate｜本地生活智能服务平台
 
-基础验证：`python scripts/run-ci.py`。范围、证据归档和 CDC 连续失败恢复见 [审查整改记录](docs/AUDIT_REMEDIATION_2026-11-27.md)；来源与升级贡献见 [CONTRIBUTIONS](CONTRIBUTIONS.md)。GitHub CI 以实际 Actions 结果为准。
-
-RAG 查询改进：[口语词项扩展与基线对照](docs/RAG_QUERY_EXPANSION_2026-11-27.md)。保留逐题漏召回和误检，不以小型合成评测冒充线上效果。
-
-回答证据控制：[有界复核与摘录校验](docs/RAG_ANSWER_SUPPORT_2026-11-27.md)。复核失败不展示草稿；模型复核仍可能误判，真实质量和延迟尚未验收。
-
-**当前实现、验证结果与下一步：[项目进度与交接](docs/PROJECT_STATUS.md)**
-
-**界面调整：[全站页面与文案整理](docs/UI_REFINEMENT_2026-11-10.md)**。前端 31 项测试及全站模板编译通过，已由本地 Web 挂载生效；浏览器视觉验收尚未完成。
-
-**当前运行版：[用户确认领券与履约追踪](docs/CLAIM_CONFIRMATION.md)**。模型只查询，领取必须本人点击确认；193 项后端、31 项前端测试通过，本地服务已更新并通过 HTTP 检查。
-
-**前阶段记录：[真实模型联调与三类问题修复](docs/PHASE7_AGENT_LIVE.md)**。当时 188 项后端回归、四类选定真实模型场景通过；当前模型工具继续保持只读，用户确认业务入口见上方。
-
-**新增单 Agent：[只读业务查询与 RAG](docs/PHASE7_READ_ONLY_AGENT.md)**。支持模型选择查店、查券、本人订单及规则工具，当前不执行领取或付款；测试与部署状态以本阶段记录为准。
-
-**最新逻辑审计：[六类问题修复与回归](docs/LOGIC_AUDIT_2026-11-09.md) · [2026-11-09 本地修复版已更新并通过 17 项 HTTP 验收](docs/LOCAL_RELEASE_2026-11-09.md)**。未推送 GitHub。
-
-**面试交付入口：[10 分钟演示与证据导航](docs/DEMO_AND_EVIDENCE.md) · [简历条目与项目讲解](docs/RESUME_AND_INTERVIEW.md)**。本轮为文档整理，现场演示需按自己的环境走查。
-
-**最新方向：[高并发交易与可靠订单主线](docs/PROJECT_DIRECTION.md) · [Phase 1 现状盘点](docs/PHASE1_INVENTORY.md)**。后端可靠性为 P0，既有 AI/RAG 保留为 P1，暂缓 SSE 扩展。
-
-验证记录：[缓存恢复（19 项）](docs/PHASE2_CACHE_RECOVERY.md) · [秒杀正确性（15 项）](docs/PHASE3_SECKILL_CORRECTNESS.md)。另见 [持久补偿（33 项）](docs/PHASE4_DURABLE_COMPENSATION.md)。另见 [秒杀超时关单（45 项）](docs/PHASE5_ORDER_EXPIRY.md)。各组为不同阶段的选定回归，存在重复用例，不累计为全量测试数或系统容量。
-
-交易实测：[2026-11-06 有限 HTTP 基线](docs/PHASE6_TRANSACTION_BASELINE.md)，含真实 MQ 履约和库存对账；不代表系统最大容量。
-
-独立进程观测：[2026-11-06 资源与 SQL/Redis 统计](docs/PHASE6_INDEPENDENT_PROFILE.md)，与原同 JVM 基线条件不同，不作为优化前后对照。
-
-跨存储中断：[Redis 已释放、Inbox 未提交时的崩溃重试](docs/PHASE6_RELEASE_GAP_CRASH.md)，核验释放标记防重复回库。
-
-关单恢复：[数据库已回库、Redis 待释放时的 SIGKILL 验证](docs/PHASE6_EXPIRY_CRASH.md)，原释放任务自动续跑。
-
-事务中断：[库存更新后的 SIGKILL、回滚与重试](docs/PHASE6_TRANSACTION_CRASH.md)，重启前独立核验回滚。
-
-提交后重投：[订单已提交、消费位点未推进时的去重验证](docs/PHASE6_COMMIT_ACK_LOSS.md)，受控断网加 SIGKILL，非全故障覆盖。
-
-真实进程故障：[SIGKILL、重启与幂等对账](docs/PHASE6_PROCESS_RECOVERY.md)，已验证两个选定窗口，非全故障覆盖。
-
-独立 JAR 复测：[资源打包与真实交易对账](docs/PHASE6_PACKAGED_JAR_PROFILE.md)，无源码挂载，非生产容量结论。
-
-Lua 加载优化：[改造与隔离对照](docs/PHASE6_LUA_LOADING_OPTIMIZATION.md)，保留持久化与业务校验；收益范围仅限本轮开发挂载环境。
-
-请求分段诊断：[脚本 SHA 热点](docs/PHASE6_REQUEST_STAGE_PROFILE.md)，仅针对当前开发挂载环境，尚未宣称生产优化收益。
-
-诊断对照：[Redis fsync 模式](docs/PHASE6_FSYNC_COMPARISON.md)，本轮未见稳定收益，未改变生产持久性。
-
 基于 Spring Boot 的本地生活平台，包含店铺搜索、探店笔记、点赞关注、签到、普通领券、异步秒杀和个人订单。在课程业务基础上，增加多层缓存、Canal 数据变更同步、RocketMQ 可靠业务消息、Kafka 行为分析、订单超时关闭及网页体验验证。
 
 项目面向 Java 后端学习与面试实践：既能从页面完成业务操作，也能沿 Controller → Service → Mapper 阅读实现，结合隔离测试理解并发、幂等、事务和故障恢复。
+
+[本地启动](#快速启动) · [轻量部署](deploy/README.md) · [演示与证据导航](docs/DEMO_AND_EVIDENCE.md) · [课程来源与贡献](CONTRIBUTIONS.md)
+
+提交 `7f8c78f` 的远端基础 CI 已通过。本地另有收藏数据库集成验收和轻量部署冒烟记录。轻量方案覆盖基础业务，AI 助手使用完整开发环境演示。[远端 CI](https://github.com/AutNiHilo-carry/CityMate/actions/runs/46109537760) · [验收范围与复跑命令](docs/ACCEPTANCE_2026-11-28.md) · [阶段记录](docs/PROJECT_STATUS.md)
 
 **详细教程：[项目 Wiki](wiki/README.md)**。包含 13 章和接口附录，按业务问题、方案推导、源码讲解、操作验证与常见问题展开。
 
